@@ -18,7 +18,7 @@
   <img alt="嘉立创/AD" src="https://img.shields.io/badge/嘉立创_AD-嘉立创_AD-orange?logo=kicad&logoColor=white" />
   <img alt="GitHub Actions" src="https://img.shields.io/badge/CI-GitHub%20Actions-black?logo=githubactions&logoColor=white" />
 </p>
-
+![Awesome-Embedded](./assets/Awesome-Embedded.png)
 
 > 快速定位：这是我们组织的**中心仓库** —— 把所有小玩具的 Repo 当作分支园地，来这里就能知道正在做什么、谁在做、下一个任务是什么。
 
