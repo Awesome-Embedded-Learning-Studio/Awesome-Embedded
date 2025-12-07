@@ -41,11 +41,12 @@
 
 ## 我们的 WIP 计划
 
-1. 完成进一步对本Organization的初始化，包括中心仓库，初步的ReadME Profile (需要进一步同 [HNHKHNH](https://github.com/HNHKHNH) 进行协商)
-2. 初步完成对一个嵌入式小产品的模拟迭代工作流，预计产出一个Repo Template作为模板
-3. 明确我们打算预备做的小产品清单，单列出来一张ProjectLists.todo.md，随后[HNHKHNH](https://github.com/HNHKHNH)同[Charliechen114514](https://github.com/Charliechen114514)约定好具体的第一个试手工程(预计于12月21号后开始)
-4. [Charliechen114514](https://github.com/Charliechen114514) 将会进一步熟悉Organization的功能，进一步的补全和完善基础的协作开发框架体系，完善我们的开发目标和追求，协同[HNHKHNH](https://github.com/HNHKHNH)梳理开发流程！
-5. 美化这个Readme，嗯，看起来好看点，至少(
+- [x] 完成进一步对本Organization的初始化，包括中心仓库，初步的ReadME Profile (需要进一步同 [HNHKHNH](https://github.com/HNHKHNH) 进行协商)
+- [ ] 初步完成对一个嵌入式小产品的模拟迭代工作流，产出一份说明计划文档准备讨论
+- [x] 预计产出一个Repo Template作为模板
+- [ ] 明确我们打算预备做的小产品清单，单列出来一张ProjectLists.todo.md，随后[HNHKHNH](https://github.com/HNHKHNH)同[Charliechen114514](https://github.com/Charliechen114514)约定好具体的第一个试手工程(预计于12月21号后开始)
+- [ ] [Charliechen114514](https://github.com/Charliechen114514) 将会进一步熟悉Organization的功能，进一步的补全和完善基础的协作开发框架体系，完善我们的开发目标和追求，协同[HNHKHNH](https://github.com/HNHKHNH)梳理开发流程！
+- [ ] 美化这个Readme，嗯，看起来好看点，至少(
 
 > 我们把上面的 WIP 当作活页，随时更新：每个条目完成后会在这里打勾并链接到对应的 Repo / PR / Issue。
 
@@ -77,14 +78,36 @@
 
 ---
 
-## 项目清单与模板 (TODO)
+## 📦项目清单与模板 (TODO)
 
-本仓库将放置 `ProjectLists.todo.md` 与 `repo-template/`：
+#### 📦 仓库说明
 
-- `ProjectLists.todo.md`：列出想做的小产品与优先级；
-- `repo-template/`：一个最小可运行的小产品模版（包含 PCB 目录、firmware、docs、CI 示例等）。
+本仓库用于集中管理：
 
-> 计划里已标注：第一个试手工程预计在 12 月 21 日后协商启动，届时会在 `ProjectLists.todo.md` 里锁定第一个项目并创建对应的 Repo。
+- **📋 项目清单** — [`ProjectLists.todo.md`](./ProjectLists.todo/ProjectLists.todo.md)
+
+  > 存放所有「待做小产品」及其优先级规划。
+
+- **🧩 项目模板集合** — [`repo-template/`](./repo-template/)
+
+  > 一个「最小可运行」的小产品模板，包含 **PCB 目录、Firmware、Docs、CI 配置示例**等内容。
+  >
+  > 🔗 快速跳转：
+  >
+  > - [📘 项目模板](./repo-template/repo-project-template)
+  > - [📙 教程模板](./repo-template/repo-tutorial-template)
+
+------
+
+#### 🛠 贡献者须知
+
+> 为了提升项目开发效率，我们提供了自动创建项目/教程模板的工具脚本。
+
+- 👉 **脚本作者：** [Charliechen114514](https://github.com/Charliechen114514)
+- 👉 **脚本位置：** [`./tools`](./tools)
+- 👉 **如何使用：**根据您的 Shell 环境选择相应脚本执行，即可在本地自动化生成完整项目骨架。
+
+📅 **首个试手工程预计在 12 月 21 日后开始协商启动。**届时会在 `ProjectLists.todo.md` 中锁定第一个任务并创建对应的项目仓库（Repo），欢迎关注进展！
 
 ---
 
