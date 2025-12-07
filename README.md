@@ -15,7 +15,7 @@
   <img alt="Qt" src="https://img.shields.io/badge/Qt-UI-lightgrey?logo=qt&logoColor=white" />
   <img alt="Embedded Linux" src="https://img.shields.io/badge/Embedded--Linux-Linux-lightgrey?logo=linux&logoColor=white" />
   <img alt="STM32" src="https://img.shields.io/badge/STM32-MCU-success?logo=arm&logoColor=white" />
-  <img alt="KiCad" src="https://img.shields.io/badge/KiCad-PCB-orange?logo=kicad&logoColor=white" />
+  <img alt="嘉立创/AD" src="https://img.shields.io/badge/嘉立创_AD-嘉立创_AD-orange?logo=kicad&logoColor=white" />
   <img alt="GitHub Actions" src="https://img.shields.io/badge/CI-GitHub%20Actions-black?logo=githubactions&logoColor=white" />
 </p>
 
@@ -71,7 +71,7 @@
   <img src="https://img.shields.io/badge/Qt-UI-lightgrey?logo=qt&logoColor=white" alt="Qt" />
   <img src="https://img.shields.io/badge/Embedded--Linux-Linux-lightgrey?logo=linux&logoColor=white" alt="Embedded Linux" />
   <img src="https://img.shields.io/badge/STM32-MCU-success?logo=arm&logoColor=white" alt="STM32" />
-  <img src="https://img.shields.io/badge/KiCad-PCB-orange?logo=kicad&logoColor=white" alt="KiCad" />
+  <img alt="嘉立创/AD" src="https://img.shields.io/badge/嘉立创_AD-嘉立创_AD-orange?logo=kicad&logoColor=white" />
   <img src="https://img.shields.io/badge/GitHub%20Actions-CI-black?logo=githubactions&logoColor=white" alt="GitHub Actions" />
 </p>
 
