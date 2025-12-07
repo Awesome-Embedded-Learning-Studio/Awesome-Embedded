@@ -1,6 +1,43 @@
 # 嵌入式软硬协作规范与流程（简明版）
 
-[TOC]
+明白，你给了完整文档，现在你需要的是——**这整份文档的可跳转 Markdown 目录（TOC）**。
+
+下面已经为你自动生成，完全可直接粘贴使用：
+
+------
+
+# 📚 **可跳转目录（TOC）**
+
+- [嵌入式软硬协作规范与流程（简明版）](#嵌入式软硬协作规范与流程简明版)
+  - [TL;DR](#tldr)
+    - [Part：确定开发](#part确定开发)
+      - [Step1](#step1)
+    - [Part：硬件](#part硬件)
+      - [Step2. 硬件原理图设计 & 外设接口定义](#step2-硬件原理图设计--外设接口定义)
+      - [Step3. PCB 设计与样板制作（EVT Sample）](#step3-pcb-设计与样板制作evt-sample)
+      - [Step4. BSP / Bootloader Bring-up](#step4-bsp--bootloader-bring-up)
+    - [Part：软件](#part软件)
+      - [Step2. 驱动开发与调试（Driver Development）](#step2-驱动开发与调试driver-development)
+      - [Step3. 高层业务逻辑开发（Application / Service Layer）](#step3-高层业务逻辑开发application--service-layer)
+      - [Step4. Mock出硬件无关的软件逻辑测试](#step4-mock出硬件无关的软件逻辑测试)
+    - [Part：联调与 PreRelease 阶段](#part联调与-prerelease-阶段)
+      - [Step5. 系统集成测试（含实机联调）](#step5-系统集成测试含实机联调)
+      - [Step6. 回归测试 & 长稳测试（DVT 阶段）](#step6-回归测试--长稳测试dvt-阶段)
+      - [Step7. 小批量试产（PVT Sample）](#step7-小批量试产pvt-sample)
+    - [Part：Release 阶段](#partrelease-阶段)
+      - [Step8. 量产（MP） & 全生命周期维护](#step8-量产mp--全生命周期维护)
+  - [1. 目标与角色](#1-目标与角色)
+  - [2. 软件分层与仓库/目录建议](#2-软件分层与仓库目录建议)
+  - [3. Git 协作与分支策略（推荐）](#3-git-协作与分支策略推荐)
+  - [4. PR / Code review 模板](#4-pr--code-review-模板)
+  - [5. CI / 构建 / 实机测试（必备）](#5-ci--构建--实机测试必备)
+  - [6. 硬件对接与约束（必须有书面接口协议）](#6-硬件对接与约束必须有书面接口协议)
+  - [7. 集成与 Bring-up 流程](#7-集成与-bring-up-流程)
+  - [8. 硬件测试夹具与现场测试建议](#8-硬件测试夹具与现场测试建议)
+  - [9. 文档与交付物（最小集）](#9-文档与交付物最小集)
+  - [10. 测试用例模板（简化）](#10-测试用例模板简化)
+  - [11. 质量控制与回退策略](#11-质量控制与回退策略)
+  - [12. 日常协作与沟通](#12-日常协作与沟通)
 
 ## TL;DR
 
