@@ -131,17 +131,21 @@ try {
     Write-Host "Created root directory: $projectName" -ForegroundColor Green
     Write-Host ""
 
-    # Step 3: Create ResourcesAndAssets folder
-    $resourcesPath = Join-Path -Path $rootPath -ChildPath "ResourcesAndAssets"
+    # Step 3: Create codes_and_assets folder
+    $resourcesPath = Join-Path -Path $rootPath -ChildPath "codes_and_assets"
     New-Item -Path $resourcesPath -ItemType Directory | Out-Null
-    Write-Host "Created folder: ResourcesAndAssets" -ForegroundColor Green
+    $resourcesReadMePath = Join-Path -Path  $resourcesPath -ChildPath "instractions.md"
+    New-Item -Path $resourcesReadMePath -ItemType File | Out-Null
+    Write-Host "Created folder: codes_and_assets" -ForegroundColor Green
     Write-Host "  Purpose: This folder will contain code, PCB files, circuit diagrams, and other teaching resources." -ForegroundColor Gray
     Write-Host ""
 
-    # Step 4: Create Documents folder
-    $documentsPath = Join-Path -Path $rootPath -ChildPath "Documents"
+    # Step 4: Create tutorial folder
+    $documentsPath = Join-Path -Path $rootPath -ChildPath "tutorial"
     New-Item -Path $documentsPath -ItemType Directory | Out-Null
-    Write-Host "Created folder: Documents" -ForegroundColor Green
+    $documentsReadMePath = Join-Path -Path  $documentsPath -ChildPath "README.md"
+    New-Item -Path $documentsReadMePath -ItemType File | Out-Null
+    Write-Host "Created folder: tutorial" -ForegroundColor Green
     Write-Host "  Purpose: This folder will contain tutorial documentation and instructional materials." -ForegroundColor Gray
     Write-Host ""
 
@@ -217,6 +221,13 @@ SOFTWARE.
 联系方式: $authorEmail
 
 > 本项目隶属于组织[Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio)的文档教程
+
+## 快速说明
+
+> codes_and_assets下放置着本教程所有的代码, 或硬件电路图或者是PCB文件等
+> 具体的细节，请到[具体的说明步骤🖱](./codes_and_assets/instractions)
+> tutorial下放置着教程的Markdown文件, 您可以使用其他Markdown浏览器阅读这些教程
+> 您如果不知道从何开始，请到[从这里开始!🖱](./tutorial/README.md)查看！
 
 ## 这是什么？
 
