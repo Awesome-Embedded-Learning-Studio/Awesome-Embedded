@@ -225,7 +225,7 @@ SOFTWARE.
 ## 快速说明
 
 > codes_and_assets下放置着本教程所有的代码, 或硬件电路图或者是PCB文件等
-> 具体的细节，请到[具体的说明步骤🖱](./codes_and_assets/instractions)
+> 具体的细节，请到[具体的说明步骤🖱](./codes_and_assets/instractions.md)
 > tutorial下放置着教程的Markdown文件, 您可以使用其他Markdown浏览器阅读这些教程
 > 您如果不知道从何开始，请到[从这里开始!🖱](./tutorial/README.md)查看！
 
