@@ -38,7 +38,7 @@ $null = Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
 
 try {
     Write-Host "========================================" -ForegroundColor Cyan
-    Write-Host "  Embedded Tutorial Repository Setup" -ForegroundColor Cyan
+    Write-Host "  Embedded Project Repository Setup" -ForegroundColor Cyan
     Write-Host "========================================`n" -ForegroundColor Cyan
 
     # Step 1: Get target directory path
@@ -124,34 +124,59 @@ try {
     # Step 2: Create software_codes folder
     Write-Host "📁 Creating 'software_codes' folder..." -ForegroundColor Cyan
     Write-Host "   Purpose: This folder will store all software code files" -ForegroundColor Gray
-    New-Item -ItemType Directory -Path (Join-Path $script:projectPath "software_codes") | Out-Null
+    $software_codes_folder_path = Join-Path $script:projectPath "software_codes"
+    New-Item -ItemType Directory -Path $software_codes_folder_path | Out-Null
+    New-Item -ItemType File -Path (Join-Path $software_codes_folder_path "index.md") | Out-Null
     Write-Host "✅ Created successfully`n" -ForegroundColor Green
 
     # Step 3: Create hardware_asset folder
     Write-Host "📁 Creating 'hardware_asset' folder..." -ForegroundColor Cyan
     Write-Host "   Purpose: This folder will store PCB designs and hardware schematics" -ForegroundColor Gray
-    New-Item -ItemType Directory -Path (Join-Path $script:projectPath "hardware_asset") | Out-Null
+
+    $hardware_asset_folder = Join-Path $script:projectPath "hardware_asset"
+    New-Item -ItemType Directory -Path $hardware_asset_folder | Out-Null
+
+    # Create index.md inside hardware_asset
+    New-Item -ItemType File -Path (Join-Path $hardware_asset_folder "index.md") | Out-Null
+    Write-Host "   ➕ Added hardware_asset/index.md" -ForegroundColor Gray
+
     Write-Host "✅ Created successfully`n" -ForegroundColor Green
+
 
     # Step 4: Create documents folder
     Write-Host "📁 Creating 'documents' folder..." -ForegroundColor Cyan
     Write-Host "   Purpose: This folder will store project documentation" -ForegroundColor Gray
-    New-Item -ItemType Directory -Path (Join-Path $script:projectPath "documents") | Out-Null
+
+    $documents_folder = Join-Path $script:projectPath "documents"
+    New-Item -ItemType Directory -Path $documents_folder | Out-Null
+
+    # Create index.md inside documents
+    New-Item -ItemType File -Path (Join-Path $documents_folder "index.md") | Out-Null
+    Write-Host "   ➕ Added documents/index.md" -ForegroundColor Gray
+
     Write-Host "✅ Created successfully`n" -ForegroundColor Green
+
 
     # Step 5: Optional tutorial folder
     Write-Host "📁 Optional: 'tutorial' folder" -ForegroundColor Cyan
     Write-Host "   Purpose: This folder will store tutorial materials and guides" -ForegroundColor Gray
+
     $createTutorial = Read-Host "Do you want to create a 'tutorial' folder? (y/n)"
-    
+
     if ($createTutorial -eq 'y' -or $createTutorial -eq 'Y') {
-        New-Item -ItemType Directory -Path (Join-Path $script:projectPath "tutorial") | Out-Null
+
+        $tutorial_folder = Join-Path $script:projectPath "tutorial"
+        New-Item -ItemType Directory -Path $tutorial_folder | Out-Null
+
+        # Create index.md inside tutorial
+        New-Item -ItemType File -Path (Join-Path $tutorial_folder "index.md") | Out-Null
+        Write-Host "   ➕ Added tutorial/index.md" -ForegroundColor Gray
+
         Write-Host "✅ Created tutorial folder`n" -ForegroundColor Green
     }
     else {
         Write-Host "ℹ️  Skipped tutorial folder creation`n" -ForegroundColor Yellow
     }
-
     # Step 6: Create MIT License
     do {
         $authorName = Read-Host "📝 Enter the author's name (in English) for MIT License"
@@ -217,6 +242,15 @@ SOFTWARE.
 📮 联系方式： $email
 
 > 本项目隶属于组织[Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio)的文档教程
+
+## 快速说明
+
+> [software_codes](./software_codes)下放置着本项目的软件代码
+> [hardware_asset](./hardware_asset) 放置着所有的硬件电路图和PCB文件等
+> [documents](./documents) 是本项目的文档
+> 如果本项目计划出教学项目, 则会还有[tutorial](./tutorial)文件夹
+> 具体的细节，请到[具体的说明步骤🖱](./codes_and_assets/instractions.md)
+> 您如果不知道从何开始，请到[从这里开始!🖱](./tutorial/README.md)查看！
 
 ## 🚀 这是什么？
 
