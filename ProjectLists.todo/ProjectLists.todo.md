@@ -36,7 +36,7 @@
 
 > Projects是更加严肃的可用工程仓库，这里将会存储真正可用的项目仓库清单。下面的列表是[Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio)计划的工程清单。
 
-> [点击我🖱](./projects/index.md")
+> [点击我🖱](./projects/index.md)
 
 
 
