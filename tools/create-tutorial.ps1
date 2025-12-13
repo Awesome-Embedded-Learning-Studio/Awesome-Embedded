@@ -8,6 +8,8 @@ $ErrorActionPreference = "Stop"
 # Variables to track creation state
 $createdItems = @()
 $rootPath = ""
+$codes_and_assets = "codes_and_assets"
+$tutorial_ = "tutorial"
 
 # Function to cleanup created items
 function Remove-CreatedItems {
@@ -30,7 +32,8 @@ function Handle-Interruption {
         if ($response -eq 'y' -or $response -eq 'Y') {
             Remove-CreatedItems
             Write-Host "`nAll changes have been reverted." -ForegroundColor Green
-        } else {
+        }
+        else {
             Write-Host "`nCreated items have been kept." -ForegroundColor Cyan
         }
     }
@@ -66,7 +69,8 @@ try {
             $targetPath = $PWD.Path
             $validPath = $true
             Write-Host "Using current directory: $targetPath" -ForegroundColor Cyan
-        } else {
+        }
+        else {
             # Resolve relative or absolute path
             try {
                 $resolvedPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($userInput)
@@ -78,10 +82,12 @@ try {
                         $targetPath = $resolvedPath
                         $validPath = $true
                         Write-Host "Using directory: $targetPath" -ForegroundColor Cyan
-                    } else {
+                    }
+                    else {
                         Write-Host "Error: The specified path is a file, not a directory. Please try again." -ForegroundColor Red
                     }
-                } else {
+                }
+                else {
                     # Ask if user wants to create the directory
                     Write-Host "Warning: Directory does not exist: $resolvedPath" -ForegroundColor Yellow
                     $createDir = Read-Host "Do you want to create this directory? (y/n)"
@@ -93,15 +99,18 @@ try {
                             $targetPath = $resolvedPath
                             $validPath = $true
                             Write-Host "Created directory: $targetPath" -ForegroundColor Green
-                        } catch {
+                        }
+                        catch {
                             Write-Host "Error: Failed to create directory. $($_.Exception.Message)" -ForegroundColor Red
                             Write-Host "Please try a different path." -ForegroundColor Yellow
                         }
-                    } else {
+                    }
+                    else {
                         Write-Host "Please enter a different path." -ForegroundColor Yellow
                     }
                 }
-            } catch {
+            }
+            catch {
                 Write-Host "Error: Invalid path format. $($_.Exception.Message)" -ForegroundColor Red
                 Write-Host "Please try again." -ForegroundColor Yellow
             }
@@ -132,20 +141,20 @@ try {
     Write-Host ""
 
     # Step 3: Create codes_and_assets folder
-    $resourcesPath = Join-Path -Path $rootPath -ChildPath "codes_and_assets"
+    $resourcesPath = Join-Path -Path $rootPath -ChildPath $codes_and_assets
     New-Item -Path $resourcesPath -ItemType Directory | Out-Null
     $resourcesReadMePath = Join-Path -Path  $resourcesPath -ChildPath "instractions.md"
     New-Item -Path $resourcesReadMePath -ItemType File | Out-Null
-    Write-Host "Created folder: codes_and_assets" -ForegroundColor Green
+    Write-Host "Created folder: $codes_and_assets" -ForegroundColor Green
     Write-Host "  Purpose: This folder will contain code, PCB files, circuit diagrams, and other teaching resources." -ForegroundColor Gray
     Write-Host ""
 
     # Step 4: Create tutorial folder
-    $documentsPath = Join-Path -Path $rootPath -ChildPath "tutorial"
+    $documentsPath = Join-Path -Path $rootPath -ChildPath "$tutorial_"
     New-Item -Path $documentsPath -ItemType Directory | Out-Null
-    $documentsReadMePath = Join-Path -Path  $documentsPath -ChildPath "README.md"
+    $documentsReadMePath = Join-Path -Path  $documentsPath -ChildPath "index.md"
     New-Item -Path $documentsReadMePath -ItemType File | Out-Null
-    Write-Host "Created folder: tutorial" -ForegroundColor Green
+    Write-Host "Created folder: $tutorial_" -ForegroundColor Green
     Write-Host "  Purpose: This folder will contain tutorial documentation and instructional materials." -ForegroundColor Gray
     Write-Host ""
 
@@ -195,7 +204,8 @@ SOFTWARE.
     if ($useAuthorName -eq 'y' -or $useAuthorName -eq 'Y') {
         $readmeAuthor = $authorName
         Write-Host "Using '$authorName' as README author" -ForegroundColor Cyan
-    } else {
+    }
+    else {
         while ([string]::IsNullOrWhiteSpace($readmeAuthor)) {
             $readmeAuthor = Read-Host "Enter the author name for README"
             if ([string]::IsNullOrWhiteSpace($readmeAuthor)) {
@@ -227,7 +237,7 @@ SOFTWARE.
 > codes_and_assets下放置着本教程所有的代码, 或硬件电路图或者是PCB文件等
 > 具体的细节，请到[具体的说明步骤🖱](./codes_and_assets/instractions.md)
 > tutorial下放置着教程的Markdown文件, 您可以使用其他Markdown浏览器阅读这些教程
-> 您如果不知道从何开始，请到[从这里开始!🖱](./tutorial/README.md)查看！
+> 您如果不知道从何开始，请到[从这里开始!🖱](./tutorial/index.md)查看！
 
 ## 这是什么？
 
@@ -239,6 +249,123 @@ SOFTWARE.
     Write-Host "Created README.md file" -ForegroundColor Green
     Write-Host ""
 
+    # Bonus Step: Optional MkDocs Static Site Generation
+    Write-Host ""
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Magenta
+    Write-Host "🎁 BONUS: MkDocs Static Site Setup" -ForegroundColor Magenta
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Magenta
+    Write-Host ""
+
+    $createMkDocs = Read-Host "Would you like to create a MkDocs static site configuration? (y/n)"
+
+    if ($createMkDocs -eq 'y' -or $createMkDocs -eq 'Y') {
+        Write-Host ""
+        Write-Host "🚀 Launching MkDocs configuration generator..." -ForegroundColor Cyan
+        Write-Host ""
+    
+        # 构建脚本路径
+        $mkdocsScriptPath = Join-Path $PSScriptRoot "sources\create-auto-sites.ps1"
+    
+        # 检查脚本是否存在
+        if (-not (Test-Path $mkdocsScriptPath)) {
+            Write-Host "❌ Error: MkDocs script not found at: $mkdocsScriptPath" -ForegroundColor Red
+            Write-Host "Please ensure the script exists in the 'sources' directory." -ForegroundColor Yellow
+        }
+        else {
+            try {
+                # 准备邮箱格式 (确保是 mailto: 格式)
+                $emailFormatted = if ($authorEmail -notlike "mailto:*") {
+                    "mailto:$authorEmail"
+                }
+                else {
+                    $authorEmail
+                }
+            
+                # 调用 MkDocs 配置生成脚本
+                Write-Host "Executing MkDocs generator with parameters:" -ForegroundColor Gray
+                Write-Host "  • Site Name: $projectName" -ForegroundColor Gray
+                Write-Host "  • Author: $authorName" -ForegroundColor Gray
+                Write-Host "  • Email: $emailFormatted" -ForegroundColor Gray
+                Write-Host "  • Doc Directory: $tutorial_" -ForegroundColor Gray
+                Write-Host ""
+            
+                $mkdocsResult = & $mkdocsScriptPath `
+                    -SiteName $projectName `
+                    -SiteAuthor $authorName `
+                    -DocDir $tutorial_ `
+                    -Email $emailFormatted `
+                    -OutputPath $rootPath
+            
+                # 检查返回值
+                if ($mkdocsResult -eq 0 -or $LASTEXITCODE -eq 0) {
+                    Write-Host ""
+                    Write-Host "✅ MkDocs configuration created successfully!" -ForegroundColor Green
+                    Write-Host "Configuration file: mkdocs.yml" -ForegroundColor Cyan
+                
+                    Write-Host ""
+                    Write-Host "OK, Copy Requested Sources..." -ForegroundColor Cyan
+                    try {
+                        # Copy icon files to tutorial directory
+                        $sourceIconPath = Join-Path $PSScriptRoot "sources\Awesome-Embedded.ico"
+                        $sourcePngPath = Join-Path $PSScriptRoot "sources\Awesome-Embedded.png"
+    
+                        if (Test-Path $sourceIconPath) {
+                            Copy-Item -Path $sourceIconPath -Destination $documentsPath -Force
+                            Write-Host "  ✅ Copied Awesome-Embedded.ico to $documentsPath directory" -ForegroundColor Green
+                        }
+                        else {
+                            Write-Host "  ⚠️  Warning: Awesome-Embedded.ico not found" -ForegroundColor Yellow
+                        }
+    
+                        if (Test-Path $sourcePngPath) {
+                            Copy-Item -Path $sourcePngPath -Destination $documentsPath -Force
+                            Write-Host "  ✅ Copied Awesome-Embedded.png to $documentsPath directory" -ForegroundColor Green
+                        }
+                        else {
+                            Write-Host "  ⚠️  Warning: Awesome-Embedded.png not found" -ForegroundColor Yellow
+                        }
+    
+                        # Copy .github folder to root directory
+                        $sourceGithubPath = Join-Path $PSScriptRoot "sources\.github"
+    
+                        if (Test-Path $sourceGithubPath) {
+                            Copy-Item -Path $sourceGithubPath -Destination $rootPath -Recurse -Force
+                            Write-Host "  ✅ Copied .github folder to root directory" -ForegroundColor Green
+                        }
+                        else {
+                            Write-Host "  ⚠️  Warning: .github folder not found" -ForegroundColor Yellow
+                        }
+    
+                        Write-Host "  Assets copy completed!" -ForegroundColor Cyan
+    
+                    }
+                    catch {
+                        Write-Host "  ❌ Error copying assets: $($_.Exception.Message)" -ForegroundColor Red
+                    }
+
+                    Write-Host ""
+                }
+                else {
+                    Write-Host ""
+                    Write-Host "⚠️  MkDocs configuration completed with exit code: $mkdocsResult" -ForegroundColor Yellow
+                }
+            
+            }
+            catch {
+                Write-Host ""
+                Write-Host "❌ Error executing MkDocs script: $($_.Exception.Message)" -ForegroundColor Red
+            }
+        }
+    }
+    else {
+        Write-Host ""
+        Write-Host "⏭️  Skipping MkDocs static site setup." -ForegroundColor Yellow
+    }
+
+    Write-Host ""
+    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Magenta
+
+
     # Step 7: Display completion and folder path
     Write-Host "=====================================" -ForegroundColor Cyan
     Write-Host "Repository structure created successfully!" -ForegroundColor Green
@@ -248,8 +375,8 @@ SOFTWARE.
     Write-Host ""
     Write-Host "Directory structure:" -ForegroundColor Yellow
     Write-Host "  $projectName/" -ForegroundColor White
-    Write-Host "  ├── ResourcesAndAssets/" -ForegroundColor White
-    Write-Host "  ├── Documents/" -ForegroundColor White
+    Write-Host "  ├── $codes_and_assets/" -ForegroundColor White
+    Write-Host "  ├── $tutorial_/" -ForegroundColor White
     Write-Host "  ├── LICENSE" -ForegroundColor White
     Write-Host "  └── README.md" -ForegroundColor White
     Write-Host ""
@@ -266,7 +393,8 @@ SOFTWARE.
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "Error: Git is not installed or not available in PATH." -ForegroundColor Red
                 Write-Host "Please install Git and try again." -ForegroundColor Yellow
-            } else {
+            }
+            else {
                 git init | Out-Null
                 git add . | Out-Null
                 git commit -m "Initial commit: Project structure created" | Out-Null
@@ -275,12 +403,15 @@ SOFTWARE.
                 Write-Host "Git repository initialized successfully!" -ForegroundColor Green
                 Write-Host "Initial commit created with all files." -ForegroundColor Green
             }
-        } catch {
+        }
+        catch {
             Write-Host "Error during Git initialization: $($_.Exception.Message)" -ForegroundColor Red
-        } finally {
+        }
+        finally {
             Pop-Location
         }
-    } else {
+    }
+    else {
         Write-Host "Git initialization skipped." -ForegroundColor Yellow
     }
 
@@ -289,7 +420,8 @@ SOFTWARE.
     Write-Host "All operations completed successfully!" -ForegroundColor Green
     Write-Host "=====================================" -ForegroundColor Cyan
 
-} catch {
+}
+catch {
     Write-Host ""
     Write-Host "Error occurred: $($_.Exception.Message)" -ForegroundColor Red
     
