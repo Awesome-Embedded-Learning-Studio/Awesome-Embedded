@@ -1,11 +1,17 @@
 # 核心仓库的工具集合
 
+## Tools脚本使用指南
+
+如果您对这里的脚本存在疑问，访问[文档目录](./documentations/)检索您感兴趣的脚本说明
+
+快速指南: 
+- [快速创建工程脚本指南](./documentations/create_project_doc.md)
+- [快速创建教程脚本指南](./documentations/create_tutorial_doc.md)
 
 
 ## 静态网站化自动部署指南
 
-> 如果是从0开始创建的，请您直接将您的文档放进tutorial即可，否则，您需要自己看下面的手动迁移指南
-
+> 如果是从0开始创建的，请您直接将您的文档放进tutorial，并且修改分支即可，否则，在您修改好分支后，务必需要自己看下面的手动迁移指南
 
 
 ### 分支更改
@@ -23,7 +29,7 @@
 你要做的只需要提供：
 
 ```
-.\sources/create-auto-sites.ps1 `
+./sources/create-auto-sites.ps1 `
   -SiteName "你打算填入的站点名称" `
   -SiteAuthor "作者" `
   -DocDir "文档目录，指定填写tutorial或者指向你的文档目录根" `
@@ -33,4 +39,4 @@
 
 即可，或者可以自己手动迁移，自行查看脚本分析即可。
 
-> 需要手动迁移的就是复制.github文件夹即可，然后
+> 需要手动迁移的就是复制.github文件夹即可
