@@ -53,7 +53,7 @@
 - [x] 预计产出一个Repo Template作为模板
 - [ ] 明确我们打算预备做的小产品清单，单列出来一张ProjectLists.todo.md，随后[HNHKHNH](https://github.com/HNHKHNH)同[Charliechen114514](https://github.com/Charliechen114514)约定好具体的第一个试手工程(预计于12月21号后开始)
 - [ ] [Charliechen114514](https://github.com/Charliechen114514) 将会进一步熟悉Organization的功能，进一步的补全和完善基础的协作开发框架体系，完善我们的开发目标和追求，协同[HNHKHNH](https://github.com/HNHKHNH)梳理开发流程！
-- [ ] 美化这个Readme，嗯，看起来好看点，至少(
+- [x] 美化这个Readme，嗯，看起来好看点，至少(
 
 > 我们把上面的 WIP 当作活页，随时更新：每个条目完成后会在这里打勾并链接到对应的 Repo / PR / Issue。
 
@@ -120,7 +120,11 @@
 
 ## 开发规范？迭代周期说明？
 
-我们的开发规范与迭代周期说明是灵活的，目前，涉及到教程和工程的所有文档都是草稿，已经上传到了draft目录下：[草稿🖱](drafts)，进一步的协商预计在12月21日后。
+我们的开发规范与迭代周期说明是灵活的，目前，涉及到教程和工程的所有文档都是草稿，已经上传到了draft目录下：[草稿🖱](drafts)，进一步的协商预计在12月23日晚上
+
+## 工具文档集合
+
+这里工具教程文档：[点击我进行阅读](./tools/README.md)
 
 ## 许可 & 联系方式
 
