@@ -49,10 +49,10 @@
 ## 我们的 WIP 计划
 
 - [x] 完成进一步对本Organization的初始化，包括中心仓库，初步的ReadME Profile (需要进一步同 [HNHKHNH](https://github.com/HNHKHNH) 进行协商)
-- [ ] 初步完成对一个嵌入式小产品的模拟迭代工作流，产出一份说明计划文档准备讨论
+- [x] 初步完成对一个嵌入式小产品的模拟迭代工作流，产出一份说明计划文档准备讨论
 - [x] 预计产出一个Repo Template作为模板
-- [ ] 明确我们打算预备做的小产品清单，单列出来一张ProjectLists.todo.md，随后[HNHKHNH](https://github.com/HNHKHNH)同[Charliechen114514](https://github.com/Charliechen114514)约定好具体的第一个试手工程(预计于12月21号后开始)
-- [ ] [Charliechen114514](https://github.com/Charliechen114514) 将会进一步熟悉Organization的功能，进一步的补全和完善基础的协作开发框架体系，完善我们的开发目标和追求，协同[HNHKHNH](https://github.com/HNHKHNH)梳理开发流程！
+- [x] 明确我们打算预备做的小产品清单，单列出来一张ProjectLists.todo.md，随后[HNHKHNH](https://github.com/HNHKHNH)同[Charliechen114514](https://github.com/Charliechen114514)约定好具体的第一个试手工程
+- [x] [Charliechen114514](https://github.com/Charliechen114514) 进一步完善基础的协作开发框架体系
 - [x] 美化这个Readme，嗯，看起来好看点，至少(
 
 > 我们把上面的 WIP 当作活页，随时更新：每个条目完成后会在这里打勾并链接到对应的 Repo / PR / Issue。
@@ -61,7 +61,7 @@
 
 ## ✨ 我们的目标（短句）
 
-- 做“能学到东西”的小玩具，而不是仅仅展示工程；
+- 做"能学到东西"的小玩具，而不是仅仅展示工程；
 - 每个项目要有完整的入门文档、PCB、固件和教学资料；
 - 建立一套小而可复用的 Repo Template，方便快速起步；
 - 鼓励开源与分享，让更多同好者能参与进来。
@@ -114,13 +114,13 @@
 - 👉 **脚本位置：** [`./tools`](./tools)
 - 👉 **如何使用：** 根据您的 Shell 环境选择相应脚本执行，即可在本地自动化生成完整项目骨架。
 
-📅 **首个试手工程预计在 12 月 21 日后开始协商启动。** 届时会在 `ProjectLists.todo.md` 中锁定第一个任务并创建对应的项目仓库（Repo），欢迎关注进展！
+📅 **首个试手工程已启动，多个项目正在进行中。** 对应的项目仓库（Repo）已创建，欢迎关注进展！
 
 ---
 
 ## 开发规范？迭代周期说明？
 
-我们的开发规范与迭代周期说明是灵活的，目前，涉及到教程和工程的所有文档都是草稿，已经上传到了draft目录下：[草稿🖱](drafts)，进一步的协商预计在12月23日晚上
+我们的开发规范与迭代周期说明是灵活的，目前，涉及到教程和工程的所有文档都是草稿，已经上传到了draft目录下：[草稿🖱](drafts)
 
 ## 工具文档集合
 
@@ -136,4 +136,3 @@
 > 感谢阅读！如果你看到这里了，说明你对嵌入式也有一丁点好奇 —— 欢迎关注我们，一起把小玩具做成好玩的教程 & 项目！芜湖起飞🚀
 
 <p align="center">✨ Keep it small, make it fun — Awesome-Embedded-Learning-Studio</p>
-
