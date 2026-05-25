@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
+import { useStars } from '../composables/useStars'
 
 const props = defineProps<{
   name: string
@@ -11,6 +12,15 @@ const props = defineProps<{
   status: 'active' | 'developing' | 'planned'
   beginner?: boolean
 }>()
+
+const { getStars } = useStars()
+const displayStars = computed(() => {
+  if (props.repo) {
+    const live = getStars(props.repo)
+    if (live !== null) return live
+  }
+  return props.stars ?? null
+})
 
 const statusConfig = computed(() => {
   const map = {
@@ -32,7 +42,7 @@ const resolvedLink = computed(() => {
   <component :is="resolvedLink ? 'a' : 'div'" :href="resolvedLink || undefined" class="project-card">
     <div class="card-header">
       <span class="card-title">{{ name }}</span>
-      <span v-if="stars" class="card-stars">⭐ {{ stars }}</span>
+      <span v-if="displayStars !== null" class="card-stars">⭐ {{ displayStars }}</span>
     </div>
     <div class="card-body">
       <p class="card-desc"><slot /></p>

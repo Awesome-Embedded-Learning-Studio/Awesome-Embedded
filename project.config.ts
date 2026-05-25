@@ -18,6 +18,7 @@ export default defineProject({
     'zh-CN': [
       { text: '首页', link: '/' },
       { text: '项目', link: '/projects/' },
+      { text: '排行榜', link: '/ranking/' },
       { text: '路线图', link: '/roadmap/' },
       { text: '规划', link: '/planning/' },
       { text: '贡献', link: '/contributing/' },
@@ -36,6 +37,7 @@ export default defineProject({
       { name: 'contributing', srcDir: 'contributing', urlPrefix: '/contributing' },
       { name: 'workflow', srcDir: 'workflow', urlPrefix: '/workflow' },
       { name: 'maintainers', srcDir: 'maintainers', urlPrefix: '/maintainers' },
+      { name: 'ranking', srcDir: 'ranking', urlPrefix: '/ranking' },
     ],
   },
 
