@@ -1,4 +1,47 @@
-# Claude Code小助手
+# Claude Code
 CLAUDE.md
-# 一些脚本运行的元数据
+.claude/
+
+# 本地仓库克隆（绝对不能提交）
+content/
+
+# 私有 manifest（绝对不能提交）
+manifest/*.local.yaml
+manifest/*.local.*
+
+# 私有报告（绝对不能提交）
+reports/internal-*.md
+reports/private-*.md
+
+# 审计中间结果
+audit-result.local.json
+audit-output.local.json
+*.local.json
+
+# 元数据
 data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node.js / VitePress
+node_modules/
+site/.vitepress/dist/
+site/.vitepress/cache/
+
+# 缓存和临时文件
+.cache/
+.tmp/
+*.tmp
+
+# 密钥和敏感信息
+.env
+secrets/
+*.key
+*.pem
+*.secret
