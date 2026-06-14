@@ -19,6 +19,7 @@ export default defineProject({
       { text: '首页', link: '/' },
       { text: '项目', link: '/projects/' },
       { text: '排行榜', link: '/ranking/' },
+      { text: '周报', link: '/weekly/' },
       { text: '路线图', link: '/roadmap/' },
       { text: '规划', link: '/planning/' },
       { text: '贡献', link: '/contributing/' },
@@ -38,6 +39,7 @@ export default defineProject({
       { name: 'workflow', srcDir: 'workflow', urlPrefix: '/workflow' },
       { name: 'maintainers', srcDir: 'maintainers', urlPrefix: '/maintainers' },
       { name: 'ranking', srcDir: 'ranking', urlPrefix: '/ranking' },
+      { name: 'weekly', srcDir: 'weekly', urlPrefix: '/weekly' },
     ],
   },
 

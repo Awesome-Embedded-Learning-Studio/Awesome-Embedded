@@ -36,8 +36,6 @@
 
 ## 快速链接
 
-- [项目模板](repo-template/) — 创建新项目的模板
-- [工具脚本](tools/) — 自动化模板生成
 - [社区讨论](https://github.com/Awesome-Embedded-Learning-Studio/community/discussions)
 
 ## 贡献者
