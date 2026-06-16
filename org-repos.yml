@@ -1,0 +1,40 @@
+# ──────────────────────────────────────────────────────────────────────────
+# org-repos.yml — Awesome-Embedded 组织仓库跟踪清单（单一真相源）
+# ──────────────────────────────────────────────────────────────────────────
+# 用途：本文件是 orgorg 跟踪仓库清单的唯一手维护来源。
+#   - orgorg 的 third_party/orgorg/.orgorg/repos.yml 由 scripts/sync-orgorg-repos.py
+#     从本文件生成（不在 submodule 内追踪，因上游 .gitignore 排除了它）。
+#   - 改清单只改这里，再跑 `python scripts/sync-orgorg-repos.py`。
+# 范围：org Awesome-Embedded-Learning-Studio，排除 meta repo（.github / community），
+#   含本站点仓库 Awesome-Embedded 自身。
+# 格式：orgorg ReposConfig —— 顶层 `repos:`，每条 `- url: <github url>`。
+# ──────────────────────────────────────────────────────────────────────────
+repos:
+  # ── Awesome-Embedded-Learning-Studio 组织（排除 .github / community）──
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeQt
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeHardware
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/imx-forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/qt-compile-pipeline
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/PenguinLab
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/C-Journey
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/CFBox
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/QuarkWidgets
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/libaestd
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/estdx
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/visor
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/CFDesktop
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/micro-forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/edgecv
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/bareline
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/miniwget
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/ST-Forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_MicroWatch
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_CXXBaseComponents
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/rk-forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_MakeAMemroyPool
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_cpp_SimpleIniParser
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/BareMetal-Drivers
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/EmbedBox
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_FreeRTOS
