@@ -3,7 +3,7 @@ import { defineProject } from './site/.vitepress/config/schema'
 export default defineProject({
   name: 'Awesome-Embedded',
   title: { 'zh-CN': 'Awesome-Embedded' },
-  description: { 'zh-CN': 'Awesome-Embedded-Learning-Studio 嵌入式学习小屋导航中心' },
+  description: { 'zh-CN': 'Awesome-Embedded-Learning-Studio · C/C++ 系统软件与嵌入式工程实践学习导航' },
   base: '/Awesome-Embedded/',
   copyright: 'Copyright © 2025-2026 Awesome-Embedded-Learning-Studio',
 
@@ -65,6 +65,6 @@ export default defineProject({
   favicon: '/Awesome-Embedded/Awesome-Embedded.png',
 
   homeBanner: {
-    'zh-CN': '欢迎来到 Awesome-Embedded 学习小屋！不知道从哪里开始？请查看 <a href="/Awesome-Embedded/guide/">新手引导</a>。',
+    'zh-CN': '欢迎来到 Awesome-Embedded 学习小屋！从现代 C++ 到 Embedded Linux、MCU、Qt 桌面与 x86_64 OS 实验——不知道从哪里开始，请查看 <a href="/Awesome-Embedded/guide/">新手引导</a>。',
   },
 })

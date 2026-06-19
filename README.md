@@ -1,13 +1,13 @@
 # Hello, Awesome-Embedded!
 
-> 这里是 [Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio) 的大厅。不管你是想学嵌入式、找开源项目、还是想贡献代码，从这里出发就对了。
+> 这里是 [Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio) 的大厅。我们做 C/C++ 系统软件、嵌入式 Linux、MCU/RTOS 与跨平台 GUI 的开源学习与工程实践——不管你想学嵌入式、研究操作系统、找开源项目，还是贡献代码，从这里出发就对了。
 
 <p align="center">
   <a href="https://awesome-embedded-learning-studio.github.io/Awesome-Embedded/">
     <img src="https://img.shields.io/badge/文档站-在线阅读-blue?logo=vitepress" alt="Docs" />
   </a>
   <img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey" />
-  <img alt="repos" src="https://img.shields.io/badge/公开仓库-21-blue" />
+  <img alt="repos" src="https://img.shields.io/badge/公开仓库-24-blue" />
 </p>
 
 ---
@@ -20,17 +20,18 @@
 
 包含：
 - **新手引导** — 不知道从哪里开始？按身份快速定位
-- **项目一览** — 按四条主航道分类的完整项目矩阵
+- **项目一览** — 按五条主线分类的完整项目矩阵
 - **组织路线图** — 学习路线、建设规划和维护优先级
 - **贡献指南** — 如何参与贡献
 - **维护者** — 核心团队介绍
 
-## 四条主航道
+## 五条主线
 
 | 方向 | 核心仓库 |
 |------|----------|
-| C++ 入门学习与工程化 | Tutorial_AwesomeModernCPP · miniwget · CFBox |
+| Modern C++ | Tutorial_AwesomeModernCPP · CFBox · Project_CXXBaseComponents |
 | Embedded Linux | imx-forge · rk-forge · PenguinLab |
+| Linux / System Programming | Cinux · CFBox · PenguinLab |
 | MCU / 裸机 / FreeRTOS | ST-Forge · BareMetal-Drivers · Project_MicroWatch |
 | Qt / GUI / 产品化 | Tutorial_AwesomeQt · CFDesktop · qt-compile-pipeline |
 

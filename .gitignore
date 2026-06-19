@@ -33,6 +33,7 @@ venv/
 node_modules/
 site/.vitepress/dist/
 site/.vitepress/cache/
+site/.vitepress/.temp/
 
 # 缓存和临时文件
 .cache/
