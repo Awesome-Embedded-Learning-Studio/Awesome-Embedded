@@ -5,6 +5,7 @@ import { useRepoStats } from '../composables/useStars'
 const ORG = 'Awesome-Embedded-Learning-Studio'
 const { getAllStats } = useRepoStats()
 
+// 与 useStars.ts 的 REPO_NAMES 保持一致；只有这里的仓库才出现在排行榜里。
 const REPO_META: Record<string, { desc: string }> = {
   'Tutorial_AwesomeModernCPP': { desc: '现代 C++ 系统教程（C++11~C++23）' },
   'Tutorial_cpp_SimpleIniParser': { desc: '手搓 INI 解析器，C++ 工程化入门实战' },
@@ -14,7 +15,11 @@ const REPO_META: Record<string, { desc: string }> = {
   'edgecv': { desc: 'C++20 编译期类型安全计算机视觉库' },
   'imx-forge': { desc: 'i.MX6ULL 嵌入式 Linux 开发工坊' },
   'rk-forge': { desc: 'Rockchip 平台开发者工作空间' },
+  'rtl8733bu-linux-driver': { desc: 'RTL8733BU WiFi 驱动 Linux 7.1 移植' },
   'PenguinLab': { desc: '基于 QEMU 的 Linux 内核学习站' },
+  'Cinux': { desc: '现代 C++17 的 x86_64 操作系统实验' },
+  'Cinux-Book': { desc: '从零手搓 x86_64 操作系统中文教程' },
+  'Cinux-Base': { desc: 'Cinux 的 freestanding C++17 基础类型库' },
   'ST-Forge': { desc: 'STM32 HAL 驱动框架，CMake 原生构建' },
   'BareMetal-Drivers': { desc: '单片机裸机通用驱动库' },
   'Project_MicroWatch': { desc: '资源受限平台智能手表原型' },
@@ -23,7 +28,12 @@ const REPO_META: Record<string, { desc: string }> = {
   'Tutorial_AwesomeQt': { desc: 'Qt 6 百科全书式教程' },
   'CFDesktop': { desc: 'Qt6 嵌入式 Material Design 3 桌面框架' },
   'qt-compile-pipeline': { desc: 'Qt6 ARM 交叉编译自动化管道' },
-  'Tutorial_EmbeddedCommonTools': { desc: '嵌入式开发通用工具教程' },
+  'QuarkWidgets': { desc: '组织级统一 Qt 组件库' },
+  'Tutorial_AwesomeHardware': { desc: '嵌入式硬件学习笔记（电路/PCB/传感器）' },
+  'EmbedBox': { desc: '嵌入式开发通用工具教程' },
+  'C-Journey': { desc: 'C 初学者学习日志与社区' },
+  'aex': { desc: '轻量 C++ 扩展库' },
+  'bareline': { desc: '现代 C++23 shell 交互框架' },
   'Awesome-Embedded': { desc: '组织中心导航仓库' },
 }
 

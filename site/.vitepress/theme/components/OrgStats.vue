@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStars } from '../composables/useStars'
+import { useStars, useRepoStats } from '../composables/useStars'
 
 const { getStars } = useStars()
+const { getAllStats } = useRepoStats()
 
+// 参与总 Stars 求和的公开仓库（与 useStars.ts 的 REPO_NAMES 保持一致）。
 const repos = [
   'https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP',
   'https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_cpp_SimpleIniParser',
@@ -13,7 +15,11 @@ const repos = [
   'https://github.com/Awesome-Embedded-Learning-Studio/edgecv',
   'https://github.com/Awesome-Embedded-Learning-Studio/imx-forge',
   'https://github.com/Awesome-Embedded-Learning-Studio/rk-forge',
+  'https://github.com/Awesome-Embedded-Learning-Studio/rtl8733bu-linux-driver',
   'https://github.com/Awesome-Embedded-Learning-Studio/PenguinLab',
+  'https://github.com/Awesome-Embedded-Learning-Studio/Cinux',
+  'https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book',
+  'https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Base',
   'https://github.com/Awesome-Embedded-Learning-Studio/ST-Forge',
   'https://github.com/Awesome-Embedded-Learning-Studio/BareMetal-Drivers',
   'https://github.com/Awesome-Embedded-Learning-Studio/Project_MicroWatch',
@@ -22,7 +28,12 @@ const repos = [
   'https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeQt',
   'https://github.com/Awesome-Embedded-Learning-Studio/CFDesktop',
   'https://github.com/Awesome-Embedded-Learning-Studio/qt-compile-pipeline',
-  'https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_EmbeddedCommonTools',
+  'https://github.com/Awesome-Embedded-Learning-Studio/QuarkWidgets',
+  'https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeHardware',
+  'https://github.com/Awesome-Embedded-Learning-Studio/EmbedBox',
+  'https://github.com/Awesome-Embedded-Learning-Studio/C-Journey',
+  'https://github.com/Awesome-Embedded-Learning-Studio/aex',
+  'https://github.com/Awesome-Embedded-Learning-Studio/bareline',
   'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded',
 ]
 
@@ -35,8 +46,14 @@ const totalStars = computed(() => {
   return sum || null
 })
 
+// 公开仓库数：从 GitHub org API 实拉（未拉到时显示 '—'），不再写死过期数字。
+const publicRepoCount = computed(() => {
+  const n = getAllStats().size
+  return n > 0 ? String(n) : '—'
+})
+
 const stats = computed(() => [
-  { label: '公开仓库', value: '21' },
+  { label: '公开仓库', value: publicRepoCount.value },
   { label: '总 Stars', value: totalStars.value ?? '—' },
   { label: '主要语言', value: 'C · C++ · Shell · TS' },
   { label: '贡献者', value: '3+' },

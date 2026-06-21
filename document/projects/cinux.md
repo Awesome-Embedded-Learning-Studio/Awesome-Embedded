@@ -33,6 +33,16 @@ Cinux 是 Awesome-Embedded-Learning-Studio 旗下的 **x86_64 操作系统实验
 
 Cinux 属于 **Linux / System Programming** 主线，与 [CFBox](/projects/cfbox)（Unix 工具 + userspace）、[PenguinLab](/projects/penguin-lab)（内核 / 调试实验）互为补充：前者是“造一个操作系统”，后两者是“在操作系统之上写系统软件”。
 
+## Cinux 家族
+
+Cinux 在组织里是一个三件套，各有分工：
+
+- **[Cinux](/projects/cinux)**（本仓库）— 前沿实验版，持续冲刺更激进的特性
+- **[Cinux-Book](/projects/cinux-book)** — 稳定教学版，手把手从零写 x86_64 OS 的中文教程
+- **[Cinux-Base](/projects/cinux-base)** — 零 OS 耦合的 freestanding 基础类型库，是 Cinux 内核的地基
+
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/Cinux)
+- [Cinux-Book（教学版）](/projects/cinux-book)
+- [Cinux-Base（基础库）](/projects/cinux-base)

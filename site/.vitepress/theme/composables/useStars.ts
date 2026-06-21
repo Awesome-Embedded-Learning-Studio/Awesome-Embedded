@@ -34,25 +34,45 @@ function saveCache(map: Map<string, RepoStats>) {
   sessionStorage.setItem(CACHE_KEY, JSON.stringify(entry))
 }
 
+// 组织公开仓库清单（GitHub org API 不可用时的 shields.io fallback 用）。
+// 与 OrgStats.vue / RankingTable.vue 的白名单保持一致；排除私有仓库（lightroot/estdx/visor/miniwget）
+// 与 meta 仓库（.github / community）。
 const REPO_NAMES = [
+  // Modern C++
   'Tutorial_AwesomeModernCPP',
   'Tutorial_cpp_SimpleIniParser',
   'Project_MakeAMemroyPool',
   'CFBox',
   'Project_CXXBaseComponents',
   'edgecv',
+  // Embedded Linux
   'imx-forge',
   'rk-forge',
+  'rtl8733bu-linux-driver',
   'PenguinLab',
+  // Linux / System Programming（Cinux 家族）
+  'Cinux',
+  'Cinux-Book',
+  'Cinux-Base',
+  // MCU / 裸机 / FreeRTOS
   'ST-Forge',
   'BareMetal-Drivers',
   'Project_MicroWatch',
   'micro-forge',
   'Tutorial_FreeRTOS',
+  // Qt / GUI
   'Tutorial_AwesomeQt',
   'CFDesktop',
   'qt-compile-pipeline',
-  'Tutorial_EmbeddedCommonTools',
+  'QuarkWidgets',
+  // 工具与教程
+  'Tutorial_AwesomeHardware',
+  'EmbedBox',
+  'C-Journey',
+  // 库
+  'aex',
+  'bareline',
+  // 中心
   'Awesome-Embedded',
 ]
 

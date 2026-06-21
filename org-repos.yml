@@ -33,10 +33,13 @@ repos:
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_MicroWatch
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_CXXBaseComponents
   - url: https://github.com/Awesome-Embedded-Learning-Studio/rk-forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/rtl8733bu-linux-driver
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_MakeAMemroyPool
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_cpp_SimpleIniParser
   - url: https://github.com/Awesome-Embedded-Learning-Studio/BareMetal-Drivers
   - url: https://github.com/Awesome-Embedded-Learning-Studio/EmbedBox
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_FreeRTOS
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Cinux
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Base
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book
   - url: https://github.com/Awesome-Embedded-Learning-Studio/lightroot
