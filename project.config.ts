@@ -24,17 +24,16 @@ export default defineProject({
       { text: '项目', link: '/projects/' },
       { text: '排行榜', link: '/ranking/' },
       { text: '周报', link: '/weekly/' },
+      { text: '文章', link: '/blog/' },
       { text: '路线图', link: '/roadmap/' },
       { text: '规划', link: '/planning/' },
       { text: '贡献', link: '/contributing/' },
       { text: '流程', link: '/workflow/' },
       { text: '维护者', link: '/maintainers/' },
-      { text: '关于', link: '/about/' },
       { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
     ],
     'en': [
       { text: 'Home', link: '/en/' },
-      { text: 'About', link: '/en/about/' },
       { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
       { text: 'Blog', link: 'https://aels.hashnode.dev' },
     ],
@@ -51,6 +50,7 @@ export default defineProject({
       { name: 'maintainers', srcDir: 'maintainers', urlPrefix: '/maintainers' },
       { name: 'ranking', srcDir: 'ranking', urlPrefix: '/ranking' },
       { name: 'weekly', srcDir: 'weekly', urlPrefix: '/weekly' },
+      { name: 'blog', srcDir: 'blog', urlPrefix: '/blog' },
     ],
   },
 
@@ -77,6 +77,6 @@ export default defineProject({
 
   homeBanner: {
     'zh-CN': '欢迎来到 Awesome-Embedded 学习小屋！从现代 C++ 到 Embedded Linux、MCU、Qt 桌面与 x86_64 OS 实验——不知道从哪里开始，请查看 <a href="/Awesome-Embedded/guide/">新手引导</a>。',
-    'en': 'Welcome to AELS — project-based engineering notes on embedded systems, modern C and C++, Linux and OS work. New here? Start with the <a href="/Awesome-Embedded/en/about/">About</a> page.',
+    'en': 'Welcome to AELS — project-based engineering notes on embedded systems, modern C and C++, Linux and OS work. New here? Scroll to the <a href="/Awesome-Embedded/en/#about">About</a> section below.',
   },
 })

@@ -63,7 +63,7 @@ function transformHead(ctx: any) {
   const title = fm.title || (ctx.pageData && ctx.pageData.title) || ctx.title || defaultTitle
   const description = fm.description || (ctx.pageData && ctx.pageData.description) || ctx.description || defaultDesc
   const path = rel.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-  const url = `${SITE_ORIGIN}${projectConfig.base}${path}`.replace(/\/$/, '')
+  const url = `${SITE_ORIGIN}${projectConfig.base}${path}`
   return [
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: isEn ? (projectConfig.title['en'] || defaultTitle) : defaultTitle }],

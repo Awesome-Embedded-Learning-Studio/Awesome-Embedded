@@ -2,6 +2,8 @@ import DefaultTheme from 'vitepress/theme'
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import HomeTipBanner from './components/HomeTipBanner.vue'
+import HomeAbout from './components/HomeAbout.vue'
+import HomeBanner from './components/HomeBanner.vue'
 import ProjectCard from './components/ProjectCard.vue'
 import ProjectGrid from './components/ProjectGrid.vue'
 import OrgStats from './components/OrgStats.vue'
@@ -13,7 +15,9 @@ export default {
   extends: DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
+      'home-hero-before': () => h(HomeBanner),
       'home-features-before': () => h(HomeTipBanner, { config: projectConfig }),
+      'home-features-after': () => h(HomeAbout),
     })
   },
   enhanceApp({ app }) {

@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="site/.vitepress/public/images/logo/AELS-Header-Logo-Light.png#gh-light-mode-only" alt="Awesome Embedded Learning Studio" width="760" />
+  <img src="site/.vitepress/public/images/logo/AELS-Header-Logo-Dark.png#gh-dark-mode-only" alt="Awesome Embedded Learning Studio" width="760" />
+</p>
+
 # Hello, Awesome-Embedded!
 
 > 这里是 [Awesome-Embedded-Learning-Studio](https://github.com/Awesome-Embedded-Learning-Studio) 的大厅。我们做 C/C++ 系统软件、嵌入式 Linux、MCU/RTOS 与跨平台 GUI 的开源学习与工程实践——不管你想学嵌入式、研究操作系统、找开源项目，还是贡献代码，从这里出发就对了。

@@ -421,3 +421,21 @@
     height: 44px;
   }
 }
+
+/* ================================================================
+   Home Brand Banner — AELS header logo, dark/light auto-switch
+   改大小调 .home-banner 的 max-width 即可
+   ================================================================ */
+.home-banner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 24px 4px;
+  text-align: center;
+}
+.home-banner__img {
+  width: 100%;
+  height: auto;
+}
+.home-banner__img.dark { display: none; }
+.dark .home-banner__img.light { display: none; }
+.dark .home-banner__img.dark { display: inline-block; }
