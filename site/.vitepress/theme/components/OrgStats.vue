@@ -20,6 +20,7 @@ const repos = [
   'https://github.com/Awesome-Embedded-Learning-Studio/Cinux',
   'https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book',
   'https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Base',
+  'https://github.com/Awesome-Embedded-Learning-Studio/Cinux-GUI',
   'https://github.com/Awesome-Embedded-Learning-Studio/ST-Forge',
   'https://github.com/Awesome-Embedded-Learning-Studio/BareMetal-Drivers',
   'https://github.com/Awesome-Embedded-Learning-Studio/Project_MicroWatch',

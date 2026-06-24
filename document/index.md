@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "Awesome-Embedded"
+  name: "Awesome Embedded Learning Studio"
   text: "嵌入式学习小屋"
-  tagline: 从现代 C++ 工程化到 Embedded Linux，从 MCU 裸机到 Qt 桌面，再到 x86_64 OS 实验与系统软件实践 —— 一站式系统软件学习导航
+  tagline: "AELS（Awesome-Embedded-Learning-Studio）的官网！从现代 C 与 C++ 工程化到 Embedded Linux、MCU 裸机、Qt 桌面，再到 x86_64 OS 架构与实验，一站式系统软件学习导航。"
   image:
     src: /Awesome-Embedded.png
     alt: Awesome-Embedded Logo

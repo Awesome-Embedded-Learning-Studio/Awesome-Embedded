@@ -20,6 +20,7 @@ const REPO_META: Record<string, { desc: string }> = {
   'Cinux': { desc: '现代 C++17 的 x86_64 操作系统实验' },
   'Cinux-Book': { desc: '从零手搓 x86_64 操作系统中文教程' },
   'Cinux-Base': { desc: 'Cinux 的 freestanding C++17 基础类型库' },
+  'Cinux-GUI': { desc: 'Cinux 家族的 host-neutral GUI 核心' },
   'ST-Forge': { desc: 'STM32 HAL 驱动框架，CMake 原生构建' },
   'BareMetal-Drivers': { desc: '单片机裸机通用驱动库' },
   'Project_MicroWatch': { desc: '资源受限平台智能手表原型' },

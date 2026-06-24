@@ -35,14 +35,16 @@ Cinux 属于 **Linux / System Programming** 主线，与 [CFBox](/projects/cfbox
 
 ## Cinux 家族
 
-Cinux 在组织里是一个三件套，各有分工：
+Cinux 在组织里是一个四件套，各有分工：
 
 - **[Cinux](/projects/cinux)**（本仓库）— 前沿实验版，持续冲刺更激进的特性
 - **[Cinux-Book](/projects/cinux-book)** — 稳定教学版，手把手从零写 x86_64 OS 的中文教程
 - **[Cinux-Base](/projects/cinux-base)** — 零 OS 耦合的 freestanding 基础类型库，是 Cinux 内核的地基
+- **[Cinux-GUI](/projects/cinux-gui)** — host-neutral GUI 核心，宿主差异收敛到一张函数指针表，今天驱动 Cinux 内核
 
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/Cinux)
 - [Cinux-Book（教学版）](/projects/cinux-book)
 - [Cinux-Base（基础库）](/projects/cinux-base)
+- [Cinux-GUI（GUI 核心）](/projects/cinux-gui)

@@ -38,7 +38,7 @@ function buildLocales(): Record<string, any> {
       baseConfig.themeConfig = {
         nav: projectConfig.nav[locale.code] || [],
         editLink: {
-          pattern: `${editPatternBase}${locale.dir ? `/${locale.dir}` : ''}/:path`,
+          pattern: `${editPatternBase}/:path`,
           text: `Edit this page on GitHub`,
         },
       }
@@ -48,6 +48,35 @@ function buildLocales(): Record<string, any> {
   }
 
   return locales
+}
+
+// ── SEO / Open Graph ───────────────────────────────────────
+// Locale-aware: zh_CN for Chinese (root) pages now; auto en_US once an /en/ locale is added later.
+// No twitter:* tags by request — Open Graph covers WeChat / Feishu / DingTalk / Juejin / Zhihu / Slack / Discord previews.
+const SITE_ORIGIN = 'https://awesome-embedded-learning-studio.github.io'
+const OG_IMAGE = `${SITE_ORIGIN}${projectConfig.base}images/og/aels-og.png`
+
+function transformHead(ctx: any) {
+  const fm = (ctx.pageData && ctx.pageData.frontmatter) || {}
+  const rel = ctx.page || ''                       // srcDir-relative md path: 'index.md' | 'about.md' | 'en/about.md'
+  const isEn = rel.startsWith('en/')
+  const title = fm.title || (ctx.pageData && ctx.pageData.title) || ctx.title || defaultTitle
+  const description = fm.description || (ctx.pageData && ctx.pageData.description) || ctx.description || defaultDesc
+  const path = rel.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+  const url = `${SITE_ORIGIN}${projectConfig.base}${path}`.replace(/\/$/, '')
+  return [
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: isEn ? (projectConfig.title['en'] || defaultTitle) : defaultTitle }],
+    ['meta', { property: 'og:title', content: title }],
+    ['meta', { property: 'og:description', content: description }],
+    ['meta', { property: 'og:url', content: url }],
+    ['meta', { property: 'og:image', content: OG_IMAGE }],
+    ['meta', { property: 'og:image:width', content: '1731' }],
+    ['meta', { property: 'og:image:height', content: '909' }],
+    ['meta', { property: 'og:image:alt', content: 'Awesome Embedded Learning Studio' }],
+    ['meta', { property: 'og:locale', content: isEn ? 'en_US' : primaryLocale.code.replace('-', '_') }],
+    ['meta', { property: 'og:locale:alternate', content: isEn ? 'zh_CN' : 'en_US' }],
+  ]
 }
 
 export default defineConfig({
@@ -73,6 +102,15 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', href: projectConfig.favicon || `${projectConfig.base}favicon.ico` }],
   ],
+
+  transformHead,
+
+  sitemap: {
+    // VitePress resolves each <loc> via new URL(pagePath, hostname), so hostname MUST end with a
+    // trailing slash (keep projectConfig.base's trailing '/') — otherwise the base segment is
+    // treated as a filename and eaten by sub-page paths. Verified via dist/sitemap.xml.
+    hostname: `${SITE_ORIGIN}${projectConfig.base}`,
+  },
 
   markdown: {
     lineNumbers: true,

@@ -2,8 +2,11 @@ import { defineProject } from './site/.vitepress/config/schema'
 
 export default defineProject({
   name: 'Awesome-Embedded',
-  title: { 'zh-CN': 'Awesome-Embedded' },
-  description: { 'zh-CN': 'Awesome-Embedded-Learning-Studio · C/C++ 系统软件与嵌入式工程实践学习导航' },
+  title: { 'zh-CN': 'Awesome-Embedded', 'en': 'Awesome Embedded Learning Studio' },
+  description: {
+    'zh-CN': 'Awesome-Embedded-Learning-Studio · C/C++ 系统软件与嵌入式工程实践学习导航',
+    'en': 'Project-based engineering notes for embedded systems, modern C++, Linux, and operating systems.',
+  },
   base: '/Awesome-Embedded/',
   copyright: 'Copyright © 2025-2026 Awesome-Embedded-Learning-Studio',
 
@@ -12,6 +15,7 @@ export default defineProject({
 
   locales: [
     { code: 'zh-CN', label: '中文', default: true },
+    { code: 'en', label: 'English', prefix: '/en/', dir: 'en' },
   ],
 
   nav: {
@@ -25,7 +29,14 @@ export default defineProject({
       { text: '贡献', link: '/contributing/' },
       { text: '流程', link: '/workflow/' },
       { text: '维护者', link: '/maintainers/' },
+      { text: '关于', link: '/about/' },
       { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
+    ],
+    'en': [
+      { text: 'Home', link: '/en/' },
+      { text: 'About', link: '/en/about/' },
+      { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
+      { text: 'Blog', link: 'https://aels.hashnode.dev' },
     ],
   },
 
@@ -66,5 +77,6 @@ export default defineProject({
 
   homeBanner: {
     'zh-CN': '欢迎来到 Awesome-Embedded 学习小屋！从现代 C++ 到 Embedded Linux、MCU、Qt 桌面与 x86_64 OS 实验——不知道从哪里开始，请查看 <a href="/Awesome-Embedded/guide/">新手引导</a>。',
+    'en': 'Welcome to AELS — project-based engineering notes on embedded systems, modern C and C++, Linux and OS work. New here? Start with the <a href="/Awesome-Embedded/en/about/">About</a> page.',
   },
 })

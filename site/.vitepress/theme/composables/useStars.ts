@@ -54,6 +54,7 @@ const REPO_NAMES = [
   'Cinux',
   'Cinux-Book',
   'Cinux-Base',
+  'Cinux-GUI',
   // MCU / 裸机 / FreeRTOS
   'ST-Forge',
   'BareMetal-Drivers',
