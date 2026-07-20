@@ -10,5 +10,6 @@ title: "周报"
 
 <!-- 周报列表：由 /weekly 流水线在顶部自动追加最新一期 -->
 
+- [周报 · 2026-W30（2026-07-20）](/weekly/2026-07-20) — Cinux v1.0.0 正式发版、CFDesktop 控制中心+通知上线、micro-forge v0.2.0 GUI 大爆发、rk-forge 接入 OpenWrt
 - [周报 · 2026-W27（2026-07-02）](/weekly/2026-07-02) — Cinux 系全速冲 GCC 自举、CF 系性能+桌面双线、forge 家族添 H618、C-Journey 大重写
 - [周报 · 2026-W25（2026-06-16）](/weekly/2026-06-16) — bareline 框架成型、多仓迁 VitePress、教程体系整理
