@@ -16,6 +16,15 @@ function extractTitle(filePath: string): string | null {
   return null
 }
 
+function isSidebarHidden(filePath: string): boolean {
+  try {
+    const content = readFileSync(filePath, 'utf-8')
+    return /^sidebar:\s*false\s*$/m.test(content)
+  } catch {
+    return false
+  }
+}
+
 function humanize(name: string): string {
   return name
     .replace(/^\d+[-]?/, '')
@@ -89,7 +98,7 @@ function scanDir(dir: string, urlPrefix: string, depth = 0): SidebarItem[] {
       } else if (existsSync(indexPath)) {
         items.push({ text: title, link: `${urlPrefix}/${name}/` })
       }
-    } else if (name !== 'index.md' && name !== 'tags.md') {
+    } else if (name !== 'index.md' && name !== 'tags.md' && !isSidebarHidden(fullPath)) {
       const title = extractTitle(fullPath) || humanize(name.replace(/\.md$/, ''))
       items.push({ text: title, link: `${urlPrefix}/${name.replace(/\.md$/, '')}` })
     }

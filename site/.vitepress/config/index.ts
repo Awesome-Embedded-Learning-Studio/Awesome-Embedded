@@ -126,6 +126,10 @@ export default defineConfig({
 
   vite: {
     publicDir: resolve(__dirname, '../public'),
+    ssr: {
+      // Mermaid 与 Panzoom 只在浏览器端动态加载，SSR 阶段不求值 DOM 相关代码。
+      external: ['mermaid', '@panzoom/panzoom'],
+    },
     build: {
       chunkSizeWarningLimit: 5000,
     },

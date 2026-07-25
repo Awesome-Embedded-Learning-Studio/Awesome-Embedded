@@ -439,3 +439,163 @@
 .home-banner__img.dark { display: none; }
 .dark .home-banner__img.light { display: none; }
 .dark .home-banner__img.dark { display: inline-block; }
+
+/* ================================================================
+   Mermaid diagrams
+   ================================================================ */
+.mermaid-diagram {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-diagram .nodeLabel,
+.mermaid-diagram .edgeLabel {
+  padding: 0.15em 0.35em;
+  line-height: 1.45;
+}
+
+.mermaid-diagram foreignObject {
+  overflow: visible;
+}
+
+.mermaid-error {
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-danger-2);
+  border-radius: 8px;
+  font-size: 0.85em;
+  text-align: left;
+}
+
+.mermaid-diagram--zoomable {
+  position: relative;
+}
+
+.mermaid-maximize-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  background: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.mermaid-diagram--zoomable:hover .mermaid-maximize-btn,
+.mermaid-diagram--zoomable:focus-within .mermaid-maximize-btn {
+  opacity: 1;
+}
+
+.mermaid-maximize-btn:hover,
+.mermaid-maximize-btn:focus-visible {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  outline: none;
+  opacity: 1;
+}
+
+.mermaid-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 12, 8, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.mermaid-lightbox__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--vp-c-border);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+}
+
+.mermaid-lightbox__btn {
+  padding: 7px 10px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  background: var(--vp-c-bg-elv);
+  color: var(--vp-c-text-1);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.mermaid-lightbox__btn:hover,
+.mermaid-lightbox__btn:focus-visible {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  outline: none;
+}
+
+.mermaid-lightbox__close {
+  margin-left: auto;
+}
+
+.mermaid-lightbox__hint {
+  margin-left: 8px;
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+}
+
+.mermaid-lightbox__stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.mermaid-lightbox__target {
+  display: inline-block;
+  touch-action: none;
+  user-select: none;
+}
+
+.mermaid-lightbox__target svg {
+  display: block;
+  border-radius: 4px;
+  background: var(--vp-c-bg-elv);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 639px) {
+  .mermaid-lightbox__hint {
+    display: none;
+  }
+
+  .mermaid-lightbox__stage {
+    padding: 16px;
+  }
+}

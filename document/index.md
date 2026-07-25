@@ -3,30 +3,42 @@ layout: home
 
 hero:
   name: "Awesome Embedded Learning Studio"
-  text: "嵌入式学习小屋"
-  tagline: "这里是AELS！一站式系统软件学习导航的小网站！"
+  text: "横跨 MCU 与嵌入式 Linux 的开源学习工作室"
+  tagline: "持续尝试 Modern C++ 工程方法，以项目为工坊，以测试、日志和真实硬件检验学习成果。"
   actions:
     - theme: brand
-      text: 新手引导
+      text: 从这里开始
       link: /guide/
     - theme: alt
-      text: 项目一览
-      link: /projects/
+      text: 认识 AELS
+      link: /blog/aels-open-learning-studio
     - theme: alt
-      text: GitHub
-      link: https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded
+      text: 查看学习地图
+      link: /roadmap/
 
 features:
   - icon: "💻"
-    title: C / C++ / Qt
-    details: 从现代 C++ 系统教程到 Qt 6 深度教程，再到 INI 解析器、内存池这些工程化小项目 —— 让嵌入式开发者也能写出工程级 C++/Qt 代码。
-    link: https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP
+    title: Modern C++ 工程方法
+    details: 从语言基础进入资源管理、零成本抽象与系统工程，观察 Modern C++ 如何跨越 MCU、Linux userspace 和操作系统。
+    link: /roadmap/01-fundamentals/
   - icon: "🔌"
-    title: 嵌入式开发
-    details: i.MX6ULL / Rockchip BSP、QEMU 内核学习站、STM32 裸机驱动、FreeRTOS 教程、MCU 全系统模拟器 —— 从板级 bring-up 到资源受限平台。
-    link: https://github.com/Awesome-Embedded-Learning-Studio/imx-forge
+    title: MCU 与真实硬件
+    details: 从 STM32F1 与 ESP32-S3 进入裸机、RTOS 和现代 SDK，区分 Host、模拟器与真实硬件分别能够证明什么。
+    link: /roadmap/02-mcu/
+  - icon: "🐧"
+    title: 嵌入式 Linux
+    details: 从 i.MX6ULL 入门，到 H618 主线实践和 Rockchip 双架构规划，理解启动链、设备树、驱动与 rootfs。
+    link: /roadmap/03-linux/
   - icon: "🧠"
-    title: 操作系统 / 计算机架构
-    details: 用现代 C++ 造 x86_64 操作系统（Cinux 家族 + 手把手教程），C++23 实现的 BusyBox 替代品 —— 从 Bootloader 到 GUI、从内核到用户态。
-    link: https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book
+    title: 操作系统实验室
+    details: Cinux 家族用现代 C++ 探索 x86_64 操作系统，从 Bootloader、内核和用户态一路走到 GUI。
+    link: /roadmap/04-specialty/
+  - icon: "🖥️"
+    title: Qt 与产品形态
+    details: 从 AwesomeQt 和 QuarkWidgets 走向 CFDesktop，探索嵌入式桌面、独立应用和真实产品闭环。
+    link: /projects/cfdesktop
+  - icon: "🔧"
+    title: 开源项目与基建
+    details: 浏览教程、forge、模拟器、系统软件和公共库，了解哪些已经验证、哪些正在建设、哪些仍处于规划。
+    link: /projects/
 ---

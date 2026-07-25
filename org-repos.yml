@@ -28,7 +28,7 @@ repos:
   - url: https://github.com/Awesome-Embedded-Learning-Studio/bareline
   - url: https://github.com/Awesome-Embedded-Learning-Studio/ST-Forge
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_MicroWatch
-  - url: https://github.com/Awesome-Embedded-Learning-Studio/Project_CXXBaseComponents
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/engineering_cpp
   - url: https://github.com/Awesome-Embedded-Learning-Studio/rk-forge
   - url: https://github.com/Awesome-Embedded-Learning-Studio/rtl8733bu-linux-driver
   - url: https://github.com/Awesome-Embedded-Learning-Studio/anatomy_memory
@@ -41,5 +41,7 @@ repos:
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book
   - url: https://github.com/Awesome-Embedded-Learning-Studio/Cinux-GUI
   - url: https://github.com/Awesome-Embedded-Learning-Studio/lightroot
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/buildmeter
   - url: https://github.com/Awesome-Embedded-Learning-Studio/h618_forge
+  - url: https://github.com/Awesome-Embedded-Learning-Studio/CFDeskit
   - url: https://github.com/Awesome-Embedded-Learning-Studio/CF-Gallery

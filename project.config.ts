@@ -26,7 +26,6 @@ export default defineProject({
       { text: '周报', link: '/weekly/' },
       { text: '文章', link: '/blog/' },
       { text: '路线图', link: '/roadmap/' },
-      { text: '规划', link: '/planning/' },
       { text: '贡献', link: '/contributing/' },
       { text: '流程', link: '/workflow/' },
       { text: '维护者', link: '/maintainers/' },
@@ -43,7 +42,6 @@ export default defineProject({
     volumes: [
       { name: 'guide', srcDir: 'guide', urlPrefix: '/guide' },
       { name: 'roadmap', srcDir: 'roadmap', urlPrefix: '/roadmap' },
-      { name: 'planning', srcDir: 'planning', urlPrefix: '/planning' },
       { name: 'projects', srcDir: 'projects', urlPrefix: '/projects' },
       { name: 'contributing', srcDir: 'contributing', urlPrefix: '/contributing' },
       { name: 'workflow', srcDir: 'workflow', urlPrefix: '/workflow' },

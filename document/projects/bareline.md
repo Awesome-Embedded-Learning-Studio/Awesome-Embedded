@@ -38,7 +38,7 @@ int main() {
 }
 ```
 
-仓库附 STM32 真机示例（`example/stm32/`）与 host PC 示例（`example/main.cpp`）。
+仓库附 STM32F103 真机示例（`example/stm32/`）与 host PC 示例（`example/main.cpp`）。
 
 ## 与 AELS 的关系
 

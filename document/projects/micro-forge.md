@@ -6,7 +6,7 @@ title: "micro-forge"
 
 ARM Cortex-M3 (STM32F103) 全系统模拟器——用 C++23 实现了完整的 CPU 执行引擎、内存总线和外设寄存器模拟。无需任何硬件，就能运行和调试真实的 STM32 固件。
 
-支持完整的 Thumb-16/Thumb-32 指令集、ARMv7-M 异常处理，以及 NVIC、SCB、SysTick、RCC、GPIO、USART、TIM、AFIO、FLASH 等外设模拟。217 个测试用例保障正确性。
+支持完整的 Thumb-16/Thumb-32 指令集、ARMv7-M 异常处理，以及 NVIC、SCB、SysTick、RCC、GPIO、USART、TIM、AFIO、FLASH 等外设模拟。当前 19 个测试文件、353 个 GoogleTest 用例保障正确性。
 
 ## 核心特性
 
@@ -16,7 +16,8 @@ ARM Cortex-M3 (STM32F103) 全系统模拟器——用 C++23 实现了完整的 C
 - ELF / 原始二进制固件加载
 - MMIO 追踪、内存转储、故障记录
 - STM32F1 HAL 固件兼容
-- 217 个测试用例
+- 可选 Qt 6 调试 GUI 与 hook 事件总线
+- 19 个测试文件、353 个 GoogleTest 用例
 
 ## 前置知识
 

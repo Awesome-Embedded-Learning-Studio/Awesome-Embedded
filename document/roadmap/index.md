@@ -1,101 +1,61 @@
-# 组织路线图
+---
+title: 学习地图
+---
 
-> 最后更新：2026-06-20
+# 嵌入式学习地图
 
-## 当前阶段
+不知道从哪开始？先建立共同基础，再从单片机、嵌入式 Linux 或 Cinux 中选择一条主线。P1 与 P2 平行，不需要相互作为前置。
 
-Awesome-Embedded-Learning-Studio 目前处于**成长期**：已建立五条主线的项目骨架，核心教程（C++、Qt、Embedded Linux）与系统软件实验（Cinux、CFBox）持续迭代中，部分实验项目正在孵化。
+> 状态基线：2026-07-25。中心站记录仓库定位、公开状态和已经核实的平台事实；实现进度与版本细节以各仓库当前 README 和验证记录为准。
+> 需要注意的是，AELS还很年轻，需要一些时间沉淀，如果您有想法，欢迎联系我们一起添砖加瓦！
 
-## 学习路线（Learning Roadmap）
+```mermaid
+%%{init: {
+  "flowchart": {
+    "curve": "linear",
+    "nodeSpacing": 34,
+    "rankSpacing": 42
+  }
+}}%%
 
-面向学习者的推荐学习路径：
+flowchart TB
+    START["进入 AELS"] --> P0["P0 · 共同基础<br/>工具与 C 基础<br/>现代 C++ 工程方法贯穿"]
 
-### 快速路径
+    P0 --> P1["P1 · 单片机<br/>C / C++ 与真实硬件"]
+    P0 --> P2["P2 · 嵌入式 Linux<br/>C / C++ 与系统工程"]
+    P0 --> CINUX["Cinux 独立活跃线<br/>现代 C++ 操作系统实验室"]
 
-| 路径 | 方向 | 推荐顺序 |
-|------|------|----------|
-| A | 嵌入式 Linux | EmbedBox → imx-forge → PenguinLab → 驱动开发 |
-| B | MCU 裸机 | EmbedBox → ST-Forge → BareMetal-Drivers → Project_MicroWatch |
-| C | C++ 工程化 | Tutorial_cpp_SimpleIniParser → Tutorial_AwesomeModernCPP → miniwget → CFBox |
-| D | Qt / GUI | Tutorial_AwesomeQt → CFDesktop → qt-compile-pipeline |
-| E | Linux / 系统编程 | CFBox → PenguinLab → Cinux（造一个操作系统） |
+    P1 --> ST["STM32F1<br/>st-forge"]
+    P1 --> ESP["ESP32-S3<br/>esp-forge（在建）"]
 
-### 详细学习路线
+    P2 --> IMX["i.MX6ULL<br/>imx-forge 入门"]
+    IMX --> RK["Rockchip 平台<br/>RK3506B / RK3568 / RK3588"]
+```
 
-- [STM32 + ESP32 全栈学习路线](/roadmap/stm32-esp32-roadmap) — 1 年计划，从基础到 Capstone 项目
-- [RK3588 学习计划](/roadmap/rk3588-roadmap) — 12 个月计划，从工具链到 AI 推理部署
+> 这张图只表达当前学习主线，不承载横向参考、仓库成熟度、公共库依赖和产品去向。那些信息放在各路线专页与[项目目录](/projects/)中维护。
 
-## 项目建设路线（Project Roadmap）
+## 四个部分各自回答什么
 
-面向贡献者和维护者的近期规划：
+| 路线 | 核心问题 | 当前载体 |
+|---|---|---|
+| [P0 · 共同基础](/roadmap/01-fundamentals/) | 怎样建立可迁移的工具、C/C++ 与工程能力？ | EmbedBox、C-Journey、ModernCPP；再按需要进入 FreeRTOS、PenguinLab、AwesomeHardware、AwesomeQt |
+| [P1 · 单片机](/roadmap/02-mcu/) | 怎样在资源受限系统里控制真实硬件？ | STM32F1 的 st-forge；ESP32-S3 的私有 esp-forge |
+| [P2 · 嵌入式 Linux](/roadmap/03-linux/) | 怎样完成从启动链到应用的板级系统工程？ | i.MX6ULL 入门，Rockchip 横跨 32/64 位，H618 作主线化横向参考 |
+| [Cinux 独立线](/roadmap/04-specialty/) | 怎样用现代 C++ 从零理解操作系统？ | Cinux、Cinux-Book、Cinux-Base、Cinux-GUI |
 
-### 2026 Q2（当前）
+现代 C++ 不是图外的选修装饰。它是 AELS 区分于常规嵌入式教程的工程方法主线，贯穿 MCU、嵌入式 Linux、Cinux 和产品项目；但“贯穿”不等于要求学习者先完成整套 ModernCPP 才能进入平台实践。
 
-- [x] 完成组织初始化（中心仓库、Profile、repo template）
-- [x] 初步建立协作框架（audit 脚本、community Discussions、roadmap）
-- [x] 核心教程持续迭代（ModernCPP、Qt、imx-forge）
-- [ ] 中心仓库文档站上线（VitePress）
-- [ ] 完成 manifest/repos.yaml 初版
-- [ ] 为 P0 仓库补充 CONTRIBUTING.md
-- [ ] 激活 Tutorial_FreeRTOS 和 EmbedBox
+## 平台顺序与边界
 
-### 2026 Q3（计划）
+- **P1 是双入口，不是先后关系。** st-forge 以 STM32F1 / Cortex-M3 打透裸机与基础架构；esp-forge 围绕现有 ESP32-S3 开发板进入 ESP-IDF、双核 RTOS、无线与 USB。
+- **P2 有主脊柱。** imx-forge 用 i.MX6ULL 打通入门全链路；随后进入 rk-forge，分别处理 RK3506B 的 32 位环境和 RK3568 / RK3588 的 64 位环境；h618_forge 只承担横向参考。
+- **Cinux 是独立活跃线。** 它从 P0 的 C/C++ 与系统基础直接进入，不要求先走 P1 或 P2。
+- **专题不是当前下一站。** GUI、网络、独立驱动课程、多媒体和边缘 AI 只保留规划，现阶段不与 forge 和 Cinux 主线争夺建设资源。
 
-- [ ] miniwget 公开发布 + B 站配套视频
-- [ ] bareline 公开发布
-- [ ] PenguinLab 增加更多实验
-- [ ] edgecv 完成 Header-Only 核心功能
-- [ ] micro-forge 完善 MCU 模拟器基础功能
-- [ ] 建立月度维护节奏
+## 三条原则
 
-## 维护优先级（Maintenance Roadmap）
+**Windows 是受支持的入口，不是对所有工具的统一承诺。** 通用工具与主机课程尽量提供 Windows、WSL2 和 Linux 路径；嵌入式 Linux 构建仍可能以 Linux、WSL2 或容器为主，具体支持以各仓当前文档和验证记录为准。
 
-| 优先级 | 仓库 | 待办 |
-|--------|------|------|
-| P0 | Tutorial_AwesomeModernCPP | 持续更新教程内容 |
-| P0 | imx-forge | 补充 CONTRIBUTING.md |
-| P0 | Tutorial_AwesomeQt | 持续更新教程内容 |
-| P1 | CFDesktop | 完善 Quick Start |
-| P1 | ST-Forge | 增加更多外设驱动示例 |
-| P1 | BareMetal-Drivers | 增加驱动类型 |
-| P1 | PenguinLab | 增加实验内容 |
-| P2 | miniwget | 完善后公开发布 |
-| P2 | bareline | 完善后公开发布 |
-| P2 | edgecv | 完成核心功能 |
-| P2 | micro-forge | 完善模拟器基础 |
+**概念先学，实战再去。** FreeRTOS 调度理论在 P0 用上位机学，真上板在 P1；Linux 内核机制用 QEMU 在 P0 学，板子 bring-up 在 P2。同一套东西，理论和实战分开，不重复教。
 
-## 暂缓事项
-
-以下事项明确当前不推进：
-
-- CI 集成（组织规模尚小，本地脚本足够）
-- 国际化（受众以中文为主）
-- GOVERNANCE.md（两人组织不需要）
-- 统一 CODEOWNERS
-
-## 已完成事项
-
-- [x] 组织初始化（2025-12）
-- [x] 中心仓库 + Profile 建立（2025-12）
-- [x] repo template 创建（2025-12）
-- [x] 协作框架完善（audit 脚本、Discussions）（2026-04）
-- [x] 中心仓库 README 美化（2026-04）
-- [x] imx-forge 文档站上线（2026-05）
-
-## 未来候选方向
-
-- RISC-V 相关教程和 BSP
-- 更多 STM32 系列支持（F4/F7/H7）
-- RT-Thread 教程
-- 嵌入式安全（TrustZone、安全启动）
-- OTA 升级框架
-- 更多配套视频教程
-
-## 项目规划文档
-
-从 `ProjectLists.todo` 迁移而来的详细规划：
-
-- [单片机项目规划](/planning/microchips) — 按难度分组的 MCU 实战项目清单
-- [i.MX6ULL 项目规划](/planning/simple-embedded) — 基于 i.MX6ULL 的入门级 Linux 项目
-- [复杂嵌入式 Linux 项目规划](/planning/embedded-linux) — 基于 RK3506B 的进阶 Linux 项目
-- [库工程规划](/planning/libraries) — 驱动库、中间件、GUI 框架的详细规划
+**单片机默认先过可模拟部分。** STM32F1 用自研 micro-forge，ESP32-S3 用乐鑫 QEMU 加 Wokwi；随后回到真板验证时序、电气、功耗、无线和 USB。模拟是降低门槛与接入 CI 的手段，不替代实机结论。

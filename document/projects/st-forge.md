@@ -4,19 +4,19 @@ title: "ST-Forge"
 
 ## 简介
 
-STM32 HAL 驱动框架，使用 CMake 原生构建，不依赖任何 IDE。目标是为 STM32 开发者提供一个清晰、现代的项目骨架和驱动参考实现。
+面向 STM32F1 / Cortex-M3 的教学工坊，基准平台为 STM32F103C8T6 Blue Pill，使用 C、CMake、ARM GCC、OpenOCD 和 GDB。目标是从启动、寄存器和外设实验出发，逐步理解 HAL、调试、升级与单核 FreeRTOS。
 
-项目处于早期开发阶段，README 尚未完善。
+仓库已经公开，课程路线已经定稿；具体内容由 ST-Forge 按自己的节奏建设。
 
-## 核心特性
+## 路线重点
 
 - CMake 原生构建系统
 - 不依赖 IDE
-- STM32 HAL 驱动封装
+- STM32F1 启动、寄存器与 HAL 对照实验
+- Host、micro-forge 与 STM32F103 真板分层验证
 
 ## 前置知识
 
-- STM32 开发基础
 - C 语言
 - CMake 基本用法
 

@@ -4,18 +4,18 @@ title: "CFDesktop"
 
 ## 简介
 
-基于 Qt 6 的嵌入式 Material Design 3 桌面框架。解决嵌入式设备上"现代化 UI"与"资源受限"之间的矛盾——通过性能自适应架构，同一套代码从低端 ARM 平台到 RK3588 都能流畅运行。
+基于 Qt 6 的嵌入式 Material Design 3 桌面框架，目标是在同一套架构上覆盖桌面开发环境和 ARM 嵌入式设备。当前开发重点是打通“桌面 → 点击图标 → 启动应用”的最小闭环，不把目标平台等同于已经完成的适配。
 
-采用模块化设计，19 个已完成 UI 控件，提供完整的 SDK 和模拟器。
+当前 `base` 与硬件分级（HWTier）已经就绪，UI / desktop 核心处于最小闭环建设中。Windows 与 WSL X11 后端已经可用；Wayland、EGLFS / LinuxFB、输入抽象和独立模拟器仍待建设。19 个 Material Design 3 控件由 [QuarkWidgets](/projects/quark-widgets) 提供，不重复计作 CFDesktop 已完成模块。
 
 ## 核心特性
 
 - Material Design 3 设计语言
-- 性能自适应：从低端 ARM 到 RK3588
-- 19 个已完成 UI 控件（P0 + P1 优先级）
-- 多显示后端：Windows、WSL X11、Wayland、嵌入式
-- 完整 SDK 和模拟器
-- 硬件检测与配置管理
+- `base` 基础层与硬件检测 / HWTier 分级
+- QuarkWidgets 提供 19 个可复用 UI 控件
+- Windows 与 WSL X11 开发后端
+- UI / desktop 最小启动闭环正在建设
+- Wayland、EGLFS / LinuxFB、输入抽象与模拟器仍在规划中
 
 ## 前置知识
 

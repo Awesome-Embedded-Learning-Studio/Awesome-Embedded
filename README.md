@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/badge/文档站-在线阅读-blue?logo=vitepress" alt="Docs" />
   </a>
   <img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey" />
-  <img alt="repos" src="https://img.shields.io/badge/公开仓库-24-blue" />
+  <img alt="roadmap" src="https://img.shields.io/badge/路线-基础%20%2B%20MCU%20%2B%20Linux%20%2B%20Cinux-blue" />
 </p>
 
 ---
@@ -25,20 +25,21 @@
 
 包含：
 - **新手引导** — 不知道从哪里开始？按身份快速定位
-- **项目一览** — 按五条主线分类的完整项目矩阵
-- **组织路线图** — 学习路线、建设规划和维护优先级
+- **项目一览** — 按六个主要方向分类的公开项目矩阵
+- **组织路线图** — 最低公共基础、两条平行平台路线、Cinux 独立线和专题边界
 - **贡献指南** — 如何参与贡献
 - **维护者** — 核心团队介绍
 
-## 五条主线
+## 主要方向
 
 | 方向 | 核心仓库 |
 |------|----------|
-| Modern C++ | Tutorial_AwesomeModernCPP · CFBox · Project_CXXBaseComponents |
-| Embedded Linux | imx-forge · rk-forge · PenguinLab |
-| Linux / System Programming | Cinux · CFBox · PenguinLab |
-| MCU / 裸机 / FreeRTOS | ST-Forge · BareMetal-Drivers · Project_MicroWatch |
-| Qt / GUI / 产品化 | Tutorial_AwesomeQt · CFDesktop · qt-compile-pipeline |
+| Modern C++ | Tutorial_AwesomeModernCPP · engineering_cpp · anatomy_memory · CFBox |
+| Embedded Linux | imx-forge · h618_forge · rk-forge · lightroot · buildmeter · PenguinLab |
+| Linux / System Programming | Cinux 家族 · CFBox · PenguinLab |
+| MCU / 裸机 / FreeRTOS | ST-Forge · micro-forge · BareMetal-Drivers · Tutorial_FreeRTOS |
+| Qt / GUI / 产品化 | Tutorial_AwesomeQt · CFDesktop · CFDeskit · QuarkWidgets · qt-compile-pipeline |
+| 通用基础 | EmbedBox · C-Journey · Tutorial_AwesomeHardware |
 
 ## 快速链接
 
