@@ -18,4 +18,11 @@ Awesome-Embedded-Learning-Studio 的核心维护者。
 - 方向：PCB 设计、硬件工程
 - 简介：硬件大牛，PCB 工程师
 
-> 想成为维护者？在 [Discussions](https://github.com/Awesome-Embedded-Learning-Studio/community/discussions) 中联系我们！
+## Leon19960120
+
+- GitHub: [Leon19960120](https://github.com/Leon19960120)
+- 角色：维护者
+- 方向：文档审校 / 工程勘误
+- 简介：参与跨仓技术内容审校、链接检查与工程问题反馈
+
+> 想成为维护者？在 [Discussions](https://github.com/orgs/Awesome-Embedded-Learning-Studio/discussions) 中联系我们！
