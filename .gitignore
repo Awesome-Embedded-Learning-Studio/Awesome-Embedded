@@ -2,6 +2,9 @@
 CLAUDE.md
 .claude/
 
+# 本地的决策
+.aels-strategy/
+
 # 本地仓库克隆（绝对不能提交）
 content/
 
