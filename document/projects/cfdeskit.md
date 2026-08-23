@@ -21,6 +21,10 @@ CFDesktop 生态的独立 Qt6 小应用集合。每个应用都是由 CFDesktop 
 - 自带 QuarkWidgets 运行库与 ABI 自检
 - system_state vendoring 所需的 cfbase 探针，避免外部运行时依赖
 
+## 与 AELS 的关系
+
+属于产品线「CF 桌面生态」分组：消费 [QuarkWidgets](/projects/quark-widgets)，通过运行时契约接入 [CFDesktop](/projects/cfdesktop)，与 [CF-Gallery](/projects/cf-gallery) 共同构成桌面生态的应用与资源两侧。
+
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/CFDeskit)

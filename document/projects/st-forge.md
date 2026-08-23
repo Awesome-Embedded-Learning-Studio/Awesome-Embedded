@@ -20,6 +20,10 @@ title: "ST-Forge"
 - C 语言
 - CMake 基本用法
 
+## 与 AELS 的关系
+
+属于教学线「MCU 实践」分组，是[学习地图](/roadmap/)第二支柱的建设主线。[micro-forge](/projects/micro-forge) 为部分实验提供确定性模拟，[Tutorial_FreeRTOS](/projects/tutorial-freertos) 提供 RTOS 概念补充，[bareline](/projects/bareline) 可在真实 UART 工程中形成消费关系。
+
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/ST-Forge)

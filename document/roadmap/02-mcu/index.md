@@ -1,50 +1,42 @@
 ---
-title: "P1 · 单片机"
+title: "MCU 实践"
 ---
 
-# P1 · 单片机
+# MCU 实践
 
-单片机是最接近原生硬件的那一层，软硬件在这里碰头。从这往后，你面对的是具体的板子和它周围的生态，不再是抽象概念。
+当前 MCU 教学集中建设 STM32 路线。学习者先具备基本工具能力和足够的 C 语言能力，再进入 [ST-Forge](/roadmap/02-mcu/st-forge)；课程终点由实际建设和验证逐步形成，不提前指定某个综合产品。
 
-两条对等入口，按平台生态切：
+## 当前主线：ST-Forge
 
-- **st-forge（公开，路线已定稿）**：STM32F1 / Cortex-M3。从启动、寄存器和裸机外设出发，读 ST 手册，以 C 语言理解驱动与 HAL 抽象。
-- **esp-forge（私有，路线已定稿）**：ESP32-S3 / 双核 Xtensa LX7。从 ESP-IDF 应用出发，拆解 RTOS、内存、无线、USB、OTA 与安全；公开前只作为路线规划，不进入公开项目目录。
+ST-Forge 以 STM32F1 / Cortex-M3 为主要教学平台，从查阅芯片资料、工具链和最小工程开始，逐步进入启动、链接、内存、时钟、GPIO、通信、中断、定时器、ADC、DMA、总线、故障、低功耗和 FreeRTOS 板端观察。
 
-深度页：[st-forge](/roadmap/02-mcu/st-forge) 和 [esp-forge](/roadmap/02-mcu/esp-forge)。
+仓库已有细致的课程设计，但实际实现仍处在早期建设阶段。中心站只按已经存在的代码和验证证据描述进度，不把课程目录当作全部完成。
 
-## 共用的工具
+## 周围的支持仓库
 
-两个 forge 不要求共享芯片级 HAL，但复用能真正跨平台的部分：
+这些关系不是学习顺序：
 
-- **BareMetal-Drivers**：C 写的共享驱动与器件库。STM32F1 复用寄存器级实现；ESP32-S3 只复用协议、器件和平台无关逻辑，通过 ESP-IDF 后端接入。
-- **micro-forge**：只服务 st-forge 的 STM32F103 / Cortex-M3 模拟。无硬件时可以跑受支持固件、观察 NVIC 和 trace 引脚。
-- **Host 测试接口**：两个平台都应把协议解析、状态机和业务逻辑从硬件中分离，在 PC 上做单元测试。
+| 仓库 | 对 ST-Forge 的作用 | 边界 |
+|---|---|---|
+| [micro-forge](/projects/micro-forge) | 为受支持的 STM32F103 固件提供确定性模拟、故障注入和 CI 入口 | 只覆盖已经实现和回归的 CPU/外设行为，不替代真板 |
+| [Tutorial_FreeRTOS](/projects/tutorial-freertos) | 在 Host 上解释任务、队列、同步和调度语义 | 不证明 STM32 上的实时性、移植和外设行为 |
+| [Tutorial_AwesomeHardware](/projects/tutorial-awesome-hardware) | 补充读手册、电源、电路、接口和板级调试知识 | 当前 MCU 硬件内容仍在逐步建设 |
+| [BareMetal-Drivers](/projects/baremetal-drivers) | 保存可复用的驱动和器件资产 | 可以接收成熟成果，但不是固定下一阶段 |
+| [bareline](/projects/bareline) | 展示现代 C++ 如何进入无堆、无异常的 MCU 工程 | 只有形成真实 ST 工程消费后，才算完成课程交接 |
 
-## 模拟机制：哪些可能先仿，哪些必须上板
+## 验证怎样逐步晋升
 
-边界要划清。下表描述适合由模拟环境承担的内容类型，不代表 micro-forge、QEMU 或 Wokwi 当前已经实现表中所有模型。
+```text
+纯逻辑 Host 测试
+    → micro-forge 中验证受支持的功能语义与故障
+    → STM32F103 真板实验
+    → 成熟、可复用的代码资产
+```
 
-| 模型支持时可先验证 | 必须真硬件的 |
-|---|---|
-| GPIO、LED、按键、中断时序 | PCB 布线、阻抗、信号完整性 |
-| UART、I2C、SPI 协议帧 | 电源（LDO / DC-DC、纹波、上电时序）|
-| ADC 数值、PWM | 无线射频实测（蓝牙、WiFi 空中包）|
-| RTOS 调度、信号量、优先级翻转 | 模拟信号调理（运放、抗混叠）|
+这是一条验证与资产晋升方式，不是仓库学习顺序，也不承诺所有实验都必须经过完全相同的层次。
 
-能否采用纯仿、半仿半真或真板验证，由每个实验引用的具体版本和支持矩阵决定。
+模拟器适合证明指令、寄存器、异常、协议状态机和确定性外设语义；真板负责电气、时序、功耗、模拟信号和板级兼容。每个实验应明确自己实际通过了哪一层。
 
-一句话钉死：仿真过了不等于硬件对了。这条每个模拟章节都要讲。
+## 关于综合项目
 
-## 模拟器分工
-
-不对称，但各自站得住：
-
-- **st-forge 用 micro-forge**：目标锁定 STM32F103；当前已经覆盖 Cortex-M3、NVIC、SCB、SysTick、RCC、GPIO、USART、TIM、AFIO 和 FLASH 等能力，具体课程引用当前支持矩阵。
-- **esp-forge 用 QEMU 加 Wokwi**：只使用选定版本实际验证过的 ESP32-S3 能力，最终回到 S3 真板验证无线、USB、电气、功耗与产品稳定性。
-
-综合项目由两个自治仓库分别决定。MicroWatch 是已有但仍处于 WIP/硬件规划状态的 Cortex-M 项目，可作为 st-forge 方向的远期候选，不代表整个 P1 的统一终点。
-
-## 往下走
-
-走到六成左右，可以查看 [专题区](/roadmap/04-specialty/) 的后续方向，但除 Cinux 独立路线外，其余专题当前都处于规划状态，P1 仍以两条 forge 主线为先。RTOS 概念在 [P0](/roadmap/01-fundamentals/) 学过了，这里结合 STM32F1 单核移植和 ESP32-S3 双核 SMP 重新验证，不把主机模拟等同于真机行为。
+[Project_MicroWatch](/projects/project-micro-watch) 是正在发展的 STM32G431 / FreeRTOS 工程，可以与 MCU 教学共享知识和资产，但它不是 ST-Forge 的预定终点。ST-Forge 是否以及怎样形成综合课程项目，以后由已经完成的内容、验证能力和真实需求决定。

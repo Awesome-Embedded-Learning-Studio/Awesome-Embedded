@@ -103,7 +103,7 @@ RK3528 不属于当前三板主线，不在课程矩阵中占位；以后即使�
 **网络与无线（重点）**
 
 - 网卡：GMAC、PHY 驱动
-- WiFi：RTL8733bu / ap6xxx / PCIe WiFi，cfg80211 / mac80211 框架（对位组织里的 rtl8733bu 仓）
+- WiFi：RTL8733bu / ap6xxx / PCIe WiFi，cfg80211 / mac80211 框架
 - Bluetooth：HCI、UART / USB BT
 - 网络协议栈：TCP / IP、socket
 

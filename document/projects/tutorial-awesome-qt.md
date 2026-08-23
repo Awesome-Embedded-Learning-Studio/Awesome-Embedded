@@ -4,22 +4,18 @@ title: "Tutorial_AwesomeQt"
 
 ## 简介
 
-Qt 6 百科全书式教程，按三层分级（入门 / 进阶 / 专家）组织。入门篇 134 篇文章已全部完成，覆盖 QtBase、QtGui、QtWidgets、QtNetwork、QML 等模块。不只是 API 文档的搬运，更着重解释常见坑点：为什么 `QObject::connect` 有时候不生效、`Q_OBJECT` 宏到底做了什么、信号槽跨线程要注意什么。
+Qt 6 系统教程，按入门 / 进阶 / 专家三层分级组织，覆盖 QtBase、QtGui、QtWidgets、QtNetwork 与 QML 等模块。不只是 API 文档搬运，更着重解释常见坑点与底层机制：`connect` 什么时候不生效、`Q_OBJECT` 宏做了什么、信号槽跨线程要注意什么。
 
-配套自定义 Widget 库和大量可直接运行的示例代码。
-
-## 核心特性
-
-- 三层分级：入门（134 篇已完成）/ 进阶 / 专家
-- 涵盖 Qt 6.9.1 LTS
-- 自定义 Widget 库 + 示例代码目录
-- 深入源码分析（MOC 机制、信号槽实现）
-- QML 与 Quick 模块教学
+入门篇已经完成，进阶与专家篇持续建设；配套自定义 Widget 库与可直接运行的示例，各篇进度以仓库为准。
 
 ## 前置知识
 
 - C++ 基础（类、继承、指针、模板）
-- 基本的构建工具使用经验（CMake 或 qmake）
+- CMake 或 qmake 基本使用
+
+## 与 AELS 的关系
+
+属于教学线「GUI 与专题」分组：学习 Qt 技术本身，稳定能力可由产品组件（[QuarkWidgets](/projects/quark-widgets)、[CFDesktop](/projects/cfdesktop)）提供真实消费与升级案例，形成工程交接。
 
 ## 链接
 

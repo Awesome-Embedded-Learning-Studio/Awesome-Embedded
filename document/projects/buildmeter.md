@@ -19,7 +19,7 @@ buildmeter 已从 rk-forge 的进度脚本抽成独立 Python 包，也可被 im
 
 ## 与 AELS 的关系
 
-buildmeter 是 P2 的构建体验工具，不承担 BSP、rootfs 或板级路线本身。它服务 imx-forge、rk-forge、h618_forge 和其他长时间 GNU make 工程。
+属于基建与验证线「构建与工具链」分组：被 [imx-forge](/projects/imx-forge) 与 [rk-forge](/projects/rk-forge) 以固定版本消费，也可服务其他长时间 GNU make 工程。不承担 BSP、rootfs 或板级路线本身。
 
 ## 链接
 

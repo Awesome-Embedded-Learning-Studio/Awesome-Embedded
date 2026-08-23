@@ -19,27 +19,24 @@
 
 ## 文档站
 
-完整的组织导航、项目矩阵和路线图已迁移到 VitePress 文档站：
+点击下面的图片，我们马上进入！
 
 **[https://awesome-embedded-learning-studio.github.io/Awesome-Embedded/](https://awesome-embedded-learning-studio.github.io/Awesome-Embedded/)**
 
 包含：
-- **新手引导** — 不知道从哪里开始？按身份快速定位
-- **项目一览** — 按六个主要方向分类的公开项目矩阵
-- **组织路线图** — 最低公共基础、两条平行平台路线、Cinux 独立线和专题边界
+- **从这里开始** — 按当前能力找到入口，允许跳过和按需回补
+- **学习关系** — 区分建议继续、按需深化、验证设施和真实消费
+- **仓库目录** — 按教学线、产品线和基建线查看定位与证据
 - **贡献指南** — 如何参与贡献
 - **维护者** — 核心团队介绍
 
-## 主要方向
+## 三条维护线
 
-| 方向 | 核心仓库 |
-|------|----------|
-| Modern C++ | Tutorial_AwesomeModernCPP · engineering_cpp · anatomy_memory · CFBox |
-| Embedded Linux | imx-forge · h618_forge · rk-forge · lightroot · buildmeter · PenguinLab |
-| Linux / System Programming | Cinux 家族 · CFBox · PenguinLab |
-| MCU / 裸机 / FreeRTOS | ST-Forge · micro-forge · BareMetal-Drivers · Tutorial_FreeRTOS |
-| Qt / GUI / 产品化 | Tutorial_AwesomeQt · CFDesktop · CFDeskit · QuarkWidgets · qt-compile-pipeline |
-| 通用基础 | EmbedBox · C-Journey · Tutorial_AwesomeHardware |
+| 维护线     | 职责                                                                  |
+| ---------- | --------------------------------------------------------------------- |
+| 教学线     | 从初步会用、语言深化和系统基本功进入 MCU、嵌入式 Linux 与完整工程实践 |
+| 产品线     | 持续演进真实代码，并向教学提供稳定版本的能力切片                      |
+| 基建与验证 | 为课程、构建、模拟、QEMU 和真机交付提供可复查证据                     |
 
 ## 快速链接
 

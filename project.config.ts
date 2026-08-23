@@ -21,15 +21,21 @@ export default defineProject({
   nav: {
     'zh-CN': [
       { text: '首页', link: '/' },
-      { text: '项目', link: '/projects/' },
-      { text: '排行榜', link: '/ranking/' },
-      { text: '周报', link: '/weekly/' },
-      { text: '文章', link: '/blog/' },
-      { text: '路线图', link: '/roadmap/' },
-      { text: '贡献', link: '/contributing/' },
-      { text: '流程', link: '/workflow/' },
-      { text: '维护者', link: '/maintainers/' },
-      { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
+      { text: '从这里开始', link: '/guide/' },
+      { text: '学习关系', link: '/roadmap/' },
+      { text: '仓库目录', link: '/projects/' },
+      {
+        text: '社区与参与',
+        items: [
+          { text: '周报', link: '/weekly/' },
+          { text: '文章', link: '/blog/' },
+          { text: '贡献指南', link: '/contributing/' },
+          { text: '协作流程', link: '/workflow/' },
+          { text: '维护者', link: '/maintainers/' },
+          { text: '项目热度', link: '/ranking/' },
+          { text: 'GitHub', link: 'https://github.com/Awesome-Embedded-Learning-Studio/Awesome-Embedded' },
+        ],
+      },
     ],
     'en': [
       { text: 'Home', link: '/en/' },
@@ -72,9 +78,4 @@ export default defineProject({
   },
 
   favicon: '/Awesome-Embedded/Awesome-Embedded.png',
-
-  homeBanner: {
-    'zh-CN': '欢迎来到 Awesome-Embedded 学习小屋！从现代 C++ 到 Embedded Linux、MCU、Qt 桌面与 x86_64 OS 实验——不知道从哪里开始，请查看 <a href="/Awesome-Embedded/guide/">新手引导</a>。',
-    'en': 'Welcome to AELS — project-based engineering notes on embedded systems, modern C and C++, Linux and OS work. New here? Scroll to the <a href="/Awesome-Embedded/en/#about">About</a> section below.',
-  },
 })

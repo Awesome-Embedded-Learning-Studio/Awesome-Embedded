@@ -1,3 +1,73 @@
+/* ================================================================
+   AELS Design Tokens — 暖铜工坊（2026-08 门面重设计）
+   主绿 = 叶绿（非青调）；点缀 = 琥珀 + 铜；终端 = 琥珀磷光屏。
+   全站组件只允许引用这些变量，不硬编码色值。
+   ================================================================ */
+
+:root {
+  /* brand 绿压深到 AA：#33804a 对白字 ≈4.9:1、对暖纸底 ≈4.5:1 */
+  --vp-c-brand-1: #33804a;
+  --vp-c-brand-2: #2a6e3e;
+  --vp-c-brand-3: #4f9752;
+  --vp-c-brand-soft: color-mix(in srgb, #33804a 11%, transparent);
+
+  /* 中性色 = 暖纸系（门面 2026-08 重设计：不再用默认冷白） */
+  --vp-c-bg: #faf6ec;
+  --vp-c-bg-alt: #f4eedd;
+  --vp-c-bg-soft: #f5efdf;
+  --vp-c-bg-elv: #fffdf4;
+  --vp-c-bg-mute: #eee7d3;
+  --vp-c-border: #e7ddc6;
+  --vp-c-divider: #e9e1cb;
+  --vp-c-gutter: #e9e1cb;
+  --vp-c-text-1: #2b2620;
+  --vp-c-text-2: #5d5648;
+  --vp-c-text-3: #948c7b;
+
+  --aels-copper: #b87333;
+  /* 琥珀压深到 AA：#a2620f 在奶油底 ≈4.7:1（用于 ★数等小字） */
+  --aels-amber: #a2620f;
+  --aels-amber-wash: rgba(244, 162, 60, 0.32);
+  /* 浅色模式 = 纸带终端（暖纸底 + 深褐字），暗色模式 = 琥珀 CRT */
+  --aels-term-bg: #f9f2e0;
+  --aels-term-fg: #3f3626;
+  --aels-term-dim: #8a7b5e;
+  --aels-term-hi: #a2620f;
+  --aels-font-mono: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo,
+    Consolas, monospace;
+  --aels-shadow-lift: 0 12px 32px rgba(24, 18, 8, 0.13),
+    0 4px 8px rgba(24, 18, 8, 0.07);
+}
+
+.dark {
+  --vp-c-brand-1: #85d689;
+  --vp-c-brand-2: #6fbe75;
+  --vp-c-brand-3: #9ce3a0;
+  --vp-c-brand-soft: color-mix(in srgb, #85d689 13%, transparent);
+
+  --vp-c-bg: #131009;
+  --vp-c-bg-alt: #171410;
+  --vp-c-bg-soft: #191510;
+  --vp-c-bg-elv: #1e1913;
+  --vp-c-bg-mute: #241e15;
+  --vp-c-border: #332b1e;
+  --vp-c-divider: #2e2820;
+  --vp-c-gutter: #2e2820;
+  --vp-c-text-1: #f2ebdd;
+  --vp-c-text-2: #b5aa94;
+  --vp-c-text-3: #7e7561;
+
+  --aels-copper: #d89c6c;
+  --aels-amber: #ffb454;
+  --aels-amber-wash: rgba(255, 180, 84, 0.22);
+  --aels-term-bg: #14100b;
+  --aels-term-fg: #ffdfae;
+  --aels-term-dim: #cdb98f;
+  --aels-term-hi: #fff1d6;
+  --aels-shadow-lift: 0 12px 32px rgba(0, 0, 0, 0.45),
+    0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
 /* ── Content Typography ──────────────────────────────────────── */
 
 .vp-doc {
@@ -61,7 +131,7 @@
 .vp-doc blockquote {
   border-left: 4px solid var(--vp-c-brand-1);
   border-radius: 0 4px 4px 0;
-  background: rgba(81, 107, 232, 0.04);
+  background: color-mix(in srgb, var(--vp-c-brand-1) 4%, transparent);
 }
 
 /* ── Links ───────────────────────────────────────────────────── */
@@ -115,23 +185,36 @@
   background: linear-gradient(
     135deg,
     var(--vp-c-brand-soft) 0%,
-    transparent 50%,
-    var(--vp-c-indigo-soft) 100%
+    transparent 55%,
+    color-mix(in srgb, var(--aels-copper) 8%, transparent) 100%
   );
   opacity: 0.5;
   pointer-events: none;
 }
 
-.VPHero .name.clip {
-  background: linear-gradient(
-    135deg,
-    var(--vp-c-brand-1) 0%,
-    var(--vp-c-indigo-1) 50%,
-    var(--vp-c-purple-1) 100%
-  );
+/* 品牌名 = 大标题本体（铜→琥珀渐变）；下方一行只留 Discussion #7 的定位，不推销 */
+.VPHero .name,
+.VPHero .name .clip {
+  background: linear-gradient(120deg, #8f5a1e 0%, var(--aels-copper) 48%, #d98a2b 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.dark .VPHero .name,
+.dark .VPHero .name .clip {
+  background: linear-gradient(120deg, #e8b573 0%, var(--aels-copper) 50%, #f5a623 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.VPHero .text {
+  font-size: clamp(18px, 2.4vw, 24px) !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  margin-top: 10px !important;
+  color: var(--vp-c-text-2) !important;
 }
 
 .VPHero .tagline {
@@ -210,7 +293,7 @@
   background: linear-gradient(
     135deg,
     var(--vp-c-brand-soft) 0%,
-    var(--vp-c-indigo-soft) 100%
+    color-mix(in srgb, var(--aels-copper) 10%, transparent) 100%
   ) !important;
   color: var(--vp-c-brand-1) !important;
   font-size: 22px !important;
@@ -265,7 +348,7 @@
 }
 
 .dark .vp-doc blockquote {
-  background: rgba(81, 107, 232, 0.08);
+  background: color-mix(in srgb, var(--vp-c-brand-1) 8%, transparent);
 }
 
 .dark .vp-doc table tr:nth-child(even) {
@@ -423,22 +506,94 @@
 }
 
 /* ================================================================
-   Home Brand Banner — AELS header logo, dark/light auto-switch
-   改大小调 .home-banner 的 max-width 即可
+   Home About — 门廊排版（内容与分节原样，仅呈现层）
+
+   阅读列宽 ~40 汉字/行；分节以"走线"纹样分节；灵魂加粗打琥珀
+   马克笔；结尾链接清单降级为出发卡。全部作用于 HomeAbout 容器内。
    ================================================================ */
-.home-banner {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 28px 24px 4px;
-  text-align: center;
+
+.home-about__inner {
+  line-height: 1.9;
 }
-.home-banner__img {
-  width: 100%;
-  height: auto;
+
+.home-about__inner > * {
+  max-width: 42em;
+  margin-left: auto;
+  margin-right: auto;
 }
-.home-banner__img.dark { display: none; }
-.dark .home-banner__img.light { display: none; }
-.dark .home-banner__img.dark { display: inline-block; }
+
+.home-about__inner p {
+  margin-bottom: 1.35em;
+}
+
+.home-about__inner h2 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  margin: 3em auto 1.2em;
+  padding-top: 1.2em;
+  /* 分节只留 ::before 走线纹样，清掉 VitePress 默认的整行分隔线 */
+  border-top: none;
+}
+
+/* 走线分节纹样：一段走线 + 两端过孔 */
+.home-about__inner h2::before {
+  content: '';
+  display: block;
+  width: 140px;
+  height: 12px;
+  margin: 0 auto 1.1em;
+  background:
+    radial-gradient(circle 2.4px at 5px 6px, var(--vp-c-brand-1) 0 2.2px, transparent 2.6px),
+    radial-gradient(circle 2.4px at 135px 6px, var(--vp-c-brand-1) 0 2.2px, transparent 2.6px),
+    linear-gradient(90deg, transparent 9px, var(--vp-c-brand-1) 9px 131px, transparent 131px);
+  background-repeat: no-repeat;
+  opacity: 0.55;
+}
+
+.home-about__inner strong {
+  font-weight: 600;
+  background: linear-gradient(transparent 62%, var(--aels-amber-wash) 62%);
+}
+
+.home-about__inner > ul:last-of-type {
+  list-style: none;
+  padding: 0;
+  max-width: 42em;
+  margin: 2.2em auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.home-about__inner > ul:last-of-type li {
+  border: 1.5px solid var(--vp-c-divider);
+  border-radius: 13px;
+  padding: 16px 18px;
+  background: var(--vp-c-bg-elv);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 0.95em;
+  line-height: 1.8;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.home-about__inner > ul:last-of-type li:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+}
+
+.home-about__inner > ul:last-of-type a {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+@media (max-width: 639px) {
+  .home-about__inner > ul:last-of-type {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ================================================================
    Mermaid diagrams

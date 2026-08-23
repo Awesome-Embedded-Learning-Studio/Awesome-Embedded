@@ -54,7 +54,6 @@ export interface ProjectConfig {
     math?: boolean
   }
 
-  homeBanner?: Record<string, string>
   favicon?: string
 }
 

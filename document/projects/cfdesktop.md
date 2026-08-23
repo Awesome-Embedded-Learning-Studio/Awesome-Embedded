@@ -23,6 +23,10 @@ title: "CFDesktop"
 - Qt 框架使用经验
 - 嵌入式 Linux 基础
 
+## 与 AELS 的关系
+
+属于产品线「CF 桌面生态」分组的产品主体：消费 [QuarkWidgets](/projects/quark-widgets) 与 [aex](/projects/aex)，与 [CFDeskit](/projects/cfdeskit) 通过应用契约协作，[CF-Gallery](/projects/cf-gallery) 提供资源供应链；部署与真板验收依托 [imx-forge](/projects/imx-forge)、[rk-forge](/projects/rk-forge) 提供的 Linux 平台。
+
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/CFDesktop)

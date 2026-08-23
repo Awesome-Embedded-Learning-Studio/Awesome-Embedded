@@ -1,56 +1,50 @@
 ---
-title: "P0 · 基础"
+title: "工具、语言与工程基础"
 ---
 
-# P0 · 基础
+# 工具、语言与工程基础
 
-碰板子之前，先准备最低限度的工具和语言基础。这一层不绑具体芯片，但也不要求所有人先学完同一组大课程。
+这一部分解决三个不同深度的问题：先让工具可用，再围绕语言理解其背后的机制，最后把语言知识送进一个能够测试、安装、发布和被下游消费的工程。
 
-## 最低共同入口：工具加 C
+## EmbedBox：先会使用
 
-**工具链** · EmbedBox。终端、Git、GCC、CMake、GDB、交叉编译、串口、Docker、QEMU。听着是一长串，其实就是"搭环境"那一关。这关过不了后面什么都做不了，所以放最前。
+[EmbedBox](/projects/embedbox) 帮助学习者先跑通终端、Git、GCC、Make、CMake、GDB、交叉编译、串口、Docker 和 QEMU。这里的目标是获得足以继续学习和实践的基本操作能力，而不是穷尽每件工具的内部原理。
 
-**C** · C-Journey。ST、ESP、Linux BSP、驱动和 RTOS 都需要读写 C；学习者不必先完成全部内容，只需具备函数、指针、结构体、位操作和基本构建能力即可进入平台路线。
+已经掌握这些能力的人可以直接跳过；进入后续仓库遇到环境问题时，也可以回来按需查阅。
 
-EmbedBox 和 C-Journey 构成最低共同入口。已经具备这些能力的学习者可以直接进入 P1 或 P2。
+## C-Journey 与 ModernCPP：为语言继续深入
 
-## ModernCPP：贯穿主线，不做统一前置考试
+[C-Journey](/projects/c-journey) 为 C 语言学习服务。编译单元、符号、链接、库、调试、测试和系统调用等内容，会在“怎样写好和理解 C 程序”的上下文中重新出现。
 
-现代 C++ 不是只服务 Cinux、Qt 或桌面项目的选修方向，而是 AELS 区分于常规嵌入式教程的核心方法：用类型、资源所有权、零成本抽象、测试与现代构建方式改善 MCU、嵌入式 Linux 和系统软件。
+[Tutorial_AwesomeModernCPP](/projects/tutorial-awesome-modern-cpp) 为 C++ 学习服务。名称修饰、模板实例化、ODR、ABI、资源管理、并发、性能和工程构建等内容，会围绕现代 C++ 的语言模型和领域实践继续深入。
 
-它不被设计成碰板子前必须完成的统一前置考试。学习者具备最低 C 与工具能力后即可进入平台仓库，再沿真实问题持续学习和应用现代 C++：
+因此，仓库之间存在内容交叉是正常的：同一个工具或机制，在“先会使用”“学懂 C”“学懂 C++”中承担的任务不同。
 
-- **STM32F1**：先理解寄存器、启动与 C 接口，再在合适边界引入类型安全、RAII、静态多态和可测试结构。
-- **ESP32-S3**：保留 ESP-IDF 的 C 接口边界，用 C++ 管理资源、任务生命周期、组件和应用结构。
-- **嵌入式 Linux**：读写 C ABI 与内核接口，同时使用现代 C++ 建设 userspace、工具和产品工程。
-- **Cinux**：把 freestanding C++ 直接用于操作系统实验，验证语言与运行时边界。
+## 工程桥梁：完整做完一件事
 
-## 按方向选择增强课
+[engineering_cpp](/projects/engineering-cpp) 负责讲共同工程方法，具体项目由独立仓库承载：
 
-这些课程都可以先学，也可以在进入平台仓库后按需要回补：
+- [SimpleIniParser](/projects/tutorial-cpp-simple-ini-parser)：从明确的 INI 子集出发，建立错误模型、正反测试、安装、版本和真实消费。
+- [anatomy_memory](/projects/anatomy-memory)：先用不变量、sanitizer 和并发检查证明正确，再严谨讨论性能。
+- [bareline](/projects/bareline)：把无堆、无异常、静态分派、Host 测试和交叉编译带入 MCU。
+- [CFBox](/projects/cfbox)：在 Linux userspace 中处理 POSIX 行为、差分测试、rootfs、QEMU 与真板交付。
 
-- 想理解**通用 RTOS 概念**：Tutorial_FreeRTOS 在 POSIX / WSL2 和 Windows MSVC 主机上讲任务、队列、同步与常见仿真边界。st-forge 到后期再做 STM32F103 单核移植，esp-forge 在 ESP-IDF 语境下进入双核 SMP。
-- 想理解**Linux 内核与驱动机制**：PenguinLab 使用 QEMU 和多架构实验建立知识图谱；它是 P2 的强力旁路，不是进入 i.MX6ULL 的强制前置。
-- 想补**硬件理论**：AwesomeHardware 提供电路、模拟/数字电子、电源、PCB、传感器和接口知识，可随板级实验逐项回补。
-- 想做**GUI 或桌面产品**：AwesomeQt 进入 QuarkWidgets、CFDeskit 与 CFDesktop。
-- 想造**操作系统或 C++ 系统软件**：ModernCPP 之后可直接进入 Cinux 独立线。
+这些项目不是所有人的统一必修课。它们提供从语言基础进入系统或嵌入式实践的不同桥梁。
 
-FreeRTOS 和 PenguinLab 的共同价值是先在 Host/QEMU 中观察通用机制，再到 P1/P2 处理真实平台差异；它们是桥梁，不是门禁。
+## 按需补充的系统知识
 
-## 模拟与真板
+- [PenguinLab](/projects/penguin-lab)：Linux 内核、系统编程和调试机制。
+- [Tutorial_FreeRTOS](/projects/tutorial-freertos)：任务、队列、同步和调度等通用 RTOS 语义。
+- [Tutorial_AwesomeHardware](/projects/tutorial-awesome-hardware)：电源、电路、器件、接口和板级调试知识。
 
-micro-forge 当前已经具备 Cortex-M3 Thumb-2、异常处理、MSP/PSP、NVIC、SysTick 和一组 STM32F103 外设模型，也能运行真实 HAL 固件。是否支持某个完整 FreeRTOS 或外设课程，以其当前支持矩阵和实际回归为准，不能从 CPU 能力直接推导。
+它们既可以在进入平台前学习，也可以在 ST-Forge、imx-forge 或 rk-forge 中遇到真实问题后回补。
 
-Host、QEMU 和模拟器用于降低入门门槛与观察软件机制；电气、时序、功耗、射频和板级兼容仍回到对应真板。
+## 什么时候可以进入平台实践
 
-## 最小启动路径
+不以“学完整座仓库”为标准，而以眼前任务能否独立完成为标准：
 
-```text
-EmbedBox + C-Journey 最小基础
-            ├── P1 单片机
-            ├── P2 嵌入式 Linux
-            ├── Cinux 独立线
-            └── ModernCPP 工程方法贯穿；其余增强课按方向回补
-```
+- 能使用基本命令行、Git、编译器、构建系统和调试工具；
+- 能读写目标仓库需要的 C 或 C++；
+- 知道遇到语言、系统或硬件缺口时去哪里补。
 
-P1 与 P2 平行，不存在必须先后。想造 OS 可以在补足 C++ 与系统基础后直接进入积极建设的 [Cinux 独立线](/roadmap/04-specialty/)；GUI、网络、驱动专题、多媒体和边缘 AI 暂时只保留规划。
+满足这些条件，就可以进入 [MCU 实践](/roadmap/02-mcu/) 或 [嵌入式 Linux 实践](/roadmap/03-linux/)。
