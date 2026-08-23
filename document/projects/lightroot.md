@@ -18,7 +18,7 @@ title: "lightroot"
 
 ## 与 AELS 的关系
 
-lightroot 属于 P2 的系统构建基建，不替代 imx-forge、rk-forge 或 h618_forge 的板级内容；平台仓提供真实 BSP 与硬件事实，lightroot 抽取可复用的构建模型。
+属于基建与验证线「构建与工具链」分组的构建系统实验：不替代 [imx-forge](/projects/imx-forge)、[rk-forge](/projects/rk-forge) 或 [h618_forge](/projects/h618-forge) 的板级内容——平台仓提供真实 BSP 与硬件事实，lightroot 先验证 typed IR、依赖解析、lockfile、执行器与最小 rootfs。
 
 ## 链接
 

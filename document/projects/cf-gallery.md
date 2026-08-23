@@ -16,7 +16,7 @@ CFDesktop 的独立摄影与壁纸资源站，使用 VitePress 展示资源，�
 
 ## 与 AELS 的关系
 
-CF-Gallery 是产品生态的静态资源仓，不构成新的 GUI 学习主线，也不代表已推迟的通用 GUI 专题重新启动。
+属于产品线「CF 桌面生态」分组的资源供应链：通过运行时安装契约服务 [CFDesktop](/projects/cfdesktop)。不构成新的 GUI 学习主线，也不代表已推迟的通用 GUI 专题重新启动。
 
 ## 链接
 

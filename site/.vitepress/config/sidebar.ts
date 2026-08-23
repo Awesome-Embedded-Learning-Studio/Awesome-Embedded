@@ -2,6 +2,7 @@ import type { DefaultTheme } from 'vitepress'
 import { readdirSync, statSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 import type { ProjectConfig, VolumeConfig } from './schema'
+import { laneGroups, laneLabels, projects, type ProjectLane } from '../project-data'
 
 type SidebarItem = DefaultTheme.SidebarItem
 
@@ -113,13 +114,61 @@ export function volumeSidebar(
 ): DefaultTheme.SidebarItem[] {
   const dir = join(docsRoot, vol.srcDir)
   const indexPath = join(dir, 'index.md')
-  const items = scanDir(dir, vol.urlPrefix)
+  const items = vol.name === 'projects'
+    ? projectSidebarItems(dir, vol.urlPrefix)
+    : scanDir(dir, vol.urlPrefix)
 
   const overviewTitle = extractTitle(indexPath) || humanize(vol.srcDir)
   return [
     { text: overviewTitle, link: `${vol.urlPrefix}/` },
     ...items,
   ]
+}
+
+// projects volume：侧边栏由 project-data 的线 → 组两级结构驱动，页面文件保持平铺不动。
+// 页面与数据不一致时 fail loud，避免侧边栏悄悄丢条目。
+function projectSidebarItems(dir: string, urlPrefix: string): SidebarItem[] {
+  assertProjectPages(dir)
+
+  const lanes: ProjectLane[] = ['learning', 'product', 'infrastructure']
+  return lanes.map((lane) => ({
+    text: laneLabels[lane].title,
+    items: laneGroups[lane].map((group) => ({
+      text: group.title,
+      collapsed: true,
+      items: projects
+        .filter((project) => project.lane === lane && project.group === group.id)
+        .map((project) => ({ text: project.name, link: `${urlPrefix}/${project.slug}` })),
+    })),
+  }))
+}
+
+function assertProjectPages(dir: string): void {
+  const onDisk = new Set(
+    readdirSync(dir)
+      .filter((file) => file.endsWith('.md') && file !== 'index.md')
+      .filter((file) => !isSidebarHidden(join(dir, file)))
+      .map((file) => file.replace(/\.md$/, ''))
+  )
+  const inData = new Set(projects.map((project) => project.slug))
+
+  const missingInData = [...onDisk].filter((slug) => !inData.has(slug))
+  const missingOnDisk = [...inData].filter((slug) => !onDisk.has(slug))
+  if (missingInData.length || missingOnDisk.length) {
+    throw new Error(
+      `projects 侧边栏数据不一致：页面存在但 project-data 缺少 -> [${missingInData.join(', ')}]；` +
+      `project-data 存在但缺少页面 -> [${missingOnDisk.join(', ')}]`
+    )
+  }
+
+  for (const project of projects) {
+    const title = extractTitle(join(dir, `${project.slug}.md`))
+    if (title !== project.name) {
+      throw new Error(
+        `projects 侧边栏标题漂移：${project.slug}.md frontmatter title "${title}" 与 project-data name "${project.name}" 不一致`
+      )
+    }
+  }
 }
 
 export function buildSidebar(

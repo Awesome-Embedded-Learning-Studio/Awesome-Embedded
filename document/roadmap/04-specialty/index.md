@@ -1,51 +1,32 @@
 ---
-title: "专题规划与 Cinux 独立线"
+title: "Cinux：产品与教学重放"
 ---
 
-# 专题规划与 Cinux 独立线
+# Cinux：产品与教学重放
 
-纵向三支柱（[P0](/roadmap/01-fundamentals/) / [P1](/roadmap/02-mcu/) / [P2](/roadmap/03-linux/)）按深度走，专题按兴趣横切。当前建设策略已经收敛：**Cinux 家族作为独立路线积极建设，其余专题全部推迟到规划阶段。**
+Cinux 方向只保留两个对外角色：前沿产品代码与稳定教学重放。它可以从 C/C++、汇编、体系结构和操作系统基础直接进入，不要求先完成 MCU 或嵌入式 Linux 路线。
 
-推迟不代表删除方向，也不代表已有公共库停止维护。BareMetal-Drivers、edgecv 等现有资产可以继续服务主线，但不因此启动新的专题课程或专题仓库。
+## Cinux：继续探索前沿代码
 
-## 独立活跃线：OS 实验室（Cinux）
+[Cinux](/projects/cinux) 使用现代 C++17 探索 x86_64 操作系统，从启动、内存、中断和调度进入用户态、文件系统与 GUI。它可以快速验证新的设计和系统能力，不要求每次变更都同步展开成教学章节。
 
-x86_64 OS 造轮子：启动、内存、调度、用户态、文件系统和 GUI 桌面全链路。
+freestanding 基础类型、容器与 GUI 核心作为 Cinux 内部代码维护，减少跨仓库同步、版本对齐和重复测试压力。
 
-- **Cinux**：前沿实验版，持续验证新的内核和用户态能力
-- **Cinux-Book**：稳定教学版，保证路线连贯和实验可复现
-- **Cinux-Base**：freestanding 基础类型与容器库
-- **Cinux-GUI**：host-neutral GUI 核心
+## Cinux-Book：稳定教学重放
 
-Cinux 直接承接 P0 的 C / C++ 与系统基础，不要求先经过 P1 或 P2，也不计入下面暂停建设的专题队列。
+[Cinux-Book](/projects/cinux-book) 不追逐 Cinux 的每次前沿变化，而是选择已经稳定的能力切片进行教学：
 
-## 推迟建设的五条专题
+- 固定可复现的版本或 SHA；
+- 说明所需的 C++、汇编和体系结构知识；
+- 给出最小代码映射、构建测试命令和预期结果；
+- 记录当前限制，以及升级到新切片时需要处理的变化。
 
-下面只保存边界与未来接口，不承诺近期仓库、课程或交付时间。
+这让产品可以继续前进，教程仍能保持连续、清晰和可验证。
 
-### 嵌入式 GUI（规划）
+## 与其他系统仓库的关系
 
-小屏驱动、帧缓冲、图形原语、Widget 和动画菜单。`visor` 暂停建设；Cinux-GUI 只服务当前活跃的 Cinux 家族，不代表该专题恢复。
+- [PenguinLab](/projects/penguin-lab) 观察真实 Linux 内核和通用系统机制；Cinux 从零实现一个可运行的实验操作系统。
+- [CFBox](/projects/cfbox) 研究 Linux userspace 与 Unix 工具；Cinux 同时面对内核 ABI 与自己的用户态。
+- [Tutorial_AwesomeModernCPP](/projects/tutorial-awesome-modern-cpp) 提供现代 C++ 深度；未来 ASM 内容补充多架构汇编与 C ABI 能力。
 
-### 网络（规划）
-
-协议栈分层、TCP/IP、socket、MQTT / CoAP 和 BLE GATT。`edgenet` 暂不创建，相关实操留在 ESP32-S3 与 Rockchip 平台主线内部。
-
-### 驱动与协议（规划）
-
-I2C / SPI / UART / CAN 的时序、帧与电气原理。BareMetal-Drivers 是已有公共库，可以继续维护和被 forge 复用；独立专题课程暂缓。
-
-### 多媒体（规划）
-
-V4L2 / DRM / ALSA 与 MPP / RGA 的视频、音频和图形管线。`edgemedia` 暂不创建，近期实验留在 rk-forge 内部。
-
-### 边缘 AI（规划）
-
-RKNN 模型转换、量化、部署与基础视觉流水线。`edgeai` 暂不创建；已有 edgecv 可以独立维护，但不作为启动专题建设的信号。
-
-## 工程基建（不是专题，是组织级库）
-
-这两条不属于专题排期，是组织级公共库，按自身维护节奏跨项目复用：
-
-- **aex**：组织的 C++ base 库（expected、scope_guard、weak_ptr 这些 header-only 扩展），跨桌面 / CLI / 嵌入式 Linux / MCU。
-- **bareline**：独立的工程库，现代 CLI / shell 交互框架，跨 MCU 加 PC。
+这些仓库互相提供知识和工程参照，不合并成一条强制顺序。

@@ -4,32 +4,21 @@ title: "Tutorial_AwesomeHardware"
 
 ## 简介
 
-**Tutorial_AwesomeHardware** 是面向嵌入式学习者的**硬件学习笔记站**——一句标语说清定位：「把抽象概念砸进脑子，而不是把公式塞满屏幕」。
+面向嵌入式学习者的硬件学习笔记站：用重新理解后的话把补课学懂的东西再讲一遍——大量原创比喻、踩坑直觉与「为什么这么设计」的来龙去脉，而不是教材搬运。
 
-它不是教材搬运工，而是一个「补课型」技术博主把补短板时学懂的东西，用**重新理解后的话**再讲一遍：大量原创比喻、踩坑直觉、「为什么这么设计」的来龙去脉。目前已上线电源与功率变换板块（23 章），其余硬件基础板块规划中。
+当前已上线电源与功率变换板块，覆盖稳态分析、开关实现、建模、磁元件与闭环控制等主题；电路基础、模拟/数字电子、PCB、传感器、接口协议与板级调试等板块在持续建设，进度以仓库为准。
 
 ## 内容板块
 
-| 板块 | 状态 | 说明 |
-|------|:----:|------|
-| ⚡ 电源与功率变换 | ✅ | 稳态分析、开关实现、建模、磁元件、闭环控制、谐波、整流、谐振与软开关（23 章） |
-| 🔌 电路基础 | 🚧 | 规划中 |
-| 📈 模拟电子 | 🚧 | 规划中 |
-| 🔢 数字电子 | 🚧 | 规划中 |
-| 🟩 PCB 入门 | 🚧 | 规划中 |
-| 🌡️ 传感器 | 🚧 | 规划中 |
-| 🔁 接口协议 | 🚧 | 规划中 |
-| 🛠️ 板级调试 | 🚧 | 规划中 |
-
-## 技术栈
-
-- [VitePress](https://vitepress.dev) 1.6 · [Vue 3](https://vuejs.org)
-- [markdown-it-mathjax3](https://www.npmjs.com/package/markdown-it-mathjax3) + [MathJax](https://www.mathjax.org) 渲染 LaTeX 公式
-- pnpm 包管理 · 分段构建脚本（规避 mathjax 内存泄漏）
+| 板块 | 状态 |
+|------|:----:|
+| ⚡ 电源与功率变换 | 已上线 |
+| 🔌 电路基础 · 📈 模拟电子 · 🔢 数字电子 | 建设中 |
+| 🟩 PCB 入门 · 🌡️ 传感器 · 🔁 接口协议 · 🛠️ 板级调试 | 规划中 |
 
 ## 与 AELS 的关系
 
-属于**通用工具与教程**范畴的**硬件基础**学习资源，是嵌入式学习的地基：在进入具体航线（[Modern C++](/projects/tutorial-awesome-modern-cpp)、[AwesomeQt](/projects/tutorial-awesome-qt)、各 forge）之前，先把电路、模拟/数字电子、PCB、传感器这些硬件基本功补齐。它是 `Tutorial_Awesome*` 系列的硬件分支。
+属于教学线「系统与硬件基础」分组，是嵌入式学习的硬件地基：在进入 [Tutorial_AwesomeModernCPP](/projects/tutorial-awesome-modern-cpp)、[Tutorial_AwesomeQt](/projects/tutorial-awesome-qt) 或各平台工坊之前，按需补齐电路、电子、PCB 与板级调试基本功。它是 `Tutorial_Awesome*` 系列的硬件分支。
 
 ## 链接
 

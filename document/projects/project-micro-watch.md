@@ -6,7 +6,7 @@ title: "Project_MicroWatch"
 
 面向资源受限 ARM Cortex-M 平台的智能手表原型工程，当前状态是 **WIP / 硬件与功能规划中**。
 
-仓库已经建立软件、硬件和教程目录，也完成了第一代硬件清单评估与部分 OLED 基础资产，但主控、传感器、交互器件和完整产品闭环尚未定型。它不是已经完成的教学项目，也不代表整个 P1 的统一 Capstone。
+仓库已经建立软件、硬件和教程目录，也完成了第一代硬件清单评估与部分 OLED 基础资产，但主控、传感器、交互器件和完整产品闭环尚未定型。它不是已经完成的教学项目，也不代表 MCU 路线的统一 Capstone。
 
 ## 规划方向
 
@@ -25,6 +25,10 @@ title: "Project_MicroWatch"
 - ARM Cortex-M 开发基础
 - C 语言编程
 - 基本电子学知识
+
+## 与 AELS 的关系
+
+属于教学线「MCU 实践」分组的独立综合工程：与 MCU 教学共享部分知识和资产（如 [BareMetal-Drivers](/projects/baremetal-drivers) 的驱动），但不承担 ST-Forge 或整个 MCU 路线的统一 Capstone，建设节奏以仓库为准。
 
 ## 链接
 

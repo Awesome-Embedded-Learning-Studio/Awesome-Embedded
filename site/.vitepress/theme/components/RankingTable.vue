@@ -1,51 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { projects } from '../../project-data'
 import { useRepoStats } from '../composables/useStars'
 
 const ORG = 'Awesome-Embedded-Learning-Studio'
 const { getAllStats } = useRepoStats()
 
-// 与 useStars.ts 的 REPO_NAMES 保持一致；只有这里的仓库才出现在排行榜里。
-const REPO_META: Record<string, { desc: string }> = {
-  'Tutorial_AwesomeModernCPP': { desc: '现代 C++ 系统教程（C++11~C++23）' },
-  'Tutorial_cpp_SimpleIniParser': { desc: '手搓 INI 解析器，C++ 工程化入门实战' },
-  'Project_MakeAMemroyPool': { desc: '内存池实战，FreeList 到 ThreadLocal' },
-  'CFBox': { desc: '现代 BusyBox 替代品，446KB 极致体积' },
-  'Project_CXXBaseComponents': { desc: 'ArgParser、FileCopier 等渐进式实战项目' },
-  'edgecv': { desc: 'C++20 编译期类型安全计算机视觉库' },
-  'imx-forge': { desc: 'i.MX6ULL 嵌入式 Linux 开发工坊' },
-  'rk-forge': { desc: 'Rockchip 平台开发者工作空间' },
-  'rtl8733bu-linux-driver': { desc: 'RTL8733BU WiFi 驱动 Linux 7.1 移植' },
-  'PenguinLab': { desc: '基于 QEMU 的 Linux 内核学习站' },
-  'Cinux': { desc: '现代 C++17 的 x86_64 操作系统实验' },
-  'Cinux-Book': { desc: '从零手搓 x86_64 操作系统中文教程' },
-  'Cinux-Base': { desc: 'Cinux 的 freestanding C++17 基础类型库' },
-  'Cinux-GUI': { desc: 'Cinux 家族的 host-neutral GUI 核心' },
-  'ST-Forge': { desc: 'STM32 HAL 驱动框架，CMake 原生构建' },
-  'BareMetal-Drivers': { desc: '单片机裸机通用驱动库' },
-  'Project_MicroWatch': { desc: '资源受限平台智能手表原型' },
-  'micro-forge': { desc: 'ARM Cortex-M3 全系统模拟器' },
-  'Tutorial_FreeRTOS': { desc: 'FreeRTOS 系列开源教程' },
-  'Tutorial_AwesomeQt': { desc: 'Qt 6 百科全书式教程' },
-  'CFDesktop': { desc: 'Qt6 嵌入式 Material Design 3 桌面框架' },
-  'qt-compile-pipeline': { desc: 'Qt6 ARM 交叉编译自动化管道' },
-  'QuarkWidgets': { desc: '组织级统一 Qt 组件库' },
-  'Tutorial_AwesomeHardware': { desc: '嵌入式硬件学习笔记（电路/PCB/传感器）' },
-  'EmbedBox': { desc: '嵌入式开发通用工具教程' },
-  'C-Journey': { desc: 'C 初学者学习日志与社区' },
-  'aex': { desc: '轻量 C++ 扩展库' },
-  'bareline': { desc: '现代 C++23 shell 交互框架' },
-  'Awesome-Embedded': { desc: '组织中心导航仓库' },
-}
+const projectByName = new Map(projects.map((project) => [project.name, project]))
 
 const ranking = computed(() => {
   const all = getAllStats()
   const list: Array<{ name: string; stars: number; forks: number; desc: string }> = []
   for (const [full, stats] of all) {
     const name = full.split('/')[1]
-    const meta = REPO_META[name]
-    if (meta) {
-      list.push({ name, stars: stats.stars, forks: stats.forks, desc: meta.desc })
+    const project = projectByName.get(name)
+    if (project) {
+      list.push({ name, stars: stats.stars, forks: stats.forks, desc: project.description })
     }
   }
   return list.sort((a, b) => b.stars - a.stars)

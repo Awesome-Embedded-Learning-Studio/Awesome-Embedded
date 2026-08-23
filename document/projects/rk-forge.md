@@ -27,6 +27,10 @@ title: "rk-forge"
 - 嵌入式 Linux BSP 基础
 - Shell 脚本编程
 
+## 与 AELS 的关系
+
+属于教学线「嵌入式 Linux 实践」分组，是[学习地图](/roadmap/)第三支柱的平台深化：承接 [imx-forge](/projects/imx-forge) 之后按开发板与目标选择平台，不必依次学习全部板卡。[h618_forge](/projects/h618-forge) 提供主线化横向参考，固定版本消费 [buildmeter](/projects/buildmeter)。
+
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/rk-forge)

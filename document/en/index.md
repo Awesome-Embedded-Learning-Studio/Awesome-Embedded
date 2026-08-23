@@ -3,18 +3,7 @@ layout: home
 
 hero:
   name: "Awesome Embedded Learning Studio"
-  text: "The Embedded Learning Hut"
-  tagline: "The official site of AELS! — a one-stop hub for systems-software learning."
-  actions:
-    - theme: brand
-      text: Start Here
-      link: /en/#about
-    - theme: alt
-      text: Browse Projects
-      link: https://github.com/Awesome-Embedded-Learning-Studio
-    - theme: alt
-      text: Read the Blog
-      link: https://aels.hashnode.dev
+  text: "A free & open-source Learning Studio that keeps improving"
 
 features:
   - icon: "💻"

@@ -1,42 +1,45 @@
 ---
-title: "P2 · 嵌入式 Linux"
+title: "嵌入式 Linux 实践"
 ---
 
-# P2 · 嵌入式 Linux
+# 嵌入式 Linux 实践
 
-通用 Linux 内核机制用 QEMU 在 [P0](/roadmap/01-fundamentals/) 学过了（PenguinLab）。P2 只搞一件事：在某块 ARM 板子上把 Linux 跑起来、调通、做出东西。
+这一方向把工具、C/C++ 和 Linux 基本功带到真实 ARM 板：构建并启动 U-Boot、内核和 rootfs，修改设备树与驱动，部署用户空间程序，并留下可复查的板端证据。
 
-这些平台都属于 Cortex-A / Linux 世界，但不是同一套 ABI。P2 明确横跨 ARM 32 位和 ARM 64 位：学习能力可以递进，工具链、启动模型、rootfs 和二进制产物不能混在一起。
+## 怎样选择平台
 
 ```mermaid
 flowchart TD
-    IMX["imx-forge · i.MX6ULL<br/>ARMv7-A / 32 位<br/>入门，打透全链路"] --> RK{"进入 Rockchip 双架构工作区"}
-    RK --> RK32["RK3506B<br/>ARMv7-A / 32 位<br/>工业接口与多核 A7"]
-    RK --> RK64["RK3568<br/>ARMv8-A / 64 位<br/>通用驱动主战场"]
-    RK64 --> RK8["RK3588<br/>ARMv8-A / 64 位<br/>NPU / GPU / VPU / ISP"]
-    IMX -. 横向参考 .-> H618["h618_forge · Allwinner H618<br/>纯主线对照，非主载体"]
+    START["第一次完整学习板级 Linux"] --> IMX["imx-forge · i.MX6ULL<br/>打通较简单的完整链路"]
+    IMX -. 建议继续而非强制 .-> RK["rk-forge · Rockchip 工作区"]
+    DIRECT["已有 BSP 经验或目标板明确"] --> RK
+    RK --> RK32["RK3506B<br/>32 位工业平台"]
+    RK --> RK64["RK3568<br/>64 位通用平台"]
+    RK --> RK8["RK3588<br/>高性能异构平台"]
+    REF["h618_forge · H618 主线化实践"] -. 横向参考 .-> IMX
+    REF -. 横向参考 .-> RK
 ```
 
-## Linux forge 的脾气：两头都要
+- [imx-forge](/roadmap/03-linux/imx-forge) 适合第一次打通完整链路。i.MX6ULL 平台较简单，资料充足，仓库已经形成版本发布、可复现构建和真板验收。
+- [rk-forge](/roadmap/03-linux/rk-forge) 面向 RK3506B、RK3568 和 RK3588。三块板共享工作区和方法，但不共享未经区分的 ABI、工具链和构建产物；学习者按背景和目标选择，不要求依次购买全部开发板。
+- [h618_forge](/projects/h618-forge) 提供 Allwinner H618 的主线 U-Boot、TF-A、Linux 与 rootfs 横向参考，不是固定后继路线。
 
-这边的 forge 和单片机不一样，既是教学站也是功能站。教你跑通 Linux，同时产出真能用的工具（buildmeter 给那种几十分钟的内核编译做进度显示，就是例子）。不是纯教学，也不是纯生产，两头都要。
+## 系统知识与平台实践允许交叉
 
-## 平台分工
+[PenguinLab](/projects/penguin-lab) 用 QEMU 解释通用 Linux 内核、系统编程和调试机制。它可以在买板前学习，也可以在 BSP 实践遇到中断、内存、驱动或调试问题后回来深化。
 
-- **imx-forge（i.MX6ULL，入门）**：单核 Cortex-A7，最简单，资料最厚（正点原子、韦东山、野火三家）。打透 U-Boot、内核、设备树、rootfs、驱动、Buildroot 一整条链。招牌是双轨内核——NXP 的 BSP 对比主线，看厂商为什么要打 patch。已发布、成熟晚期，定位、规划、项目见 [imx-forge 专页](/roadmap/03-linux/imx-forge)。
-- **rk-forge（Rockchip 平台）**：一个仓库横跨 32 位 RK3506B 与 64 位 RK3568 / RK3588。三板形成平台梯度，但工具链、启动架构和 ABI 分开讲；所有课程以对应真板验证为验收目标。完整大纲见 [rk-forge 专页](/roadmap/03-linux/rk-forge)。
-- **h618_forge（LubanCat-A1 / Allwinner H618，横向参考）**：已经形成从主线 U-Boot、自建 TF-A、主线 Linux 到自建 Buildroot rootfs 和 HDMI 输出的纯主线工作区，并保留真板验证日志。它用来对照“主线优先”与厂商 BSP 路径的差异，不是 RK3588 的后继，也不挤入 i.MX6ULL → Rockchip 的主脊柱。
+平台 forge 仍然会在具体上下文中重新解释必要内容：会在 QEMU 中观察内核机制，不等于已经理解某块 SoC 的启动链、厂商补丁、设备树和电气事实。
 
-i.MX6ULL 负责把 32 位 Linux 全链路讲透；进入 rk-forge 后，RK3506B 延续 32 位并补 Rockchip 工业平台经验，RK3568 建立 64 位通用驱动基线，RK3588 再进入高性能专题和 Android。三块 RK 板共用工作区和方法论，但绝不共用未经区分的工具链与构建产物。学习路线用 Buildroot 当主要载体，细节见专页。
+## 工程项目与基建
 
-## 基建项目
+| 仓库 | 职责 | 与平台 forge 的关系 |
+|---|---|---|
+| [CFBox](/projects/cfbox) | Linux userspace 高阶工程 | 已通过 imx-forge 在真板上作为 PID 1 验证 |
+| [buildmeter](/projects/buildmeter) | 长时间构建的进度与可观测性基建 | 被 imx-forge 和 rk-forge 以固定版本消费，不是学习节点 |
+| [lightroot](/projects/lightroot) | typed IR、依赖和 rootfs 的构建系统实验 | 最小 QEMU/真板 rootfs 闭环完成前，不宣称替代 Buildroot |
 
-三个项目承担跨平台基建，中心站只同步其当前职责，不另行改写定位：
+产品项目可以使用这些平台完成部署和验收，但不会因此成为嵌入式 Linux 课程的统一终点。
 
-- **CFBox**：C++23 写的 BusyBox 替代，当前提供 123 个 applet、399 项测试；体积优化构建约 418 KB，并已在 i.MX6ULL 上作为 PID 1 运行。
-- **lightroot**：更易用的 Buildroot 风格 rootfs 构建器，已经公开，当前处于 Stage 1。
-- **buildmeter**：从平台仓内部工具独立出来的构建进度工具，为 Linux Kernel、U-Boot 和 Buildroot 的 GNU make 构建提供阶段、进度与 ETA。
+## 验收证据
 
-## 往下走
-
-RK3588 上的驱动、媒体与 AI 实验继续留在 [rk-forge 专页](/roadmap/03-linux/rk-forge)内，桌面产品直接进入 [CFDesktop](/projects/cfdesktop)。独立专题当前均已推迟，不作为 P2 的必经下一站。
+平台仓库应尽量留下可以复查的交付证据：源码版本、工具链和配置、构建命令、产物 hash、串口或测试日志、目标板信息、已知限制和迁移说明。QEMU 可以降低学习门槛，真板仍负责验证启动介质、外设、电气和平台兼容。
