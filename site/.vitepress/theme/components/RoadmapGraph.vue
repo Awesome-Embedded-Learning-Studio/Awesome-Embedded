@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import { useData, withBase } from 'vitepress'
+import { useData, useRouter, withBase } from 'vitepress'
 import {
   ROADMAP_BANDS,
   roadmapEdges,
@@ -11,6 +11,7 @@ import { useStars } from '../composables/useStars'
 
 /* ─────────── 文案（zh/en） ─────────── */
 const { lang } = useData()
+const router = useRouter()
 const en = computed(() => lang.value.startsWith('en'))
 const t = {
   title: computed(() => (en.value ? 'Learning is a tree, not a pipeline' : '学习是一棵树，不是流水线')),
@@ -134,16 +135,21 @@ let dragId: string | null = null
 let dragOff: { x: number; y: number } | null = null
 let saveTimer: ReturnType<typeof setTimeout> | null = null
 
-/* 拖拽误触抑制：位移超阈值后置 suppressClick，click 时吞掉，
-   否则每次拖完节点浏览器都会在同一 <a> 上合成 click 新开仓库标签页。 */
+/* 拖拽误触抑制（双保险）：位移超 4px（真拖拽）或按住超过 350ms（长按抓取但
+   手指没怎么动）都按拖拽意图处理，click 时吞掉。光靠这里不够——VitePress 路由器
+   把 click 监听挂在 window 捕获阶段，会先于节点级处理器抢走 <a> 点击做 SPA 跳转，
+   所以模板容器挂了 vp-raw 让路由器放行，导航决策交给 onClickGuard 接管。 */
 let downScreen: { x: number; y: number } | null = null
+let downAt = 0
 let suppressClick = false
+const HOLD_MS = 350
 
 function onPointerDown(ev: PointerEvent, n: LiveNode) {
   dragId = n.id
   const p = svgXY(ev)
   dragOff = { x: p.x - n.x, y: p.y - n.y }
   downScreen = { x: ev.clientX, y: ev.clientY }
+  downAt = performance.now()
   suppressClick = false
   ;(ev.currentTarget as Element).setPointerCapture(ev.pointerId)
 }
@@ -159,11 +165,21 @@ function onPointerMove(ev: PointerEvent, n: LiveNode) {
   n.x = p.x - dragOff.x
   n.y = p.y - dragOff.y
 }
-function onClickGuard(ev: MouseEvent) {
-  if (suppressClick) {
-    ev.preventDefault()
-    suppressClick = false
+/* 导航决策由本函数接管（容器挂 vp-raw）：干净轻点 → 站内链接走 SPA 路由；
+   拖拽 / 长按 → 吞掉不跳；修饰键/非左键/外链(target=_blank) → 浏览器原生行为。 */
+function onClickGuard(ev: MouseEvent, n: LiveNode) {
+  const href = nodeHref(n)
+  if (!href || nodeExternal(n)) return
+  if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return
+  ev.preventDefault()
+  /* 键盘 Enter 触发的 click（detail=0，无 pointerdown 前置）：直接放行 */
+  if (ev.detail === 0) {
+    router.go(href)
+    return
   }
+  const heldLong = performance.now() - downAt > HOLD_MS
+  if (!suppressClick && !heldLong) router.go(href)
+  suppressClick = false
 }
 function onPointerUp() {
   if (!dragId) return
@@ -235,7 +251,10 @@ function nodeExternal(n: LiveNode): boolean {
       <span class="rg-plaque__note">{{ t.note.value }}</span>
     </div>
 
-    <div class="rg-wrap">
+    <!-- vp-raw：VitePress 路由器在 window 捕获阶段拦截 <a> 点击做 SPA 跳转，
+         节点级 preventDefault 排不上队（拖完/长按松手照样跳页）。挂 vp-raw 让
+         路由器放过容器内链接，导航权交回 onClickGuard。 -->
+    <div class="rg-wrap vp-raw">
       <div class="rg-ctl">
         <button type="button" @click="resetLayout">{{ t.reset.value }}</button>
         <a :href="withBase('/projects/')">{{ t.allRepos.value }}</a>
@@ -292,7 +311,7 @@ function nodeExternal(n: LiveNode): boolean {
             @pointermove="onPointerMove($event, n)"
             @pointerup="onPointerUp"
             @pointercancel="onPointerUp"
-            @click="onClickGuard"
+            @click="onClickGuard($event, n)"
             @pointerenter="hoverId = n.id"
             @pointerleave="hoverId = null"
           >
