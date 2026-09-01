@@ -4,6 +4,13 @@ layout: home
 hero:
   name: "Awesome Embedded Learning Studio"
   text: "持续进步的完全开源免费的 Learning Studio"
+  actions:
+    - theme: brand
+      text: "💬 加入 QQ 交流群"
+      link: "#aels-qq-groups"
+    - theme: alt
+      text: "社区讨论区"
+      link: "https://github.com/orgs/Awesome-Embedded-Learning-Studio/discussions/7"
 
 features:
   - icon: "🧭"

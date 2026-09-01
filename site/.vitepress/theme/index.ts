@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import HomeTerminal from './components/HomeTerminal.vue'
 import DataStrip from './components/DataStrip.vue'
+import QQGroups from './components/QQGroups.vue'
 import RoadmapGraph from './components/RoadmapGraph.vue'
 import HomeAbout from './components/HomeAbout.vue'
 import HomePlaque from './components/HomePlaque.vue'
@@ -22,7 +23,8 @@ export default {
       'layout-top': () => h(MermaidLightbox),
       // 首页门面：hero 右侧琥珀终端 → 数据带 → 可拖拽学习树 → 方法论卡 → 门廊长文
       'home-hero-image': () => h(HomeTerminal),
-      'home-hero-after': () => h(DataStrip),
+      // DataStrip 必须保持在第一位：它的 margin: -6px auto 0 是为紧贴 hero 设计的
+      'home-hero-after': () => [h(DataStrip), h(QQGroups)],
       'home-features-before': () => [
         h(RoadmapGraph),
         h(HomePlaque, { tag: '§ APPROACH', title: '怎么学，怎么信' }),
