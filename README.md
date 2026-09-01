@@ -15,19 +15,24 @@
   <img alt="roadmap" src="https://img.shields.io/badge/路线-基础%20%2B%20MCU%20%2B%20Linux%20%2B%20Cinux-blue" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/orgs/Awesome-Embedded-Learning-Studio/discussions/7">
-    <img src="site/.vitepress/public/images/qq/aels-embeded.svg" width="150" alt="AELS QQ 群二维码 645248275" />
-    <br />
-    <sub><b>AELS 交流群</b> · 645248275</sub>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP">
-    <img src="site/.vitepress/public/images/qq/aels-tamcpp.svg" width="150" alt="TAMCPP QQ 群二维码 1107100989" />
-    <br />
-    <sub><b>TAMCPP（Modern C++ 教程）群</b> · 1107100989</sub>
-  </a>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/orgs/Awesome-Embedded-Learning-Studio/discussions/7">
+        <img src="site/.vitepress/public/images/qq/aels-embeded.svg" width="150" alt="AELS QQ 群二维码 645248275" />
+        <br />
+        <sub><b>AELS 交流群</b> · 645248275</sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP">
+        <img src="site/.vitepress/public/images/qq/aels-tamcpp.svg" width="150" alt="TAMCPP QQ 群二维码 1107100989" />
+        <br />
+        <sub><b>TAMCPP（Modern C++ 教程）群</b> · 1107100989</sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
 ---
 
