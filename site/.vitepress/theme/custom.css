@@ -177,6 +177,25 @@
   }
 }
 
+/* 手机/窄屏：hero 终端是整卡不是悬浮小 logo。VPHero 默认按"小 logo 图"
+   排 hero 图位（顶部 -76px 拉进导航栏、底部 -48px 把标题拽上来重叠、
+   固定 320/392 方形画布），换成终端卡片后与标题/导航栏互相压边。
+   窄屏改回文档流：清负 margin、画布随卡片自适应、藏掉圆形 logo 光晕底。 */
+@media (max-width: 959.98px) {
+  .VPHero .image {
+    margin: 0 0 28px !important;
+  }
+
+  .VPHero .image-container {
+    width: min(440px, 100%) !important;
+    height: auto !important;
+  }
+
+  .VPHero .image-bg {
+    display: none;
+  }
+}
+
 .VPHome .VPHero::before {
   content: '';
   position: absolute;
