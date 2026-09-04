@@ -15,3 +15,4 @@ title: "Tutorial_FreeRTOS"
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_FreeRTOS)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/Tutorial_FreeRTOS/)

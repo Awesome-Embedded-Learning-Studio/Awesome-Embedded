@@ -27,3 +27,4 @@ engineering_cpp 是 B 站《现代 C++ 工程实践》的配套 hub：用 C++23 
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/engineering_cpp)
+- [B站视频链接](https://space.bilibili.com/294645890/lists/7045956)

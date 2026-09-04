@@ -20,3 +20,4 @@ C++20 编译期类型安全的计算机视觉库：强类型 Image / ImageView �
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/edgecv)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/edgecv/)
