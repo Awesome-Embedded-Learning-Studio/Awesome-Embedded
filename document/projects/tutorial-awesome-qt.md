@@ -20,3 +20,4 @@ Qt 6 系统教程，按入门 / 进阶 / 专家三层分级组织，覆盖 QtBas
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeQt)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/Tutorial_AwesomeQt/)

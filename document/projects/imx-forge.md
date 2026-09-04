@@ -28,3 +28,4 @@ v1.0.0 已在正点原子阿尔法开发板完成 SD 卡与 eMMC 启动验证，
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/imx-forge)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/imx-forge/)

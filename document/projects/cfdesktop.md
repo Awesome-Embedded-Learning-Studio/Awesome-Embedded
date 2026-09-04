@@ -30,3 +30,4 @@ title: "CFDesktop"
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/CFDesktop)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/CFDesktop/)

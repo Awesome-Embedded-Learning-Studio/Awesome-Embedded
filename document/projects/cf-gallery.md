@@ -21,3 +21,4 @@ CFDesktop 的独立摄影与壁纸资源站，使用 VitePress 展示资源，�
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/CF-Gallery)
+- [在线网站](https://awesome-embedded-learning-studio.github.io/CF-Gallery/)

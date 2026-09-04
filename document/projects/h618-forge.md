@@ -33,3 +33,4 @@ h618_forge 是嵌入式 Linux 实践中的横向参考，不是 RK3588 的后继
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/h618_forge)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/h618_forge/)

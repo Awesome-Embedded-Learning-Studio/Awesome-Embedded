@@ -21,3 +21,4 @@ title: "PenguinLab"
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/PenguinLab)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/PenguinLab/)
