@@ -19,4 +19,4 @@ C-Journey 是 C 语言的进阶学习日志与社区枢纽：目标不是「会�
 ## 链接
 
 - [GitHub 仓库](https://github.com/Awesome-Embedded-Learning-Studio/C-Journey)
-- [在线文档站](http://awesome-embedded-learning-studio.github.io/C-Journey/)
+- [在线文档站](https://awesome-embedded-learning-studio.github.io/C-Journey/)
