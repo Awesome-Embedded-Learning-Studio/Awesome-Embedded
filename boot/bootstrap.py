@@ -46,17 +46,17 @@ CORE_REPOS = ["EmbedBox", "C-Journey"]
 
 # Pillar -> repo short-names. Short-names MUST match the url tail in
 # org-repos.yml exactly (case-sensitive: ST-Forge, h618_forge, aex).
-# esp-forge is private + unregistered -> not listed; append to TRACKS["mcu"]
-# once it goes public and is added to org-repos.yml.
+# Private repos (aels-prism, visor) stay unlisted: plain https clone cannot
+# see them. Append a repo here only after it goes public and is registered
+# in org-repos.yml.
 TRACKS = {
     "fundamentals": ["EmbedBox", "C-Journey", "Tutorial_FreeRTOS", "PenguinLab",
                      "Tutorial_AwesomeHardware", "Tutorial_AwesomeQt",
                      "Tutorial_AwesomeModernCPP"],
-    "mcu":          ["ST-Forge", "BareMetal-Drivers", "micro-forge"],
+    "mcu":          ["ST-Forge", "BareMetal-Drivers", "micro-forge", "libestdx"],
     "linux":        ["imx-forge", "rk-forge", "h618_forge", "CFBox", "lightroot",
-                     "buildmeter"],
-    "specialty":    ["Cinux", "Cinux-Book", "Cinux-Base", "Cinux-GUI", "aex",
-                     "bareline"],
+                     "buildmeter", "devtree-journey"],
+    "specialty":    ["Cinux", "Cinux-Book", "ZerOS", "aex", "bareline"],
 }
 
 
@@ -198,11 +198,12 @@ def print_map(dest: Path) -> None:
     print()
     print("  P0 · 基础        EmbedBox(工具链) + C-Journey(C)")
     print("                   → 已克隆,从这里开始")
-    print("  P1 · 单片机      ST-Forge(STM32F1) · esp-forge(私有,未公开)")
+    print("  P1 · 单片机      ST-Forge(STM32F1) · micro-forge · libestdx(MCU 库)")
     print(f"                   → python boot/bootstrap.py --dest {d} --track mcu")
     print("  P2 · 嵌入式Linux imx-forge → rk-forge → h618_forge(横向参考)")
+    print("                   + devtree-journey(设备树)")
     print(f"                   → python boot/bootstrap.py --dest {d} --track linux")
-    print("  专题 · Cinux     Cinux / Cinux-Book / Cinux-Base / Cinux-GUI")
+    print("  专题 · 手搓系列   Cinux(X64 OS) / Cinux-Book / ZerOS(RTOS) / aex / bareline")
     print(f"                   → python boot/bootstrap.py --dest {d} --track specialty")
     print()
     print("  完整地图:  document/roadmap/")
