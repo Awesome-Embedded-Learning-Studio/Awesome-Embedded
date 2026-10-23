@@ -1,6 +1,8 @@
 ---
 title: "我们想做一个横跨 MCU 与嵌入式 Linux 的开源学习工作室"
 description: "AELS 尝试把 Modern C++ 工程方法带进真实的嵌入式学习过程，从 MCU 一路走到嵌入式 Linux、系统软件与产品。"
+date: 2026-07-25
+tags: [随笔]
 ---
 
 # 我们想做一个横跨 MCU 与嵌入式 Linux 的开源学习工作室

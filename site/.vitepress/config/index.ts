@@ -2,6 +2,9 @@ import { defineConfig } from 'vitepress'
 import type { DefaultTheme } from 'vitepress'
 import { buildSidebar } from './sidebar'
 import { resolvePlugins } from '../plugins'
+import { rssPlugin } from './rss'
+import './todo-checks'
+import { siteBase, withBase, absoluteUrl } from './site-env'
 import type { ProjectConfig } from './schema'
 import { resolve } from 'path'
 
@@ -53,8 +56,7 @@ function buildLocales(): Record<string, any> {
 // ── SEO / Open Graph ───────────────────────────────────────
 // Locale-aware: zh_CN for Chinese (root) pages now; auto en_US once an /en/ locale is added later.
 // No twitter:* tags by request — Open Graph covers WeChat / Feishu / DingTalk / Juejin / Zhihu / Slack / Discord previews.
-const SITE_ORIGIN = 'https://awesome-embedded-learning-studio.github.io'
-const OG_IMAGE = `${SITE_ORIGIN}${projectConfig.base}images/og/aels-og.png`
+const OG_IMAGE = absoluteUrl('/images/og/aels-og.png')
 
 function transformHead(ctx: any) {
   const fm = (ctx.pageData && ctx.pageData.frontmatter) || {}
@@ -63,8 +65,8 @@ function transformHead(ctx: any) {
   const title = fm.title || (ctx.pageData && ctx.pageData.title) || ctx.title || defaultTitle
   const description = fm.description || (ctx.pageData && ctx.pageData.description) || ctx.description || defaultDesc
   const path = rel.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-  const url = `${SITE_ORIGIN}${projectConfig.base}${path}`
-  return [
+  const url = absoluteUrl(`/${path}`)
+  const head: any[] = [
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: isEn ? (projectConfig.title['en'] || defaultTitle) : defaultTitle }],
     ['meta', { property: 'og:title', content: title }],
@@ -77,6 +79,14 @@ function transformHead(ctx: any) {
     ['meta', { property: 'og:locale', content: isEn ? 'en_US' : primaryLocale.code.replace('-', '_') }],
     ['meta', { property: 'og:locale:alternate', content: isEn ? 'zh_CN' : 'en_US' }],
   ]
+
+  // 静态跳转页(document/planning/ 下的迁移页):frontmatter 只写站内目标路径,
+  // refresh 与 canonical 在这里统一生成,地址跟随 site-env 的 base/origin 参数化。
+  if (typeof fm.redirect === 'string' && fm.redirect) {
+    head.push(['meta', { 'http-equiv': 'refresh', content: `0; url=${withBase(fm.redirect)}` }])
+    head.push(['link', { rel: 'canonical', href: absoluteUrl(fm.redirect) }])
+  }
+  return head
 }
 
 export default defineConfig({
@@ -84,7 +94,7 @@ export default defineConfig({
   title: defaultTitle,
   description: defaultDesc,
   lang: primaryLocale.code,
-  base: projectConfig.base,
+  base: siteBase,
   cleanUrls: true,
   lastUpdated: true,
   ignoreDeadLinks: false,
@@ -100,16 +110,18 @@ export default defineConfig({
   locales: buildLocales(),
 
   head: [
-    ['link', { rel: 'icon', href: projectConfig.favicon || `${projectConfig.base}favicon.ico` }],
+    // favicon 字段只写文件名,base 前缀由这里拼上,避免手抄路径
+    ['link', { rel: 'icon', href: projectConfig.favicon ? withBase(`/${projectConfig.favicon}`) : withBase('/favicon.ico') }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: withBase('/feed.xml') }],
   ],
 
   transformHead,
 
   sitemap: {
     // VitePress resolves each <loc> via new URL(pagePath, hostname), so hostname MUST end with a
-    // trailing slash (keep projectConfig.base's trailing '/') — otherwise the base segment is
-    // treated as a filename and eaten by sub-page paths. Verified via dist/sitemap.xml.
-    hostname: `${SITE_ORIGIN}${projectConfig.base}`,
+    // trailing slash (absoluteUrl('/') = siteOrigin + base, and base keeps its trailing '/') —
+    // otherwise the base segment is treated as a filename and eaten by sub-page paths. Verified via dist/sitemap.xml.
+    hostname: absoluteUrl('/'),
   },
 
   markdown: {
@@ -125,6 +137,7 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [rssPlugin()],
     publicDir: resolve(__dirname, '../public'),
     ssr: {
       // Mermaid 与 Panzoom 只在浏览器端动态加载，SSR 阶段不求值 DOM 相关代码。

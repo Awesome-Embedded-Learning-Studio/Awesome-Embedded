@@ -39,4 +39,4 @@ ST-Forge 以 STM32F1 / Cortex-M3 为主要教学平台，从查阅芯片资料�
 
 ## 关于综合项目
 
-[Project_MicroWatch](/projects/project-micro-watch) 是正在发展的 STM32G431 / FreeRTOS 工程，可以与 MCU 教学共享知识和资产，但它不是 ST-Forge 的预定终点。ST-Forge 是否以及怎样形成综合课程项目，以后由已经完成的内容、验证能力和真实需求决定。
+MCU 路线不预定统一的结课工程。ST-Forge 是否以及怎样形成综合课程项目，以后由已经完成的内容、验证能力和真实需求决定，届时在项目目录单独登记。

@@ -278,20 +278,6 @@ export const projects: AelsProject[] = [
     relations: ['可承接平台工坊中成熟的可复用资产'],
   },
   {
-    name: 'Project_MicroWatch',
-    slug: 'project-micro-watch',
-    repo: github('Project_MicroWatch'),
-    lane: 'learning',
-    group: 'mcu-practice',
-    kind: '综合工程',
-    domains: ['MCU', 'FreeRTOS'],
-    stage: 'building',
-    position: '独立发展的 STM32G431 / FreeRTOS 工程，用于观察资源受限产品的综合问题。',
-    description: '现有 MCU 项目，不代表 ST-Forge 或整个 MCU 路线的预定终点。',
-    evidence: '项目仍在建设，硬件与完整产品闭环尚未稳定。',
-    relations: ['与 MCU 教学共享部分知识和资产，但不承担统一 Capstone'],
-  },
-  {
     name: 'bareline',
     slug: 'bareline',
     repo: github('bareline'),
@@ -543,6 +529,48 @@ export const projects: AelsProject[] = [
     evidence: '已有 Qt ARM 交叉构建脚本，尚未与 CFDesktop/BSP 建立完整固定版本交接。',
     relations: ['需要进入 CFDesktop 与 Linux BSP 的真实交付链'],
   },
+  {
+    name: 'ZerOS',
+    slug: 'zeros',
+    repo: github('ZerOS'),
+    lane: 'learning',
+    group: 'systems-fundamentals',
+    kind: '教学专题',
+    domains: ['RTOS', 'MCU', '现代 C++'],
+    stage: 'building',
+    position: '用 C++23 从零写一个裸机 RTOS，在 Cortex-M3 上理解实时系统机制。',
+    description: '玩具级但约束严格：无堆、无 RTTI、无异常、无 C ABI，一套内核在桌面单测、Renode 与 QEMU 仿真以及真板环境运行。',
+    evidence: 'MIT 许可，README 标明 Cortex-M3 与 freestanding 约束（2026-10-23 读取仓库首页）。',
+    relations: ['README 自述与 Tutorial_AwesomeModernCPP 建立联动', '承接 Tutorial_FreeRTOS 概念通识之后的 RTOS 实战'],
+  },
+  {
+    name: 'libestdx',
+    slug: 'libestdx',
+    repo: github('libestdx'),
+    lane: 'learning',
+    group: 'mcu-practice',
+    kind: '器件驱动库',
+    domains: ['MCU', '现代 C++', '驱动'],
+    stage: 'building',
+    position: 'C++23 编写的嵌入式器件驱动库，给单片机工程提供现代化驱动资产。',
+    description: '从教程主线解耦出来供浅克隆取用，构建面向 STM32F103C8T6，仿真验证依赖 Renode。',
+    evidence: 'README 自述与 Tutorial_AwesomeModernCPP 联动及持续建设状态，工具链 arm-none-eabi-gcc 加 CMake 加 Ninja（2026-10-23 读取仓库首页）。',
+    relations: ['Tutorial_AwesomeModernCPP 的联动仓库', '为 ST-Forge 与裸机工程提供驱动层'],
+  },
+  {
+    name: 'devtree-journey',
+    slug: 'devtree-journey',
+    repo: github('devtree-journey'),
+    lane: 'learning',
+    group: 'linux-practice',
+    kind: '专题实验',
+    domains: ['设备树', 'Linux', 'U-Boot'],
+    stage: 'building',
+    position: '面向 Linux 与 U-Boot 的设备树学习实验仓。',
+    description: '讲义加可跟跑实验，从 exercises/lab/00-bootstrap 开始，每个实验自带命令与验收条件。',
+    evidence: 'README 写明本地 VitePress 预览方式与已验证的工具版本 dtc v1.8.1（2026-10-23 读取仓库首页）。',
+    relations: ['与 imx-forge、rk-forge 的板级实践互链', '嵌入式 Linux 路线的设备树横向入口'],
+  },
 ]
 
 // fail loud：数据不一致时在 import 即刻暴露（dev / build / 侧边栏生成都会经过这里）
@@ -565,3 +593,4 @@ export const projects: AelsProject[] = [
 }
 
 export const publicProjectNames = projects.map((project) => project.name)
+export const projectSlugs = projects.map((project) => project.slug)

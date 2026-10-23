@@ -13,6 +13,8 @@ import ProjectCatalog from './components/ProjectCatalog.vue'
 import OrgStats from './components/OrgStats.vue'
 import RankingTable from './components/RankingTable.vue'
 import MermaidLightbox from './components/MermaidLightbox.vue'
+import BlogList from './components/BlogList.vue'
+import TodoBoard from './components/TodoBoard.vue'
 import { setupMermaid } from './mermaid-client'
 import './custom.css'
 
@@ -41,5 +43,7 @@ export default {
     app.component('ProjectCatalog', ProjectCatalog)
     app.component('OrgStats', OrgStats)
     app.component('RankingTable', RankingTable)
+    app.component('BlogList', BlogList)
+    app.component('TodoBoard', TodoBoard)
   },
 } satisfies Theme

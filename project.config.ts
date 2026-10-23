@@ -7,6 +7,7 @@ export default defineProject({
     'zh-CN': 'Awesome-Embedded-Learning-Studio · C/C++ 系统软件与嵌入式工程实践学习导航',
     'en': 'Project-based engineering notes for embedded systems, modern C++, Linux, and operating systems.',
   },
+  siteOrigin: 'https://awesome-embedded-learning-studio.github.io',
   base: '/Awesome-Embedded/',
   copyright: 'Copyright © 2025-2026 Awesome-Embedded-Learning-Studio',
 
@@ -24,11 +25,13 @@ export default defineProject({
       { text: '从这里开始', link: '/guide/' },
       { text: '学习关系', link: '/roadmap/' },
       { text: '仓库目录', link: '/projects/' },
+      { text: '视频', link: 'https://github.com/Awesome-Embedded-Learning-Studio/aels-prism' },
+      { text: '文章', link: '/blog/' },
       {
         text: '社区与参与',
         items: [
-          { text: '周报', link: '/weekly/' },
-          { text: '文章', link: '/blog/' },
+          { text: '周报', link: '/blog/?tag=周报' },
+          { text: '路线与进行中', link: '/todo/' },
           { text: '贡献指南', link: '/contributing/' },
           { text: '协作流程', link: '/workflow/' },
           { text: '维护者', link: '/maintainers/' },
@@ -55,6 +58,7 @@ export default defineProject({
       { name: 'ranking', srcDir: 'ranking', urlPrefix: '/ranking' },
       { name: 'weekly', srcDir: 'weekly', urlPrefix: '/weekly' },
       { name: 'blog', srcDir: 'blog', urlPrefix: '/blog' },
+      { name: 'todo', srcDir: 'todo', urlPrefix: '/todo' },
     ],
   },
 
@@ -77,5 +81,5 @@ export default defineProject({
     math: false,
   },
 
-  favicon: '/Awesome-Embedded/Awesome-Embedded.png',
+  favicon: 'Awesome-Embedded.png',
 })

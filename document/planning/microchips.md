@@ -1,13 +1,7 @@
 ---
 title: "单片机规划已迁移"
 sidebar: false
-head:
-  - - meta
-    - http-equiv: refresh
-      content: "0; url=/Awesome-Embedded/roadmap/02-mcu/"
-  - - link
-    - rel: canonical
-      href: "https://awesome-embedded-learning-studio.github.io/Awesome-Embedded/roadmap/02-mcu/"
+redirect: "/roadmap/02-mcu/"
 ---
 
 # 单片机规划已迁移

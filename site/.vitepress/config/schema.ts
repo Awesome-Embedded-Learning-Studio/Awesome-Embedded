@@ -20,6 +20,9 @@ export interface ProjectConfig {
   name: string
   title: Record<string, string>
   description: Record<string, string>
+  /** 部署的绝对地址,不带尾斜杠,默认 Pages。环境变量 SITE_ORIGIN 可覆盖 */
+  siteOrigin: string
+  /** URL 子路径,前后带斜杠,如 '/Awesome-Embedded/'。环境变量 SITE_BASE 可覆盖 */
   base: string
   copyright: string
 
@@ -54,6 +57,7 @@ export interface ProjectConfig {
     math?: boolean
   }
 
+  /** 图标文件名,不含 base 前缀,构建时自动拼上 */
   favicon?: string
 }
 

@@ -55,7 +55,7 @@ imx-forge 适合第一次打通完整板级链路；rk-forge 根据开发板与�
 
 ### [Cinux：产品与教学重放](/roadmap/04-specialty/)
 
-Cinux 持续探索前沿操作系统能力，Cinux-Book 负责选择稳定切片进行教学重放。公共基础类型和 GUI 代码收拢到 Cinux 内部，避免用多个仓库放大维护压力。
+Cinux 持续探索前沿操作系统能力，Cinux-Book 负责选择稳定切片进行教学重放。GUI 框架由 visor 承接（跨宿主 GUI 框架，Cinux 是宿主之一），桌面壳由 vesper 承接，两仓公开后在项目目录登记。
 
 ## 共同验证底线
 

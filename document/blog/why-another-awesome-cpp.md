@@ -1,6 +1,8 @@
 ---
 title: "为什么又要一个 Awesome C++ 列表？因为光有链接还不够"
 description: "先别误会——Tutorial_AwesomeModernCPP 根本不是一份链接列表，Awesome 只是这套教程的命名习惯。"
+date: 2026-06-25
+tags: [随笔]
 ---
 
 # 为什么又要一个 Awesome C++ 列表？因为光有链接还不够

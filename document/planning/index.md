@@ -1,13 +1,7 @@
 ---
 title: "项目规划已迁移"
 sidebar: false
-head:
-  - - meta
-    - http-equiv: refresh
-      content: "0; url=/Awesome-Embedded/roadmap/"
-  - - link
-    - rel: canonical
-      href: "https://awesome-embedded-learning-studio.github.io/Awesome-Embedded/roadmap/"
+redirect: "/roadmap/"
 ---
 
 # 项目规划已迁移

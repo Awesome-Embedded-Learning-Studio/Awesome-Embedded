@@ -16,7 +16,7 @@ title: "BareMetal-Drivers"
 
 ## 与 AELS 的关系
 
-属于教学线「MCU 实践」分组，与 [ST-Forge](/projects/st-forge) 平台工坊配套：工坊里验证成熟的可复用资产沉淀到这里，[Project_MicroWatch](/projects/project-micro-watch) 等工程也可消费这些驱动。
+属于教学线「MCU 实践」分组，与 [ST-Forge](/projects/st-forge) 平台工坊配套：工坊里验证成熟的可复用资产沉淀到这里，供 [bareline](/projects/bareline) 这类裸机工程消费。
 
 ## 链接
 
