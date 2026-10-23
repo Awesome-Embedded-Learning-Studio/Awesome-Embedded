@@ -19,6 +19,7 @@ Usage:
 import argparse
 import datetime as dt
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 META_DIR = REPO_ROOT / "content" / "meta"
 REFRESH_SCRIPT = REPO_ROOT / "scripts" / "refresh-meta.py"
+# C2 可见性台账：待处理变化（新仓/消失仓）留痕于此，发布周报前过目，
+# 处理完成（登记项目页/确认归档等）后人工删行。文件在 gitignored 的 content/ 下。
+PENDING_FILE = META_DIR / "pending-changes.md"
+PENDING_LINE_RE = re.compile(
+    r"^- \[(\d{4}-\d{2}-\d{2})\] (new|gone) ([\w.-]+)(?: — (.*))?$")
 
 ACTIVE_DAYS = 30
 STALE_DAYS = 180
@@ -88,6 +94,36 @@ def pick_previous(current_date, want_days):
 
 def fmt_delta(n):
     return f"+{n}" if n > 0 else str(n)
+
+
+def load_pending():
+    """Read pending-changes.md -> {(kind, repo): (first_seen, note)}."""
+    if not PENDING_FILE.exists():
+        return {}
+    entries = {}
+    for line in PENDING_FILE.read_text(encoding="utf-8").splitlines():
+        m = PENDING_LINE_RE.match(line.strip())
+        if m:
+            date, kind, name, note = m.groups()
+            entries[(kind, name)] = (date, note or "")
+    return entries
+
+
+def save_pending(entries):
+    header = (
+        "# 待处理变化清单（自动维护，处理完手工删行）\n"
+        "\n"
+        "- weekly-report.py 每次运行把新增/消失仓库登记到此处，已登记项不重复记。\n"
+        "- 发布周报前过目一遍；某项处理完成（补项目页、确认归档/改名）后删除该行。\n"
+        "- 全部清空后文件保留表头即可。\n")
+    body = sorted(
+        (date, kind, name, note) for (kind, name), (date, note) in entries.items())
+    lines = [header]
+    if body:
+        for date, kind, name, note in body:
+            suffix = f" — {note}" if note else ""
+            lines.append(f"- [{date}] {kind} {name}{suffix}")
+    PENDING_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main():
@@ -181,6 +217,24 @@ def main():
         w("")
         for n in gone_repos:
             w(f"- {n}")
+        w("")
+
+    # --- C2 pending ledger: upsert new/gone, echo full table into the raw report ---
+    pending = load_pending()
+    for n in new_repos:
+        desc = (curr_repos[n].get("description") or "").strip()
+        pending.setdefault(("new", n), (str(curr_date), desc))
+    for n in gone_repos:
+        pending.setdefault(("gone", n), (str(curr_date), ""))
+    save_pending(pending)
+    if pending:
+        w("## 待处理变化清单（C2 台账全文；处理完从 content/meta/pending-changes.md 删行）")
+        w("")
+        for (kind, name), (date, note) in sorted(
+                pending.items(), key=lambda kv: (kv[1][0], kv[0][1])):
+            label = "新仓待登记" if kind == "new" else "消失待确认"
+            suffix = f" — {note}" if note else ""
+            w(f"- [{date}] {label}：**{name}**{suffix}")
         w("")
 
     # --- activity transitions ---

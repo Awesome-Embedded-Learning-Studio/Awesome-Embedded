@@ -193,6 +193,7 @@ export const projects: AelsProject[] = [
     evidence: '已有课程与代码基础；新的工程闭环正在小步重构。',
     relations: ['由 engineering_cpp 组织', '计划交付库、ini-check 工具与真实消费者'],
   },
+
   {
     name: 'anatomy_memory',
     slug: 'anatomy-memory',
@@ -235,6 +236,7 @@ export const projects: AelsProject[] = [
     evidence: '已有 Host 可运行示例；代码级 CI 验证仍需加强。',
     relations: ['为 ST-Forge 的 FreeRTOS 内容提供概念补充', 'Host 模拟不替代真板验收'],
   },
+
   {
     name: 'Tutorial_AwesomeHardware',
     slug: 'tutorial-awesome-hardware',
@@ -333,6 +335,7 @@ export const projects: AelsProject[] = [
     evidence: '已有完整主线链路和真板验证日志。',
     relations: ['为 imx-forge 与 rk-forge 提供横向方法参考'],
   },
+
   {
     name: 'CFBox',
     slug: 'cfbox',

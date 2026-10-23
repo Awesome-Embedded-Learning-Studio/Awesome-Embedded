@@ -726,6 +726,13 @@ const bandNodes = (band: RoadmapBand) =>
   .rg-plaque__note {
     display: none;
   }
+  /* 控件不再悬浮：absolute 会压在横向滚动的图上、节点文字从底下穿过。
+     退回流内独占一行，垫在图上方。 */
+  .rg-ctl {
+    position: static;
+    justify-content: flex-end;
+    padding: 10px 12px 0;
+  }
   /* 窄屏不再等比缩成缩略图：保最小宽度横向滚 + 允许双指缩放，
      页面纵向滚动优先（pan-y） */
   .rg-svg {
