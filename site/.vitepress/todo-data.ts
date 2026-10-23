@@ -77,9 +77,9 @@ export const todoItems: TodoItem[] = [
   {
     id: 'frontend-restyle',
     title: '中心站前端改版',
-    desc: '阅读尺度、找路与组件语言的系统性改版，先诊断后实施。',
+    desc: '阅读尺度、找路与组件语言的系统性改版，正文提到 16px，学习入口提前，窄屏换文字版学习树。',
     track: 'central',
-    status: 'active',
+    status: 'done',
     link: '/',
     month: '2026-10',
   },
