@@ -125,6 +125,7 @@ export const todoItems: TodoItem[] = [
     desc: '在 RK3588 或 STM32 上跑通第一个真正跑在设备上的 AI 应用。',
     track: 'learning',
     status: 'queued',
+    link: '/plans/rk-forge/',
     projectSlug: 'rk-forge',
     month: '2026-10',
   },

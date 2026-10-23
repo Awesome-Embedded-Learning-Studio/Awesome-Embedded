@@ -32,6 +32,7 @@ export default defineProject({
         items: [
           { text: '周报', link: '/blog/?tag=周报' },
           { text: '路线与进行中', link: '/todo/' },
+          { text: '项目规划', link: '/plans/' },
           { text: '贡献指南', link: '/contributing/' },
           { text: '协作流程', link: '/workflow/' },
           { text: '维护者', link: '/maintainers/' },
@@ -59,6 +60,7 @@ export default defineProject({
       { name: 'weekly', srcDir: 'weekly', urlPrefix: '/weekly' },
       { name: 'blog', srcDir: 'blog', urlPrefix: '/blog' },
       { name: 'todo', srcDir: 'todo', urlPrefix: '/todo' },
+      { name: 'plans', srcDir: 'plans', urlPrefix: '/plans' },
     ],
   },
 
