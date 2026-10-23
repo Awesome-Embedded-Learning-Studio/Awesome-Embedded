@@ -1,7 +1,7 @@
 // 「路线与进行中」数据源的构建期核对，fail loud：import 即校验，dev 与 build 都会经过。
 // 本文件只在 config（Node 环境）里运行，可以读仓库根的清单与 content/ 下的私有名单，
 // 永远不会被引进浏览器包，名单内容不进产物。
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { todoItems } from '../todo-data'
 import { publicProjectNames, projectSlugs } from '../project-data'
@@ -53,11 +53,17 @@ const CWD = process.cwd()
   }
 
   // 私有仓名名单：content/ 整个目录被 gitignore，名单不进公开历史。
+  // 因此 CI 和全新克隆上没有这个文件：名单核对只在本地构建时生效，缺文件不算异常。
   const listPath = resolve(CWD, 'content/todo-private-names.txt')
-  const privateNames = readFileSync(listPath, 'utf8')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'))
+  const privateNames = existsSync(listPath)
+    ? readFileSync(listPath, 'utf8')
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line && !line.startsWith('#'))
+    : []
+  if (privateNames.length === 0) {
+    console.warn('[todo-checks] 私有仓名名单缺失（CI/全新克隆属预期），仓名核对跳过')
+  }
 
   const banned = /(Q|J|A)\d|待拍|未拍|候选|预算|\d+\s*小时/
   for (const item of todoItems) {
