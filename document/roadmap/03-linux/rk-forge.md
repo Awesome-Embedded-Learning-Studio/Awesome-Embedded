@@ -4,6 +4,8 @@ title: "rk-forge · Rockchip 平台"
 
 # rk-forge · Rockchip 平台
 
+> 仓库定位与验证入口见 [项目目录 · rk-forge](/projects/rk-forge)。
+
 > 仓库状态：公开，三板课程路线已经定稿。workspace 已有，具体内容由 rk-forge 按自己的节奏建设。
 
 rk-forge 是 Rockchip 平台对位 imx-forge 的工作区，但它不是一条单一架构的线性升级链。仓库同时覆盖 **RK3506B 的 ARMv7-A / 32 位路线**，以及 **RK3568、RK3588 的 ARMv8-A / 64 位路线**。三块板共享 Linux BSP、驱动与产品化方法，但工具链、ABI、启动架构和 rootfs 产物必须分开管理。

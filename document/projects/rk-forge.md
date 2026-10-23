@@ -2,6 +2,10 @@
 title: "rk-forge"
 ---
 
+# rk-forge
+
+> 完整课程路线见 [学习地图 · rk-forge](/roadmap/03-linux/rk-forge)。
+
 ## 简介
 
 面向 Rockchip 平台的双架构开发者工作空间。主线覆盖 RK3506B、RK3568 和 RK3588：RK3506B 是 ARMv7-A / 32 位，RK3568 与 RK3588 是 ARMv8-A / 64 位。

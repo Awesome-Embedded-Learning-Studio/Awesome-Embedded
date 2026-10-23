@@ -4,7 +4,7 @@ import { projects } from '../../project-data'
 import { useRepoStats } from '../composables/useStars'
 
 const ORG = 'Awesome-Embedded-Learning-Studio'
-const { getAllStats } = useRepoStats()
+const { getAllStats, state } = useRepoStats()
 
 const projectByName = new Map(projects.map((project) => [project.name, project]))
 
@@ -37,6 +37,7 @@ const ranking = computed(() => {
       target="_blank"
       rel="noopener"
       class="ranking-row"
+      :aria-label="`${item.name}，${item.stars} stars，${item.forks} forks`"
     >
       <span class="col-rank" :class="{ 'rank-top': idx < 3 }">{{ idx + 1 }}</span>
       <span class="col-name">
@@ -46,7 +47,11 @@ const ranking = computed(() => {
       <span class="col-stars">⭐ {{ item.stars }}</span>
       <span class="col-forks">🍴 {{ item.forks }}</span>
     </a>
-    <div v-if="ranking.length === 0" class="ranking-empty">加载中...</div>
+    <div v-if="ranking.length === 0" class="ranking-empty">
+      <template v-if="state === 'loading'">正在读取 GitHub 数据…</template>
+      <template v-else-if="state === 'error'">暂时拿不到 GitHub 数据，稍后刷新再试。</template>
+      <template v-else>还没有可用的数据。</template>
+    </div>
   </div>
 </template>
 
@@ -54,7 +59,7 @@ const ranking = computed(() => {
 .ranking-table {
   margin: 1.5em 0;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   background-color: var(--vp-c-bg);
 }
@@ -70,7 +75,7 @@ const ranking = computed(() => {
 .ranking-header {
   font-size: 12px;
   font-weight: 600;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid var(--vp-c-divider);
@@ -95,7 +100,7 @@ const ranking = computed(() => {
 .col-rank {
   font-size: 14px;
   font-weight: 600;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
 }
 
 .rank-top {
@@ -118,7 +123,7 @@ const ranking = computed(() => {
 
 .repo-desc {
   font-size: 12px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -134,7 +139,7 @@ const ranking = computed(() => {
 .ranking-empty {
   padding: 40px 20px;
   text-align: center;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   font-size: 14px;
 }
 
@@ -146,7 +151,10 @@ const ranking = computed(() => {
   }
 
   .repo-desc {
-    display: none;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 }
 </style>

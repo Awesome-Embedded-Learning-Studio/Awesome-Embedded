@@ -2,6 +2,8 @@
 title: "engineering_cpp"
 ---
 
+# engineering_cpp
+
 ## 简介
 
 engineering_cpp 是 B 站《现代 C++ 工程实践》的配套 hub：用 C++23 与统一 CMake 工程，把语言知识放进可以构建、测试和演进的小项目里，讲共同的需求、设计、测试、构建和交付方法。

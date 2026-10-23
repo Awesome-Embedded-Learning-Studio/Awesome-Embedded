@@ -2,6 +2,8 @@
 title: "Cinux-Book"
 ---
 
+# Cinux-Book
+
 ## 简介
 
 Cinux 的手把手教学版：一份从零开始写 x86_64 操作系统的中文教程，用现代 C++17 实现，从 MBR / Bootloader 一路讲到 GUI 桌面环境。

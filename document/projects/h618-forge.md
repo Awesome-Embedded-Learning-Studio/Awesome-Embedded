@@ -2,6 +2,8 @@
 title: "h618_forge"
 ---
 
+# h618_forge
+
 ## 简介
 
 面向野火 LubanCat-A1 / Allwinner H618 的 pure-mainline 嵌入式 Linux 工作空间。从主线 U-Boot、开源 TF-A、主线 Linux 到自建 Buildroot rootfs，保留真实板上日志和完整的 0→1 移植过程。

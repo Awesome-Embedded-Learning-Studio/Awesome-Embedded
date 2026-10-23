@@ -2,6 +2,10 @@
 title: "ST-Forge"
 ---
 
+# ST-Forge
+
+> 完整课程路线见 [学习地图 · ST-Forge](/roadmap/02-mcu/st-forge)。
+
 ## 简介
 
 面向 STM32F1 / Cortex-M3 的教学工坊，基准平台为 STM32F103C8T6 Blue Pill，使用 C、CMake、ARM GCC、OpenOCD 和 GDB。目标是从启动、寄存器和外设实验出发，逐步理解 HAL、调试、升级与单核 FreeRTOS。

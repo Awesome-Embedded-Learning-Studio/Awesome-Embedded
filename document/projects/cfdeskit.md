@@ -2,6 +2,8 @@
 title: "CFDeskit"
 ---
 
+# CFDeskit
+
 ## 简介
 
 CFDesktop 生态的独立 Qt6 小应用集合。每个应用都是由 CFDesktop 或其他 launcher 通过 `QProcess` 启动的独立可执行程序，不链接进桌面 shell，因此单个应用崩溃或卡死不会拖垮桌面。

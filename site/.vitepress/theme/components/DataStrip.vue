@@ -7,7 +7,7 @@ import { useRepoStats } from '../composables/useStars'
 // 客户端由 useStars 的实时抓取替换（sessionStorage 缓存 1h）。
 
 const { lang } = useData()
-const { getAllStats } = useRepoStats()
+const { getAllStats, state } = useRepoStats()
 
 const en = computed(() => lang.value.startsWith('en'))
 
@@ -42,7 +42,10 @@ const items = computed(() => [
 </script>
 
 <template>
-  <div class="aels-stats">
+  <div
+    class="aels-stats"
+    :title="state === 'error' ? 'GitHub 暂时读取不到，这里显示 2026-08-23 的快照' : undefined"
+  >
     <span v-for="it in items" :key="it.label" class="aels-stats__item">
       <b>{{ it.value }}</b>{{ it.label }}
     </span>
@@ -61,7 +64,7 @@ const items = computed(() => [
   border-top: 1px solid var(--vp-c-divider);
   font-family: var(--aels-font-mono);
   font-size: 12.5px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
 }
 
 .aels-stats__item b {

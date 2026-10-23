@@ -1,5 +1,7 @@
 ---
 title: "仓库目录"
+aside: false
+pageClass: catalog-page
 ---
 
 # 仓库目录

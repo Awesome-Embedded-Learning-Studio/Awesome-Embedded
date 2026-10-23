@@ -2,6 +2,8 @@
 title: "贡献指南"
 ---
 
+# 贡献指南
+
 感谢你对 Awesome-Embedded-Learning-Studio 的关注！这里介绍如何参与贡献。
 
 ## 快速开始

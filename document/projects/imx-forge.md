@@ -2,6 +2,10 @@
 title: "imx-forge"
 ---
 
+# imx-forge
+
+> 完整课程路线见 [学习地图 · imx-forge](/roadmap/03-linux/imx-forge)。
+
 ## 简介
 
 面向 NXP i.MX6ULL 的嵌入式 Linux 开发工坊，也是第一次打通完整板级链路的推荐入口：Docker 一键搭建开发环境，BSP 与主线双内核轨道并行，覆盖从交叉编译工具链到 U-Boot、内核、设备树、根文件系统与驱动开发的完整学习路径。

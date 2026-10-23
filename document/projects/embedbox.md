@@ -2,6 +2,8 @@
 title: "EmbedBox"
 ---
 
+# EmbedBox
+
 ## 简介
 
 EmbedBox 是 AELS 的入门坡道：先学会使用嵌入式开发的常用工具——终端、Git、Markdown、GCC、Make、CMake、GDB、交叉编译、串口、Docker 与 QEMU。

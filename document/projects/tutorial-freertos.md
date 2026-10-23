@@ -2,6 +2,8 @@
 title: "Tutorial_FreeRTOS"
 ---
 
+# Tutorial_FreeRTOS
+
 ## 简介
 
 不依赖真 MCU、在 PC 上跑通 FreeRTOS 内核机制的教程：章节顺序对齐《Mastering the FreeRTOS Kernel》，用一个多任务传感器仪表盘作为渐进式贯穿项目，POSIX（Linux / macOS / WSL2）与 Windows MSVC 双轨可跑。

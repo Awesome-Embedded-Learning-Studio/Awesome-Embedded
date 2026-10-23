@@ -2,6 +2,8 @@
 title: "Tutorial_AwesomeHardware"
 ---
 
+# Tutorial_AwesomeHardware
+
 ## 简介
 
 面向嵌入式学习者的硬件学习笔记站：用重新理解后的话把补课学懂的东西再讲一遍——大量原创比喻、踩坑直觉与「为什么这么设计」的来龙去脉，而不是教材搬运。

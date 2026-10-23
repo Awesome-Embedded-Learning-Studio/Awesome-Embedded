@@ -4,6 +4,8 @@ title: "st-forge · STM32F1 / ARM Cortex-M3"
 
 # st-forge · STM32F1 / ARM Cortex-M3
 
+> 仓库定位与验证入口见 [项目目录 · ST-Forge](/projects/st-forge)。
+
 > 仓库状态：公开。课程路线已经定稿，具体内容由 st-forge 按自己的节奏建设。
 
 st-forge 是锁定 **STM32F1 / ARM Cortex-M3** 的单片机学习工坊，当前统一使用 **STM32F103C8T6 Blue Pill** 作为课程基准。

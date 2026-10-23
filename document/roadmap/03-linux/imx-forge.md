@@ -4,6 +4,8 @@ title: "imx-forge · i.MX6ULL"
 
 # imx-forge · i.MX6ULL
 
+> 仓库定位与验证入口见 [项目目录 · imx-forge](/projects/imx-forge)。
+
 已发布，进入成熟晚期。这页做规划凝练和定位，深度内容在 imx-forge 自己的文档站和 issue 里，中心站链出去，不复制。
 
 ## 定位

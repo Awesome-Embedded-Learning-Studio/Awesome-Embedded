@@ -2,6 +2,8 @@
 title: "PenguinLab"
 ---
 
+# PenguinLab
+
 ## 简介
 
 基于 QEMU 的 Linux 内核学习站：用分层知识图谱组织内容，在 ARM32 / ARM64 / RISC-V / x86_64 多架构模拟环境中动手实践内核原理、驱动开发与嵌入式全栈，无需物理开发板。

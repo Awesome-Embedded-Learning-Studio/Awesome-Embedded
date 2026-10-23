@@ -2,6 +2,8 @@
 title: "Tutorial_AwesomeQt"
 ---
 
+# Tutorial_AwesomeQt
+
 ## 简介
 
 Qt 6 系统教程，按入门 / 进阶 / 专家三层分级组织，覆盖 QtBase、QtGui、QtWidgets、QtNetwork 与 QML 等模块。不只是 API 文档搬运，更着重解释常见坑点与底层机制：`connect` 什么时候不生效、`Q_OBJECT` 宏做了什么、信号槽跨线程要注意什么。

@@ -10,6 +10,8 @@ title: "嵌入式 Linux 实践"
 
 ```mermaid
 flowchart TD
+    accTitle: 嵌入式 Linux 学习路径
+    accDescr: 从第一块板级 Linux 出发，在 imx-forge 与 rk-forge 之间按目标平台选择路径。
     START["第一次完整学习板级 Linux"] --> IMX["imx-forge · i.MX6ULL<br/>打通较简单的完整链路"]
     IMX -. 建议继续而非强制 .-> RK["rk-forge · Rockchip 工作区"]
     DIRECT["已有 BSP 经验或目标板明确"] --> RK
@@ -19,6 +21,8 @@ flowchart TD
     REF["h618_forge · H618 主线化实践"] -. 横向参考 .-> IMX
     REF -. 横向参考 .-> RK
 ```
+
+图在窄屏可以左右滑动，点右下角的按钮放大。
 
 - [imx-forge](/roadmap/03-linux/imx-forge) 适合第一次打通完整链路。i.MX6ULL 平台较简单，资料充足，仓库已经形成版本发布、可复现构建和真板验收。
 - [rk-forge](/roadmap/03-linux/rk-forge) 面向 RK3506B、RK3568 和 RK3588。三块板共享工作区和方法，但不共享未经区分的 ABI、工具链和构建产物；学习者按背景和目标选择，不要求依次购买全部开发板。

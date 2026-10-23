@@ -6,7 +6,7 @@ import { useStars } from '../composables/useStars'
 
 const props = defineProps<{ project: AelsProject }>()
 
-const { getStars } = useStars()
+const { getStars, state } = useStars()
 const displayStars = computed(() => {
   return getStars(props.project.repo)
 })
@@ -30,7 +30,10 @@ const resolvedLink = computed(() => {
   <component :is="resolvedLink ? 'a' : 'div'" :href="resolvedLink || undefined" class="project-card">
     <div class="card-header">
       <span class="card-title">{{ project.name }}</span>
-      <span v-if="displayStars !== null" class="card-stars">⭐ {{ displayStars }}</span>
+      <span
+        class="card-stars"
+        :title="state === 'error' ? '星数暂时读取不到' : 'GitHub 实时星数'"
+      >⭐ {{ displayStars ?? '—' }}</span>
     </div>
     <div class="card-body">
       <p class="card-position">{{ project.position }}</p>
@@ -50,9 +53,9 @@ const resolvedLink = computed(() => {
 .project-card {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 22px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
+  border-radius: 12px;
   background-color: var(--vp-c-bg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
   transition: border-color 0.39s ease, box-shadow 0.39s ease, transform 0.39s ease;
@@ -97,8 +100,11 @@ const resolvedLink = computed(() => {
 }
 
 .card-stars {
+  min-width: 3.2em;
   font-size: 13px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
   flex-shrink: 0;
   margin-left: 12px;
 }
@@ -109,7 +115,7 @@ const resolvedLink = computed(() => {
 
 .card-desc {
   margin: 8px 0 0;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.7;
   color: var(--vp-c-text-2);
 }
@@ -125,7 +131,7 @@ const resolvedLink = computed(() => {
 .card-evidence,
 .card-relations {
   margin: 10px 0 0;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.65;
   color: var(--vp-c-text-2);
 }
@@ -143,8 +149,8 @@ const resolvedLink = computed(() => {
   display: inline-flex;
   align-items: center;
   padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
   font-weight: 500;
   line-height: 1.6;
 }
@@ -155,31 +161,27 @@ const resolvedLink = computed(() => {
   color: var(--vp-c-text-2);
 }
 
-.status-verifiable,
-.status-delivered {
-  background-color: rgba(83, 162, 83, 0.12);
-  color: #53a253;
+.card-tag.status-verifiable {
+  border: 1px dashed var(--aels-status-verifiable);
+  background-color: var(--aels-status-verifiable-bg);
+  color: var(--aels-status-verifiable);
 }
 
-.status-building {
-  background-color: rgba(234, 179, 8, 0.12);
-  color: #b08d07;
+.card-tag.status-delivered {
+  border: 1px solid var(--aels-status-delivered);
+  background-color: var(--aels-status-delivered-bg);
+  color: var(--aels-status-delivered);
 }
 
-.status-maintained {
+.card-tag.status-building {
+  border: 1px solid var(--aels-status-building);
+  background-color: var(--aels-status-building-bg);
+  color: var(--aels-status-building);
+}
+
+.card-tag.status-maintained {
   background-color: var(--vp-c-default-soft);
-  color: var(--vp-c-text-3);
-}
-
-.dark .status-verifiable,
-.dark .status-delivered {
-  background-color: rgba(83, 162, 83, 0.18);
-  color: #6ccf6c;
-}
-
-.dark .status-building {
-  background-color: rgba(234, 179, 8, 0.15);
-  color: #eab308;
+  color: var(--vp-c-text-2);
 }
 
 @media (max-width: 639px) {
@@ -192,7 +194,7 @@ const resolvedLink = computed(() => {
   }
 
   .card-desc {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 </style>

@@ -6,11 +6,11 @@ hero:
   text: "持续进步的完全开源免费的 Learning Studio"
   actions:
     - theme: brand
-      text: "💬 加入 QQ 交流群"
-      link: "#aels-qq-groups"
+      text: "从这里开始学"
+      link: /guide/
     - theme: alt
-      text: "社区讨论区"
-      link: "https://github.com/orgs/Awesome-Embedded-Learning-Studio/discussions/7"
+      text: "浏览项目目录"
+      link: /projects/
 
 features:
   - icon: "🧭"

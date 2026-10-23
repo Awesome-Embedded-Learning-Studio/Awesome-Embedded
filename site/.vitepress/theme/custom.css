@@ -22,7 +22,14 @@
   --vp-c-gutter: #e9e1cb;
   --vp-c-text-1: #2b2620;
   --vp-c-text-2: #5d5648;
-  --vp-c-text-3: #948c7b;
+  --vp-c-text-3: #6f6757;
+
+  --aels-status-verifiable: #245c2b;
+  --aels-status-verifiable-bg: color-mix(in srgb, #245c2b 12%, transparent);
+  --aels-status-delivered: #1f5c2b;
+  --aels-status-delivered-bg: color-mix(in srgb, #1f5c2b 12%, transparent);
+  --aels-status-building: #6b5100;
+  --aels-status-building-bg: color-mix(in srgb, #6b5100 12%, transparent);
 
   --aels-copper: #b87333;
   /* 琥珀压深到 AA：#a2620f 在奶油底 ≈4.7:1（用于 ★数等小字） */
@@ -55,7 +62,14 @@
   --vp-c-gutter: #2e2820;
   --vp-c-text-1: #f2ebdd;
   --vp-c-text-2: #b5aa94;
-  --vp-c-text-3: #7e7561;
+  --vp-c-text-3: #9a9285;
+
+  --aels-status-verifiable: #7fdc85;
+  --aels-status-verifiable-bg: color-mix(in srgb, #85d689 16%, transparent);
+  --aels-status-delivered: #9ce3a0;
+  --aels-status-delivered-bg: color-mix(in srgb, #85d689 16%, transparent);
+  --aels-status-building: #eab308;
+  --aels-status-building-bg: color-mix(in srgb, #eab308 15%, transparent);
 
   --aels-copper: #d89c6c;
   --aels-amber: #ffb454;
@@ -68,20 +82,46 @@
     0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
+/* ── Focus ───────────────────────────────────────────────────── */
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--vp-c-brand-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* ── Content Typography ──────────────────────────────────────── */
 
 .vp-doc {
-  line-height: 1.85;
-  font-size: 0.82rem;
+  line-height: 1.75;
+  font-size: 1rem;
 }
 
 .vp-doc h1 { line-height: 1.4; }
 .vp-doc h2 { line-height: 1.45; }
 .vp-doc h3 { line-height: 1.5; }
-.vp-doc h4 { line-height: 1.55; }
+.vp-doc h4 { font-size: 17px; font-weight: 500; line-height: 1.55; }
+
+/* VitePress 给段落写死 28px 行高，字号变了它不跟，这里显式接住 */
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.75;
+}
 
 .vp-doc p {
   margin-bottom: 1.2em;
+}
+
+/* ── Catalog page: 放开正文列，只约束页首散文 ─────────────────── */
+
+.catalog-page .vp-doc > h1,
+.catalog-page .vp-doc > p,
+.catalog-page .vp-doc > ul,
+.catalog-page .vp-doc > blockquote {
+  max-width: 760px;
 }
 
 /* ── Content Width ───────────────────────────────────────────── */
@@ -93,28 +133,40 @@
 /* ── Code Blocks ─────────────────────────────────────────────── */
 
 .vp-doc div[class*='language-'] {
+  border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
-  font-size: 0.75rem;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.7;
 }
 
 .vp-doc div[class*='language-'] code {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .vp-doc :not(pre) > code {
-  font-size: 0.78em;
+  font-size: 0.875em;
   padding: 0.15em 0.35em;
   border-radius: 4px;
+  color: var(--vp-c-brand-2);
+  background-color: color-mix(in srgb, var(--vp-c-brand-1) 8%, var(--vp-c-bg));
+}
+
+.dark .vp-doc :not(pre) > code {
+  color: var(--vp-c-brand-1);
+  background-color: color-mix(in srgb, var(--vp-c-brand-1) 12%, var(--vp-c-bg));
 }
 
 /* ── Tables ──────────────────────────────────────────────────── */
 
 .vp-doc table {
-  font-size: 0.78rem;
+  font-size: 14px;
   line-height: 1.6;
   border-radius: 8px;
-  overflow: hidden;
+}
+
+.vp-doc table th,
+.vp-doc table td {
+  font-size: 14px;
 }
 
 .vp-doc table th {
@@ -134,13 +186,28 @@
   background: color-mix(in srgb, var(--vp-c-brand-1) 4%, transparent);
 }
 
+.vp-doc blockquote > p {
+  font-size: 1rem;
+}
+
 /* ── Links ───────────────────────────────────────────────────── */
 
 .vp-doc a {
+  color: var(--vp-c-brand-2);
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 3px;
   transition: color 0.2s ease;
+}
+
+.VPSidebar .VPSidebarItem.level-0.is-active > .item .link > .text,
+.VPSidebar .VPSidebarItem.level-1.is-active > .item .link > .text,
+.VPSidebar .VPSidebarItem.level-2.is-active > .item .link > .text,
+.VPSidebar .VPSidebarItem.level-3.is-active > .item .link > .text,
+.VPSidebar .VPSidebarItem.level-4.is-active > .item .link > .text,
+.VPSidebar .VPSidebarItem.level-5.is-active > .item .link > .text,
+.VPDocFooter .edit-link-button {
+  color: var(--vp-c-brand-2);
 }
 
 .vp-doc a:hover {
@@ -272,6 +339,23 @@
   .VPFeatures .item {
     animation: none;
   }
+
+  .project-card,
+  .stat-item,
+  .ranking-row,
+  .mermaid-maximize-btn,
+  .catalog-filters button {
+    transition: none !important;
+  }
+
+  .project-card:hover {
+    transform: none;
+  }
+
+  .home-about__inner > ul:last-of-type li,
+  .home-about__inner > ul:last-of-type li:hover {
+    transform: none;
+  }
 }
 
 /* ── Features Grid ───────────────────────────────────────────── */
@@ -285,7 +369,7 @@
 
 .VPFeature {
   border: 1px solid var(--vp-c-divider) !important;
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   background-color: var(--vp-c-bg) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
               0 1px 2px rgba(0, 0, 0, 0.06);
@@ -388,7 +472,7 @@
   .VPFeature .icon {
     width: 40px !important;
     height: 40px !important;
-    border-radius: 10px !important;
+    border-radius: 8px !important;
     font-size: 18px !important;
   }
 
@@ -430,7 +514,7 @@
   gap: 16px;
   padding: 24px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
+  border-radius: 12px;
   background-color: var(--vp-c-bg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
   transition: border-color 0.39s ease, box-shadow 0.39s ease, transform 0.39s ease;
@@ -588,7 +672,7 @@
 
 .home-about__inner > ul:last-of-type li {
   border: 1.5px solid var(--vp-c-divider);
-  border-radius: 13px;
+  border-radius: 12px;
   padding: 16px 18px;
   background: var(--vp-c-bg-elv);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
@@ -628,6 +712,12 @@
   height: auto;
 }
 
+@media (max-width: 899px) {
+  .mermaid-diagram > svg {
+    min-width: 720px;
+  }
+}
+
 .mermaid-diagram .nodeLabel,
 .mermaid-diagram .edgeLabel {
   padding: 0.15em 0.35em;
@@ -659,15 +749,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--vp-c-bg-elv);
   color: var(--vp-c-text-2);
   cursor: pointer;
-  opacity: 0.55;
+  opacity: 0.85;
   transition:
     opacity 0.15s ease,
     color 0.15s ease,
@@ -681,9 +771,8 @@
 
 .mermaid-maximize-btn:hover,
 .mermaid-maximize-btn:focus-visible {
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-  outline: none;
+  color: var(--vp-c-brand-2);
+  border-color: var(--vp-c-brand-2);
   opacity: 1;
 }
 
@@ -726,9 +815,8 @@
 
 .mermaid-lightbox__btn:hover,
 .mermaid-lightbox__btn:focus-visible {
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-  outline: none;
+  color: var(--vp-c-brand-2);
+  border-color: var(--vp-c-brand-2);
 }
 
 .mermaid-lightbox__close {

@@ -2,6 +2,8 @@
 title: "QuarkWidgets"
 ---
 
+# QuarkWidgets
+
 ## 简介
 
 组织共享的 Qt6 / Material Design 3 组件库：用分层管线（数学工具 → 主题引擎 → 动画引擎 → Material 行为 → widget 适配）组织 UI，提供覆盖常见交互的 MD3 控件集，全部收在 `qw::` 命名空间下，配套完整 GoogleTest 测试套件。

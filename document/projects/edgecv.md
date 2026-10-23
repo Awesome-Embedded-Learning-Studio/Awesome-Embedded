@@ -2,6 +2,8 @@
 title: "edgecv"
 ---
 
+# edgecv
+
 ## 简介
 
 C++20 编译期类型安全的计算机视觉库：强类型 Image / ImageView 容器、Expected 错误处理、Pipeline 组合式 API，以及颜色转换、滤波、边缘检测等算法封装。Header-Only 设计，支持 `-fno-exceptions` / `-fno-rtti` 与 ARM 交叉编译，并提供 OpenCV `cv::Mat` / QImage 互转桥接。

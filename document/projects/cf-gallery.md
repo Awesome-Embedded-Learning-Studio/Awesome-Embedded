@@ -2,6 +2,8 @@
 title: "CF-Gallery"
 ---
 
+# CF-Gallery
+
 ## 简介
 
 CFDesktop 的独立摄影与壁纸资源站，使用 VitePress 展示资源，并可将图片作为运行时壁纸包安装到 CFDesktop。

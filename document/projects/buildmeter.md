@@ -2,6 +2,8 @@
 title: "buildmeter"
 ---
 
+# buildmeter
+
 ## 简介
 
 为 Linux Kernel、U-Boot 和 Buildroot 等 GNU make 构建提供实时进度显示。它解决长时间构建只有日志、无法判断阶段和剩余时间的问题。

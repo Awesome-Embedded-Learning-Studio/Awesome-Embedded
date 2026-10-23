@@ -5,6 +5,7 @@ import {
   ROADMAP_BANDS,
   roadmapEdges,
   roadmapNodes,
+  type RoadmapBand,
   type RoadmapNode,
 } from '../../roadmap-graph'
 import { useStars } from '../composables/useStars'
@@ -241,6 +242,10 @@ function nodeHref(n: LiveNode): string | null {
 function nodeExternal(n: LiveNode): boolean {
   return !!n.href && n.href.startsWith('http')
 }
+
+/* 窄屏文字版：按层带分组，数据与图同源 */
+const bandNodes = (band: RoadmapBand) =>
+  roadmapNodes.filter((n) => n.y >= band.top && n.y <= band.bottom)
 </script>
 
 <template>
@@ -389,10 +394,37 @@ function nodeExternal(n: LiveNode): boolean {
         <span class="rg-legend__right">{{ t.lgBadge.value }}</span>
       </div>
     </div>
+
+    <!-- 窄屏文字版：图缩到 7px 读不动，这里给出同源的层级路径 -->
+    <div class="rg-list">
+      <div v-for="band in ROADMAP_BANDS" :key="band.label" class="rg-list__group">
+        <h4>{{ band.label }}</h4>
+        <ul>
+          <li v-for="n in bandNodes(band)" :key="n.id">
+            <a
+              v-if="nodeHref(n)"
+              :href="nodeHref(n) ?? undefined"
+              :target="nodeExternal(n) ? '_blank' : undefined"
+              :rel="nodeExternal(n) ? 'noopener' : undefined"
+            >
+              <b>{{ n.name }}</b><span>{{ n.sub }}</span>
+            </a>
+            <span v-else class="rg-list__ghost">
+              <b>{{ n.name }}</b><span>{{ n.sub }}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* ── 窄屏文字版 ── */
+.rg-list {
+  display: none;
+}
+
 /* ── 区块外壳 ── */
 .rg-section {
   max-width: 1200px;
@@ -422,15 +454,72 @@ function nodeExternal(n: LiveNode): boolean {
 }
 .rg-plaque__note {
   font-size: 13px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   margin-left: auto;
+}
+
+@media (max-width: 767px) {
+  .rg-scroll,
+  .rg-legend,
+  .rg-plaque__note,
+  .rg-ctl button {
+    display: none;
+  }
+
+  .rg-list {
+    display: block;
+    margin: 4px 0 12px;
+  }
+
+  .rg-list__group {
+    margin-top: 18px;
+  }
+
+  .rg-list__group h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vp-c-text-2);
+  }
+
+  .rg-list ul {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rg-list a,
+  .rg-list__ghost {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    align-items: baseline;
+    padding: 8px 10px;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 8px;
+    text-decoration: none;
+  }
+
+  .rg-list a b,
+  .rg-list__ghost b {
+    font-size: 14px;
+    color: var(--vp-c-text-1);
+  }
+
+  .rg-list a span,
+  .rg-list__ghost span {
+    font-size: 12.5px;
+    color: var(--vp-c-text-2);
+  }
 }
 
 /* ── 图卡 ── */
 .rg-wrap {
   position: relative;
   border: 1px solid var(--vp-c-border);
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--vp-c-bg-soft);
   box-shadow: 0 1px 3px rgba(16, 32, 24, 0.06), 0 1px 2px rgba(16, 32, 24, 0.08);
   overflow: hidden;
@@ -591,7 +680,7 @@ function nodeExternal(n: LiveNode): boolean {
   opacity: 0.7;
 }
 .rg-name {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   fill: var(--vp-c-text-1);
 }

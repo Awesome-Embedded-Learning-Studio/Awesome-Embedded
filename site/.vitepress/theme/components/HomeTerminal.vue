@@ -58,7 +58,7 @@ onMounted(() => {
 <style scoped>
 .term {
   background: var(--aels-term-bg);
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--aels-term-fg) 16%, transparent);
   box-shadow: var(--aels-shadow-lift);
   overflow: hidden;

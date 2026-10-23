@@ -2,6 +2,8 @@
 title: "bareline"
 ---
 
+# bareline
+
 ## 简介
 
 零开销、header-only 的 C++23 嵌入式 shell 库，面向裸机目标（Cortex-M 级 MCU）：无堆分配、无异常、命令在编译期注册。

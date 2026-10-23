@@ -1,4 +1,4 @@
-import { shallowRef } from 'vue'
+import { ref, shallowRef } from 'vue'
 import { publicProjectNames } from '../../project-data'
 
 const ORG = 'Awesome-Embedded-Learning-Studio'
@@ -10,7 +10,10 @@ export interface RepoStats {
   forks: number
 }
 
+export type StatsState = 'idle' | 'loading' | 'ready' | 'degraded' | 'error'
+
 const statsMap = shallowRef<Map<string, RepoStats>>(new Map())
+const statsState = ref<StatsState>('idle')
 let fetchPromise: Promise<void> | null = null
 
 interface CacheEntry {
@@ -75,18 +78,34 @@ function ensureFetch(): Promise<void> {
   const cached = loadCache()
   if (cached) {
     statsMap.value = cached
+    statsState.value = 'ready'
     return Promise.resolve()
   }
 
+  statsState.value = 'loading'
   fetchPromise = (async () => {
-    let map = await fetchViaGitHubApi()
-    if (!map) {
-      map = await fetchViaShieldsIo(publicProjectNames)
+    const fromApi = await fetchViaGitHubApi()
+    if (fromApi) {
+      statsMap.value = fromApi
+      statsState.value = 'ready'
+      saveCache(fromApi)
+      return
     }
-    statsMap.value = map
-    saveCache(map)
+
+    // 组织接口不可达时退到 shields 逐仓查询，只展示不写缓存，
+    // 避免把一次失败固化成一小时的空数据。
+    const fallback = await fetchViaShieldsIo(publicProjectNames)
+    if (fallback.size > 0) {
+      statsMap.value = fallback
+      statsState.value = 'degraded'
+      return
+    }
+
+    statsState.value = 'error'
   })()
-    .catch(() => {})
+    .catch(() => {
+      statsState.value = 'error'
+    })
     .finally(() => {
       fetchPromise = null
     })
@@ -112,7 +131,7 @@ export function useStars() {
     return val ? val.stars : null
   }
 
-  return { getStars }
+  return { getStars, state: statsState }
 }
 
 export function useRepoStats() {
@@ -128,5 +147,5 @@ export function useRepoStats() {
     return statsMap.value
   }
 
-  return { getStats, getAllStats }
+  return { getStats, getAllStats, state: statsState }
 }

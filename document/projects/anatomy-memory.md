@@ -2,6 +2,8 @@
 title: "anatomy_memory"
 ---
 
+# anatomy_memory
+
 ## 简介
 
 内存池实战教程：从分析 `malloc` 的局限性开始，逐步实现 FreeList、ThreadCache 与 CentralPool，完成一个可测试、可分析的多层内存分配器，并涉及线程本地存储、Size Class 设计、基准测试与标准库 allocator 对接等进阶主题，配套系列视频教程。

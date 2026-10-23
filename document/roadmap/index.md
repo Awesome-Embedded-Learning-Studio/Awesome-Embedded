@@ -8,6 +8,8 @@ AELS 的仓库不是一条只能向前走的流水线。常见顺序是先学会
 
 ```mermaid
 flowchart TB
+    accTitle: AELS 学习关系图
+    accDescr: 从 EmbedBox 进入 C 语言与现代 C++ 两条承重墙，经系统基本功进入 MCU 或嵌入式 Linux，最后汇入完整工程与产品线。
     START["初步会用<br/>EmbedBox"] --> C["C 语言深化<br/>C-Journey"]
     START --> CPP["C++ 深化<br/>Tutorial_AwesomeModernCPP"]
 
@@ -25,6 +27,8 @@ flowchart TB
     SIM["micro-forge<br/>验证设施"] -. 提供验证 .-> MCU
     BM["buildmeter<br/>构建基建"] -. 被实际消费 .-> ELINUX
 ```
+
+图在窄屏可以左右滑动，点右下角的按钮放大。
 
 这张图只画稳定的学习关系，不承诺每个仓库的未来终点，也不把产品和基建伪装成课程阶段。
 

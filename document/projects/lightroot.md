@@ -2,6 +2,8 @@
 title: "lightroot"
 ---
 
+# lightroot
+
 ## 简介
 
 一个更易用的 Buildroot 风格嵌入式 rootfs 构建器，使用 C++、CMake 和声明式配置组织包、依赖、工具链、构建计划与镜像布局。

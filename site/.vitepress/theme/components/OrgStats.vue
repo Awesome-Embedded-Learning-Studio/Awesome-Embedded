@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { projects } from '../../project-data'
 import { useStars } from '../composables/useStars'
 
-const { getStars } = useStars()
+const { getStars, state } = useStars()
 
 const totalStars = computed(() => {
   let sum = 0
@@ -23,8 +23,8 @@ const stats = computed(() => [
 </script>
 
 <template>
-  <div class="org-stats">
-    <div v-for="item in stats" :key="item.label" class="stat-item">
+  <div class="org-stats" :aria-busy="state === 'loading'">
+    <div v-for="item in stats" :key="item.label" class="stat-item" :title="item.hint">
       <span class="stat-value">{{ item.value }}</span>
       <span class="stat-label">{{ item.label }}</span>
     </div>

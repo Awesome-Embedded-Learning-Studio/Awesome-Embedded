@@ -31,10 +31,10 @@ const plaque = computed(() =>
   padding: 0 24px 64px;
 }
 
-/* 首页"关于"段字号 —— 全站 .vp-doc 是 0.82rem(~13px,偏小),首页里显得更小。
-   这里单独调大更易读。列宽/分节/高亮等门廊排版见 custom.css 的 Home About 段。 */
+/* 首页"关于"段沿用全站正文字号，不再单独放大。
+   列宽/分节/高亮等门廊排版见 custom.css 的 Home About 段。 */
 .home-about__inner {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.9;
 }
 </style>

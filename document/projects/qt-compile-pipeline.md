@@ -2,6 +2,8 @@
 title: "qt-compile-pipeline"
 ---
 
+# qt-compile-pipeline
+
 ## 简介
 
 Qt6 ARM 交叉编译自动化管道：把从源码编译 Qt6 这个复杂过程收敛为「改配置文件 + 一键构建」，覆盖 Host / Target 双平台构建、自动打包与 SHA256 校验、幂等断点续传，并集成 tslib、PulseAudio、FFmpeg、OpenSSL 等常用第三方库。
