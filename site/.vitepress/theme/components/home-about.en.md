@@ -1,10 +1,10 @@
-## 🚀🚀🚀 About AELS
+## About AELS
 
 **AELS** (Awesome Embedded Learning Studio) is an engineering-notes studio built around learning embedded systems and modern C++ through real projects — though I've always liked calling it the *a little hut*. It was started by CharlieChen114514 (yeah, that's me, the main maintainer of AELS), and is being built out in the open, together with friends. We warmly welcome anyone who is interested in systems software, embedded development, or C/C++ — anyone who, in today's restless software-engineering climate, still wanders over here to listen to us grumble a bit!
 
 You're currently at the central repository and official site of the organization — the heart of the little hut where we lay down the engineering notes that come out of actually building things. From here, head off in any direction to find the corner you like best.
 
-## 🧐 It says "Awesome", but this isn't just another awesome list
+## It says "Awesome", but this isn't just another awesome list
 
 It's true — wherever you're visiting from, you've surely noticed the internet already has plenty of good link collections. In fact, the author has been deeply influenced by these Awesome-Lists; even today I still flip through them now and then, checking out the tutorial repos and open-source libraries they recommend.
 
@@ -14,13 +14,13 @@ I have to admit — the age of LLMs has come and smashed our lives. Acquiring kn
 
 This site covers a lot of ground, centered on a few areas: embedded systems, modern C++, Linux, and operating systems. It's **project-driven** combined with topic-driven — most of the writing grows out of real repos we're actively working on, and extends outward from there.
 
-## 📊 As of June 24, 2026 — how's the project doing?
+## As of June 24, 2026 — how's the project doing?
 
 So far, the organization's most successful project is [Tutorial_AwesomeModernCPP](https://github.com/Awesome-Embedded-Learning-Studio/Tutorial_AwesomeModernCPP) — one of the best-received repos, a systematic modern C++ tutorial that runs from C and C++98 all the way to C++23, still under active construction, and it's picked up some genuine attention. Alongside it is other solid work: [imx-forge](https://github.com/Awesome-Embedded-Learning-Studio/imx-forge), representing the NXP i.MX6ULL embedded-Linux BSP and application-layer development tutorials, and the newly rising Cinux operating-system tutorial series written in C++17: [Cinux-Book](https://github.com/Awesome-Embedded-Learning-Studio/Cinux-Book).
 
 But I also have to be serious about this: these repositories are still under continuous construction. Quite a few of them are early, experimental, or just ideas being explored. In truth, from the end of December 2025 to today, only about half a year has passed. A lot of the content hasn't yet stood the test of time, and still needs the precious feedback and active participation of the author and our enthusiastic friends. That way AELS can help more people enjoy learning — maybe even fall in love with the broad field of C/C++, embedded, and systems-software development.
 
-## 🤝 Come build AELS together with us!
+## Come build AELS together with us!
 
 What AELS wants to be is a **learning community for C/C++ + embedded + systems software**. Even though right now the author and a few friends are still shouldering this mostly on our own, we warmly invite you to join — to help build a safe little learning hut for others still adrift in outdated materials and dogmatic assertions.
 

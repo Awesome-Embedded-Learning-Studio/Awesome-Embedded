@@ -45,14 +45,13 @@ const stats = computed(() => [
   align-items: center;
   padding: 20px 16px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   background-color: var(--vp-c-bg);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color var(--aels-dur) var(--aels-ease);
 }
 
 .stat-item:hover {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .stat-value {

@@ -80,12 +80,6 @@ function transformHead(ctx: any) {
     ['meta', { property: 'og:locale:alternate', content: isEn ? 'zh_CN' : 'en_US' }],
   ]
 
-  // 静态跳转页(document/planning/ 下的迁移页):frontmatter 只写站内目标路径,
-  // refresh 与 canonical 在这里统一生成,地址跟随 site-env 的 base/origin 参数化。
-  if (typeof fm.redirect === 'string' && fm.redirect) {
-    head.push(['meta', { 'http-equiv': 'refresh', content: `0; url=${withBase(fm.redirect)}` }])
-    head.push(['link', { rel: 'canonical', href: absoluteUrl(fm.redirect) }])
-  }
   return head
 }
 

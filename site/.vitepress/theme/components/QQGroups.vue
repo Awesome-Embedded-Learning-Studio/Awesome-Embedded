@@ -30,7 +30,7 @@ const groups = computed(() => [
 <template>
   <section id="aels-qq-groups" class="aels-qq" aria-label="QQ Groups">
     <span class="aels-qq__tag">§ COMMUNITY</span>
-    <h3 class="aels-qq__title">{{ en ? '💬 Join our QQ Groups' : '💬 加入 QQ 交流群' }}</h3>
+    <h3 class="aels-qq__title">{{ en ? 'Join our QQ Groups' : '加入 QQ 交流群' }}</h3>
 
     <div class="aels-qq__row">
       <a
@@ -108,14 +108,12 @@ const groups = computed(() => [
   padding: 10px;
   background: #ffffff;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  transition: border-color 0.39s ease, box-shadow 0.39s ease, transform 0.39s ease;
+  border-radius: var(--aels-radius-md);
+  transition: border-color var(--aels-dur) var(--aels-ease);
 }
 
 .aels-qq__card:hover .aels-qq__qr {
   border-color: var(--aels-copper);
-  box-shadow: var(--aels-shadow-lift);
-  transform: translateY(-2px);
 }
 
 .aels-qq__name {

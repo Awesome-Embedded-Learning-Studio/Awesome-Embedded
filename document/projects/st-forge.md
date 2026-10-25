@@ -8,15 +8,15 @@ title: "ST-Forge"
 
 ## 简介
 
-面向 STM32F1 / Cortex-M3 的教学工坊，基准平台为 STM32F103C8T6 Blue Pill，使用 C、CMake、ARM GCC、OpenOCD 和 GDB。目标是从启动、寄存器和外设实验出发，逐步理解 HAL、调试、升级与单核 FreeRTOS。
+面向 STM32F1 / Cortex-M3 的教学工坊，基准平台为 STM32F103C8T6 Blue Pill，使用 C、CMake、ARM GCC、OpenOCD 和 GDB。课程主轴 2026-10-24 起定为 Cortex-M3 处理器架构，问的是“这颗处理器为什么这样工作”，外设从课程主体降级为架构的应用案例，ARM 汇编的读与写织在架构线里。
 
-仓库已经公开，课程路线已经定稿；具体内容由 ST-Forge 按自己的节奏建设。
+仓库已经公开，课程矩阵（P0 到 P9 十段）已定稿，章节建设中，具体内容由 ST-Forge 按自己的节奏建设。
 
 ## 路线重点
 
 - CMake 原生构建系统
 - 不依赖 IDE
-- STM32F1 启动、寄存器与 HAL 对照实验
+- 处理器本体、内存系统、异常与中断的架构主线
 - Host、micro-forge 与 STM32F103 真板分层验证
 
 ## 前置知识

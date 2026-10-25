@@ -32,7 +32,7 @@ const data = computed(() => live.value ?? SEED)
 
 const items = computed(() => [
   { label: en.value ? 'org stars' : 'org stars', value: `★ ${data.value.stars}` },
-  { label: 'forks', value: `⑂ ${data.value.forks}` },
+  { label: 'forks', value: String(data.value.forks) },
   { label: en.value ? 'repos' : '仓库', value: String(data.value.repos) },
   {
     label: en.value ? 'evidence' : '验证',

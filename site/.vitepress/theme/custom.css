@@ -42,6 +42,24 @@
   --aels-term-hi: #a2620f;
   --aels-font-mono: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo,
     Consolas, monospace;
+  /* 正文：中文屏显优先，拉丁字母和数字交给系统 UI 字。不加载 webfont，零字节 */
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --vp-font-family-mono: var(--aels-font-mono);
+  /* 半径刻度：一个值只干一件事，卡片不再跟标签用同一个圆角 */
+  --aels-radius-xs: 2px;   /* 标签、徽标 */
+  --aels-radius-sm: 4px;   /* 按钮、筛选器 */
+  --aels-radius-md: 6px;   /* 卡片、输入框 */
+  --aels-radius-lg: 10px;  /* 面板、大容器 */
+  /* 动效：一个时长到底，不再出现 0.39s 这种没来由的数 */
+  --aels-dur: 160ms;
+  --aels-ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  /* 图纸网格线：hero 背景用的极淡方格，跟着分隔线走 */
+  --aels-grid: color-mix(in srgb, var(--vp-c-divider) 62%, transparent);
+  /* 首页大标题走实色墨，交给 VitePress 自己的变量接管，别再叠 background-clip */
+  --vp-home-hero-name-color: var(--vp-c-text-1);
+  --vp-home-hero-name-background: none;
   --aels-shadow-lift: 0 12px 32px rgba(24, 18, 8, 0.13),
     0 4px 8px rgba(24, 18, 8, 0.07);
 }
@@ -104,6 +122,23 @@ summary:focus-visible,
 .vp-doc h2 { line-height: 1.45; }
 .vp-doc h3 { line-height: 1.5; }
 .vp-doc h4 { font-size: 17px; font-weight: 500; line-height: 1.55; }
+
+/* 标题靠字重和字距立起来，不靠字体本身的花活 */
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  letter-spacing: -0.01em;
+}
+
+/* 数字走等宽数字，统计块和表格才能上下对得齐 */
+.vp-doc table td,
+.stat-value,
+.col-stars,
+.col-forks,
+.aels-stats__item b {
+  font-variant-numeric: tabular-nums;
+}
 
 /* VitePress 给段落写死 28px 行高，字号变了它不跟，这里显式接住 */
 .vp-doc p,
@@ -263,36 +298,34 @@ summary:focus-visible,
   }
 }
 
+/* hero 背景：极淡方格纸，往右下淡出。整块没有任何颜色渐变 */
 .VPHome .VPHero::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    135deg,
-    var(--vp-c-brand-soft) 0%,
-    transparent 55%,
-    color-mix(in srgb, var(--aels-copper) 8%, transparent) 100%
-  );
-  opacity: 0.5;
   pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, var(--aels-grid) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(to bottom, var(--aels-grid) 0 1px, transparent 1px 32px);
+  -webkit-mask-image: linear-gradient(155deg, #000 0%, #000 18%, transparent 62%);
+  mask-image: linear-gradient(155deg, #000 0%, #000 18%, transparent 62%);
 }
 
-/* 品牌名 = 大标题本体（铜→琥珀渐变）；下方一行只留 Discussion #7 的定位，不推销 */
-.VPHero .name,
-.VPHero .name .clip {
-  background: linear-gradient(120deg, #8f5a1e 0%, var(--aels-copper) 48%, #d98a2b 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* 大标题上方的刻度尺：一排铜色刻度吊在一条细线上，像图纸抬头 */
+.VPHero .main::before {
+  content: '';
+  display: block;
+  width: 184px;
+  height: 9px;
+  margin: 0 0 22px;
+  background: repeating-linear-gradient(to right, var(--aels-copper) 0 1.5px, transparent 1.5px 23px);
+  border-bottom: 1px solid color-mix(in srgb, var(--aels-copper) 72%, transparent);
 }
 
-.dark .VPHero .name,
-.dark .VPHero .name .clip {
-  background: linear-gradient(120deg, #e8b573 0%, var(--aels-copper) 50%, #f5a623 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* 品牌名 = 大标题本体，实色墨。渐变已由 --vp-home-hero-name-* 两个变量关掉 */
+.VPHero .name {
+  color: var(--vp-c-text-1);
 }
 
 .VPHero .text {
@@ -308,38 +341,7 @@ summary:focus-visible,
   color: var(--vp-c-text-2) !important;
 }
 
-/* ── Feature Card Animation ──────────────────────────────────── */
-
-@keyframes feature-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.VPFeatures .item { animation: feature-fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-.VPFeatures .item:nth-child(1)  { animation-delay: 0ms; }
-.VPFeatures .item:nth-child(2)  { animation-delay: 78ms; }
-.VPFeatures .item:nth-child(3)  { animation-delay: 156ms; }
-.VPFeatures .item:nth-child(4)  { animation-delay: 234ms; }
-.VPFeatures .item:nth-child(5)  { animation-delay: 312ms; }
-.VPFeatures .item:nth-child(6)  { animation-delay: 390ms; }
-.VPFeatures .item:nth-child(7)  { animation-delay: 468ms; }
-.VPFeatures .item:nth-child(8)  { animation-delay: 546ms; }
-.VPFeatures .item:nth-child(9)  { animation-delay: 624ms; }
-.VPFeatures .item:nth-child(10) { animation-delay: 702ms; }
-.VPFeatures .item:nth-child(11) { animation-delay: 780ms; }
-.VPFeatures .item:nth-child(12) { animation-delay: 858ms; }
-
 @media (prefers-reduced-motion: reduce) {
-  .VPFeatures .item {
-    animation: none;
-  }
-
   .project-card,
   .stat-item,
   .ranking-row,
@@ -353,135 +355,8 @@ summary:focus-visible,
   }
 
   .home-about__inner > ul:last-of-type li,
-  .home-about__inner > ul:last-of-type li:hover {
+  .home-about__inner ul:last-of-type li:hover {
     transform: none;
-  }
-}
-
-/* ── Features Grid ───────────────────────────────────────────── */
-
-.VPFeatures {
-  padding-top: 16px;
-  padding-bottom: 48px;
-}
-
-/* ── Feature Card ────────────────────────────────────────────── */
-
-.VPFeature {
-  border: 1px solid var(--vp-c-divider) !important;
-  border-radius: 12px !important;
-  background-color: var(--vp-c-bg) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
-              0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: border-color 0.39s ease,
-              box-shadow 0.39s ease,
-              transform 0.39s ease;
-}
-
-.VPFeature.link:hover {
-  border-color: var(--vp-c-brand-1) !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1),
-              0 4px 8px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
-}
-
-.VPFeature .box {
-  padding: 28px 24px !important;
-}
-
-.VPFeature .icon {
-  width: 48px !important;
-  height: 48px !important;
-  border-radius: 12px !important;
-  background: linear-gradient(
-    135deg,
-    var(--vp-c-brand-soft) 0%,
-    color-mix(in srgb, var(--aels-copper) 10%, transparent) 100%
-  ) !important;
-  color: var(--vp-c-brand-1) !important;
-  font-size: 22px !important;
-  transition: background 0.39s ease,
-              color 0.39s ease,
-              transform 0.39s ease;
-}
-
-.VPFeature.link:hover .icon {
-  transform: scale(1.1);
-}
-
-.VPFeature .title {
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  line-height: 1.5 !important;
-  color: var(--vp-c-text-1) !important;
-  transition: color 0.39s ease;
-}
-
-.VPFeature.link:hover .title {
-  color: var(--vp-c-brand-1) !important;
-}
-
-.VPFeature .details {
-  font-size: 13px !important;
-  line-height: 1.7 !important;
-  color: var(--vp-c-text-2) !important;
-  font-weight: 400 !important;
-}
-
-.VPFeature .link-text-icon {
-  transition: transform 0.39s ease;
-}
-
-.VPFeature.link:hover .link-text-icon {
-  transform: translateX(4px);
-}
-
-/* ── Dark Mode ───────────────────────────────────────────────── */
-
-.dark .VPFeature {
-  background-color: var(--vp-c-bg-elv) !important;
-  border-color: var(--vp-c-border) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2),
-              0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.dark .VPFeature.link:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3),
-              0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.dark .vp-doc blockquote {
-  background: color-mix(in srgb, var(--vp-c-brand-1) 8%, transparent);
-}
-
-.dark .vp-doc table tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-.dark .vp-doc img {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* ── Responsive ──────────────────────────────────────────────── */
-
-@media (max-width: 639px) {
-  .VPFeature .box {
-    padding: 20px 18px !important;
-  }
-
-  .VPFeature .icon {
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 8px !important;
-    font-size: 18px !important;
-  }
-
-  .VPFeature .title {
-    font-size: 14px !important;
-  }
-
-  .VPFeature .details {
-    font-size: 12.5px !important;
   }
 }
 
@@ -514,28 +389,22 @@ summary:focus-visible,
   gap: 16px;
   padding: 24px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   background-color: var(--vp-c-bg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: border-color 0.39s ease, box-shadow 0.39s ease, transform 0.39s ease;
+  transition: border-color var(--aels-dur) var(--aels-ease);
   text-decoration: none !important;
   color: inherit;
 }
 
 .contributor-card:hover {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
 }
 
 .dark .contributor-card {
   background-color: var(--vp-c-bg-elv);
   border-color: var(--vp-c-border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.dark .contributor-card:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .contributor-card .card-avatar {
@@ -546,7 +415,7 @@ summary:focus-visible,
   object-fit: cover;
   border: 2px solid var(--vp-c-divider);
   flex-shrink: 0;
-  transition: border-color 0.39s ease;
+  transition: border-color var(--aels-dur) var(--aels-ease);
 }
 
 .contributor-card:hover .card-avatar {
@@ -565,7 +434,7 @@ summary:focus-visible,
   font-weight: 600;
   color: var(--vp-c-text-1);
   text-decoration: none !important;
-  transition: color 0.39s ease;
+  transition: color var(--aels-dur) var(--aels-ease);
 }
 
 .contributor-card .card-name:hover {
@@ -615,86 +484,151 @@ summary:focus-visible,
    马克笔；结尾链接清单降级为出发卡。全部作用于 HomeAbout 容器内。
    ================================================================ */
 
-.home-about__inner {
-  line-height: 1.9;
+/* 门廊开头那枚小灯泡：老标识，独立于新组织图标，只在首页这里出现一次 */
+.porch-mark {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 2px;
+  opacity: 0.85;
 }
 
-.home-about__inner > * {
-  max-width: 42em;
-  margin-left: auto;
-  margin-right: auto;
+/* 深色底下这块海军蓝几乎看不见，直接转成白线稿 */
+.dark .porch-mark {
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+}
+
+/* 每一节一张卡：卡在，内容才在；滚到哪一节，那张卡弹出来，划走再收回去 */
+.home-about__inner .porch-sec {
+  position: relative;
+  max-width: 46em;
+  margin: 0 auto 20px;
+  padding: 26px 30px 28px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: var(--aels-radius-lg);
+  background: var(--vp-c-bg-elv);
+  opacity: 0;
+  /* 从下沿往上顶：缩放中心压在卡片底边，向上位移加轻微放大 */
+  transform: translateY(40px) scale(0.96);
+  transform-origin: 50% 100%;
+  will-change: opacity, transform;
+  /* 收起时用这条：快一点、不带过冲，退场不该抢戏 */
+  transition:
+    transform 0.34s cubic-bezier(0.4, 0, 0.7, 0.2),
+    opacity 0.2s ease-in;
+}
+
+/* 从视口上方滚回来的：从上沿压下来，不跟上顶一个方向 */
+.home-about__inner .porch-sec.from-top {
+  transform: translateY(-34px) scale(0.97);
+  transform-origin: 50% 0;
+}
+
+.home-about__inner .porch-sec.is-shown {
+  opacity: 1;
+  transform: none;
+  /* 出场这条：慢一点、带过冲 */
+  transition:
+    transform 0.58s cubic-bezier(0.18, 1.5, 0.36, 1),
+    opacity 0.22s ease-out;
+}
+
+/* 锚点直达 / 前进后退：立即到位，不播动画 */
+.home-about__inner .porch-sec.is-shown.no-anim {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-about__inner .porch-sec {
+    opacity: 1;
+    transform: none;
+  }
+  .home-about__inner .porch-sec.is-shown {
+    transition: none;
+  }
+}
+
+/* 打印的时候不该有还没弹出来的卡 */
+@media print {
+  .home-about__inner .porch-sec {
+    opacity: 1 !important;
+    transform: none !important;
+    break-inside: avoid;
+  }
 }
 
 .home-about__inner p {
-  margin-bottom: 1.35em;
+  margin-bottom: 1.15em;
 }
 
+.home-about__inner p:last-child {
+  margin-bottom: 0;
+}
+
+/* 卡片里的节标题：不再靠大留白分节，卡本身就是分隔 */
 .home-about__inner h2 {
-  font-size: 1.45rem;
+  font-size: 1.3rem;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0.3px;
-  margin: 3em auto 1.2em;
-  padding-top: 1.2em;
-  /* 分节只留 ::before 走线纹样，清掉 VitePress 默认的整行分隔线 */
+  margin: 0 0 1em;
+  padding-top: 0;
   border-top: none;
 }
 
-/* 走线分节纹样：一段走线 + 两端过孔 */
+/* 卡头标记：一根铜色细线，两头各一个实心焊盘 */
 .home-about__inner h2::before {
   content: '';
   display: block;
-  width: 140px;
-  height: 12px;
-  margin: 0 auto 1.1em;
+  width: 96px;
+  height: 6px;
+  margin: 0 0 0.75em;
+  border-top: 1px solid color-mix(in srgb, var(--aels-copper) 50%, transparent);
   background:
-    radial-gradient(circle 2.4px at 5px 6px, var(--vp-c-brand-1) 0 2.2px, transparent 2.6px),
-    radial-gradient(circle 2.4px at 135px 6px, var(--vp-c-brand-1) 0 2.2px, transparent 2.6px),
-    linear-gradient(90deg, transparent 9px, var(--vp-c-brand-1) 9px 131px, transparent 131px);
-  background-repeat: no-repeat;
-  opacity: 0.55;
+    linear-gradient(var(--aels-copper), var(--aels-copper)) 0 0 / 5px 5px no-repeat,
+    linear-gradient(var(--aels-copper), var(--aels-copper)) 100% 0 / 5px 5px no-repeat;
 }
 
 .home-about__inner strong {
   font-weight: 600;
-  background: linear-gradient(transparent 62%, var(--aels-amber-wash) 62%);
+  box-shadow: inset 0 -0.42em 0 var(--aels-amber-wash);
 }
 
-.home-about__inner > ul:last-of-type {
+/* 结尾那条链接清单：卡里不再套卡，压成一条分栏脚注 */
+.home-about__inner ul:last-of-type {
   list-style: none;
-  padding: 0;
-  max-width: 42em;
-  margin: 2.2em auto 0;
+  margin: 1.5em 0 0;
+  padding: 14px 0 0;
+  border-top: 1px dashed var(--vp-c-divider);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 6px 26px;
 }
 
-.home-about__inner > ul:last-of-type li {
-  border: 1.5px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 16px 18px;
-  background: var(--vp-c-bg-elv);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
-  font-size: 0.95em;
-  line-height: 1.8;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+.home-about__inner ul:last-of-type li {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  font-size: 0.92em;
+  line-height: 1.9;
+  color: var(--vp-c-text-2);
+  overflow-wrap: anywhere;
 }
 
-.home-about__inner > ul:last-of-type li:hover {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
-  transform: translateY(-3px);
-}
-
-.home-about__inner > ul:last-of-type a {
+.home-about__inner ul:last-of-type a {
   color: var(--vp-c-brand-1);
   font-weight: 600;
 }
 
 @media (max-width: 639px) {
-  .home-about__inner > ul:last-of-type {
+  .home-about__inner ul:last-of-type {
     grid-template-columns: 1fr;
+  }
+
+  .home-about__inner .porch-sec {
+    padding: 20px 18px 22px;
   }
 }
 
@@ -861,3 +795,68 @@ summary:focus-visible,
     padding: 16px;
   }
 }
+
+/* ================================================================
+   顶部导航下拉：弹射
+   鼠标进入菜单按钮时，面板从导航条下沿弹出来，带一点过冲。
+   窄屏走的是 VPNavScreenMenuGroup（整页侧滑那套），这里不碰。
+   ================================================================ */
+
+@media (min-width: 768px) {
+  .VPNavBar .VPFlyout .menu {
+    transform-origin: top right;
+    will-change: transform, opacity;
+  }
+
+  .VPNavBar .VPFlyout .button[aria-expanded='false'] + .menu {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.94);
+    transition:
+      opacity 0.1s ease-in,
+      transform 0.14s ease-in,
+      visibility 0s linear 0.14s;
+  }
+
+  .VPNavBar .VPFlyout:hover .menu,
+  .VPNavBar .VPFlyout .button[aria-expanded='true'] + .menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.12s ease-out,
+      transform 0.36s cubic-bezier(0.16, 1.55, 0.4, 1),
+      visibility 0s linear;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .VPNavBar .VPFlyout .menu,
+  .VPNavBar .VPFlyout .button[aria-expanded='false'] + .menu {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* 下拉面板跟卡片一个圆角刻度，不再单独用一个 12px */
+.VPNavBar .VPFlyout .VPMenu {
+  border-radius: var(--aels-radius-md);
+}
+
+/* ================================================================
+   Issue 看板：仓库色标
+   分组头、仓库徽标、统计色带共用一套色，靠 --aels-hue 传递。
+   索引在 IssueBoard 里按仓库数量排序固定，筛选时不会跳色。
+   ================================================================ */
+
+.aels-hue-0 { --aels-hue: #b87333; }
+.aels-hue-1 { --aels-hue: #4b7f52; }
+.aels-hue-2 { --aels-hue: #46688b; }
+.aels-hue-3 { --aels-hue: #7d5683; }
+.aels-hue-4 { --aels-hue: #2f7d74; }
+.aels-hue-5 { --aels-hue: #9a6b1f; }
+
+.dark .aels-hue-0 { --aels-hue: #d89c6c; }
+.dark .aels-hue-1 { --aels-hue: #7fc48a; }
+.dark .aels-hue-2 { --aels-hue: #85a9cc; }
+.dark .aels-hue-3 { --aels-hue: #c295c7; }
+.dark .aels-hue-4 { --aels-hue: #6cc0b6; }
+.dark .aels-hue-5 { --aels-hue: #d8a95c; }

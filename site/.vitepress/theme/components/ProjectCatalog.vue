@@ -181,7 +181,7 @@ watch([lane, stage], syncUrl)
 .catalog-filters button {
   padding: 6px 13px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
+  border-radius: var(--aels-radius-sm);
   background: var(--vp-c-bg);
   color: var(--vp-c-text-2);
   cursor: pointer;
@@ -217,7 +217,7 @@ watch([lane, stage], syncUrl)
   margin: 2rem 0;
   padding: 1.25rem 1.5rem;
   border: 1px dashed var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   color: var(--vp-c-text-2);
 }
 

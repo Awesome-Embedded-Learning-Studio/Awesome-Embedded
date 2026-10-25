@@ -33,7 +33,7 @@ const resolvedLink = computed(() => {
       <span
         class="card-stars"
         :title="state === 'error' ? '星数暂时读取不到' : 'GitHub 实时星数'"
-      >⭐ {{ displayStars ?? '—' }}</span>
+      >★ {{ displayStars ?? '—' }}</span>
     </div>
     <div class="card-body">
       <p class="card-position">{{ project.position }}</p>
@@ -55,10 +55,10 @@ const resolvedLink = computed(() => {
   flex-direction: column;
   padding: 22px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   background-color: var(--vp-c-bg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: border-color 0.39s ease, box-shadow 0.39s ease, transform 0.39s ease;
+  transition: border-color var(--aels-dur) var(--aels-ease);
   text-decoration: none !important;
   color: inherit;
   cursor: pointer;
@@ -66,18 +66,12 @@ const resolvedLink = computed(() => {
 
 .project-card:hover {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
 }
 
 .dark .project-card {
   background-color: var(--vp-c-bg-elv);
   border-color: var(--vp-c-border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.dark .project-card:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-header {
@@ -91,7 +85,7 @@ const resolvedLink = computed(() => {
   font-size: 16px;
   font-weight: 600;
   color: var(--vp-c-text-1);
-  transition: color 0.39s ease;
+  transition: color var(--aels-dur) var(--aels-ease);
   line-height: 1.4;
 }
 
@@ -149,7 +143,7 @@ const resolvedLink = computed(() => {
   display: inline-flex;
   align-items: center;
   padding: 2px 10px;
-  border-radius: 999px;
+  border-radius: var(--aels-radius-xs);
   font-size: 12.5px;
   font-weight: 500;
   line-height: 1.6;

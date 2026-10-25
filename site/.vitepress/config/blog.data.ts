@@ -1,9 +1,9 @@
-// 文章列表的数据源：document/blog/ 下全部文章（不含索引页）。
+// 文章列表的数据源：document/blog/ 下全部文章（含 weekly/ 等子目录，不含索引页）。
 // fail loud：文章头缺 title / description / date / tags，或日期格式非法，构建即停并指明文件。
 // YAML 会把 2026-07-25 自动解析成 Date，这里统一归一化成 YYYY-MM-DD 字符串再交给页面。
 import { createContentLoader } from 'vitepress'
 
-const loader = createContentLoader('../document/blog/*.md', {
+const loader = createContentLoader('../document/blog/**/*.md', {
   exclude: ['../document/blog/index.md'],
   render: false,
   excerpt: true,

@@ -1,8 +1,8 @@
 // RSS：构建收尾时从 document/blog/ 直接读文章生成 /feed.xml，与列表共用同一套必填字段约定。
-// 指路页（document/weekly/index.md）不在 blog 目录里，天然不进源。
+// 周报住在 blog/weekly/ 子目录，一并收录；旧 /weekly/ 指路页已删除，全站周报内容都在 blog 目录里。
 import type { Plugin } from 'vite'
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs'
-import { resolve, basename, join } from 'node:path'
+import { resolve, join } from 'node:path'
 import { absoluteUrl, withBase } from './site-env'
 
 interface PostFm {
@@ -30,8 +30,9 @@ export function rssPlugin(): Plugin {
     name: 'aels-rss',
     buildEnd() {
       const blogDir = resolve(process.cwd(), 'document/blog')
-      const posts = readdirSync(blogDir)
-        .filter((f) => f.endsWith('.md') && f !== 'index.md')
+      const posts = readdirSync(blogDir, { recursive: true })
+        .map((f) => f.replace(/\\/g, '/'))
+        .filter((f) => f.endsWith('.md') && f !== 'index.md' && !f.endsWith('/index.md'))
         .map((f) => ({ f, fm: parseFrontmatter(readFileSync(join(blogDir, f), 'utf8')) }))
         .filter((p): p is { f: string; fm: PostFm } => p.fm !== null && !!p.fm.title && !!p.fm.date)
         .sort((a, b) => b.fm.date.localeCompare(a.fm.date))
@@ -39,7 +40,7 @@ export function rssPlugin(): Plugin {
       const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       const items = posts
         .map((p) => {
-          const slug = basename(p.f, '.md')
+          const slug = p.f.replace(/\.md$/, '')
           return [
             '    <item>',
             `      <title>${esc(p.fm.title)}</title>`,

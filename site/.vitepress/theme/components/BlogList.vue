@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { withBase } from 'vitepress'
 import { data } from '../../config/blog.data'
 
 interface Post {
@@ -29,7 +30,7 @@ const allTags = computed(() => [...new Set(posts.flatMap((p) => p.frontmatter.ta
 
   <ul class="blog-list">
     <li v-for="post in shown" :key="post.url">
-      <a :href="post.url">
+      <a :href="withBase(post.url)">
         <span class="blog-date">{{ post.frontmatter.date }}</span>
         {{ post.frontmatter.title }}
       </a>
@@ -47,7 +48,7 @@ const allTags = computed(() => [...new Set(posts.flatMap((p) => p.frontmatter.ta
 }
 .blog-filter button {
   border: 1px solid var(--vp-c-border);
-  border-radius: 999px;
+  border-radius: var(--aels-radius-sm);
   padding: 0.15em 0.8em;
   background: transparent;
   cursor: pointer;

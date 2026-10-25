@@ -10,6 +10,7 @@ title: "项目规划"
 - [Cinux 线规划](/plans/cinux)
 - [imx-forge 规划](/plans/imx-forge)
 - [rk-forge 规划](/plans/rk-forge)
+- [eai 规划](/plans/eai)
 - [Tutorial_AwesomeModernCPP 规划](/plans/tutorial-awesome-modern-cpp)
 - [Tutorial_AwesomeQt 规划](/plans/tutorial-awesome-qt)
 - [C-Journey 规划](/plans/c-journey)

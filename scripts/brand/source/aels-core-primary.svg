@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"
+     viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">AELS CORE — navy and amber</title>
+  <desc id="desc">AELS CORE: a symmetric chip with two pins on each side,
+  a geometric A cutout, and a small square kernel.</desc>
+<path fill="#142C52" fill-rule="evenodd" d="M 280 234 H 744
+C 781.555 234 812 264.445 812 302
+V 364 H 892 Q 912 364 912 384
+V 429 Q 912 449 892 449 H 812
+V 526 H 892 Q 912 526 912 546
+V 591 Q 912 611 892 611 H 812
+V 722 C 812 759.555 781.555 790 744 790
+H 280 C 242.445 790 212 759.555 212 722
+V 611 H 132 Q 112 611 112 591
+V 546 Q 112 526 132 526 H 212
+V 449 H 132 Q 112 449 112 429
+V 384 Q 112 364 132 364 H 212
+V 302 C 212 264.445 242.445 234 280 234 Z M 450 318 H 574
+Q 585 318 591 330
+L 780 704 Q 790 724 768 724
+H 660 Q 647 724 641 712
+L 521 476 Q 512 459 503 476
+L 383 712 Q 377 724 364 724
+H 256 Q 234 724 244 704
+L 433 330 Q 439 318 450 318 Z"/>
+<path fill="#E6A83D" d="M 480 636 H 544 Q 556 636 556 648
+V 712 Q 556 724 544 724
+H 480 Q 468 724 468 712
+V 648 Q 468 636 480 636 Z"/>
+</svg>

@@ -51,11 +51,11 @@ EmbedBox 负责先会使用，C-Journey 与 ModernCPP 分别为 C 和 C++ 深入
 
 ### [MCU 实践](/roadmap/02-mcu/)
 
-当前以 ST-Forge 为建设主线。Tutorial_FreeRTOS、AwesomeHardware 和 micro-forge 分别提供概念、硬件与模拟支持；BareMetal-Drivers 可以接收成熟资产，但没有预设的统一结课产品。
+当前以 ST-Forge 为建设主线。Tutorial_FreeRTOS、AwesomeHardware 和 micro-forge 分别提供概念、硬件与模拟支持；BareMetal-Drivers 可以接收成熟资产，libestdx 与 ZerOS 分别提供现代 C++ 驱动资产和裸机 RTOS 教学专题，它们都不是固定课程阶段。
 
 ### [嵌入式 Linux 实践](/roadmap/03-linux/)
 
-imx-forge 适合第一次打通完整板级链路；rk-forge 根据开发板与目标选择平台；h618_forge 提供主线化横向参考。PenguinLab、CFBox、buildmeter 和 lightroot 各自承担系统知识、工程项目或基建职责。
+imx-forge 适合第一次打通完整板级链路；rk-forge 根据开发板与目标选择平台；h618_forge 提供主线化横向参考。PenguinLab、devtree-journey、CFBox、buildmeter 和 lightroot 各自承担系统知识、设备树专题、工程项目或基建职责。
 
 ### [Cinux：产品与教学重放](/roadmap/04-specialty/)
 

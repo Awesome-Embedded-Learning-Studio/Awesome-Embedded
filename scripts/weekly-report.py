@@ -283,7 +283,9 @@ def main():
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print(f"[done] {prev_date} → {curr_date}  (区间 {interval} 天, {interval_note})")
-    print(f"  wrote {out_path.relative_to(REPO_ROOT)}")
+    wrote = (out_path.relative_to(REPO_ROOT)
+             if out_path.is_relative_to(REPO_ROOT) else out_path)
+    print(f"  wrote {wrote}")
     print(f"  stars Δ={fmt_delta(cs['total_stars']-ps['total_stars'])}  "
           f"repos Δ={fmt_delta(cs['total_repos']-ps['total_repos'])}  "
           f"new={len(new_repos)} gone={len(gone_repos)}")

@@ -6,19 +6,19 @@ title: "rk-forge · Rockchip 平台"
 
 > 仓库定位与验证入口见 [项目目录 · rk-forge](/projects/rk-forge)。
 
-> 仓库状态：公开，三板课程路线已经定稿。workspace 已有，具体内容由 rk-forge 按自己的节奏建设。
+> 仓库状态：公开，三块板（RK3506B / RK3568 / RK3588）的课程路线已经定稿。workspace 已有，具体内容由 rk-forge 按自己的节奏建设。
 
-rk-forge 是 Rockchip 平台对位 imx-forge 的工作区，但它不是一条单一架构的线性升级链。仓库同时覆盖 **RK3506B 的 ARMv7-A / 32 位路线**，以及 **RK3568、RK3588 的 ARMv8-A / 64 位路线**。三块板共享 Linux BSP、驱动与产品化方法，但工具链、ABI、启动架构和 rootfs 产物必须分开管理。
+我们把 rk-forge 建成 Rockchip 平台上与 imx-forge 相对应的工作区，但它不是一条单一架构的线性升级链。仓库同时覆盖 **RK3506B 的 ARMv7-A / 32 位路线**，以及 **RK3568、RK3588 的 ARMv8-A / 64 位路线**。三块板共享 Linux BSP、驱动与产品化方法，但工具链、ABI、启动架构和 rootfs 产物必须分开管理。
 
-目标是在 RK3506B 上保留清晰的 32 位工业平台入口，在 RK3568 上打磨通用 64 位驱动，在 RK3588 上继续进入 NPU、GPU、媒体和 Android。
+我们给三块板分了工：RK3506B 上保留清晰的 32 位工业平台入口，我们拿 RK3568 打磨通用 64 位驱动，到了 RK3588，再往 NPU、GPU、媒体和 Android 走。
 
 ## 定位
 
-- **真板闭环**：组织已有 RK3506B、RK3568、RK3588，课程按目标板保存构建配置、启动日志和验证记录；“计划在真板验收”不等于“当前每节都已经验过”。
-- **双架构工作区**：RK3506B 走 32 位路线；RK3568 / RK3588 走 64 位路线。共享方法，不混用二进制产物。
+- **真板闭环**：组织已有 RK3506B、RK3568、RK3588，课程按目标板保存构建配置、启动日志和验证记录。“计划在真板验收”不等于“当前每节都已经验过”。
+- **双架构工作区**：RK3506B 走 32 位路线，RK3568 / RK3588 走 64 位路线。共享方法，不混用二进制产物。
 - **三板分工**：3506B 负责 32 位平台与工业外设，3568 负责 64 位通用驱动，3588 负责高性能子系统和产品门户。
-- **Linux 加 Android 双系统**：RK3588 跑 Android 是 imx 给不了的差异化。
-- **门户**：不只是学习，通向产品（CFDesktop / AI 盒 / 智能屏）。
+- **Linux 加 Android 双系统**：RK3588 跑 Android 是 imx-forge 给不了的差异化。
+- **门户**：学习之外，这条线也通向产品（CFDesktop / AI 盒 / 智能屏），CFDesktop 是本组织的桌面环境产品。
 
 ## 三板怎么分工
 
@@ -28,18 +28,18 @@ rk-forge 是 Rockchip 平台对位 imx-forge 的工作区，但它不是一条�
 | RK3568（4x Cortex-A55） | ARMv8-A / 64 位 | 64 位 Linux 全链路与通用驱动主战场 |
 | RK3588（4x Cortex-A76 + 4x Cortex-A55） | ARMv8-A / 64 位 | NPU / GPU / VPU / ISP、Android 与产品门户 |
 
-RK3528 不属于当前三板主线，不在课程矩阵中占位；以后即使增加支持，也应作为独立目标配置出现。
+RK3528 我们没放进当前三板主线，课程矩阵里也没有它的位置。以后就算增加支持，我们也会让它作为独立目标配置出现。
 
 ## 双架构边界
 
-三块板可以共享 U-Boot、Linux、设备树、Buildroot、驱动模型和调试方法，但下面这些内容不能假装兼容：
+三块板可以共享 U-Boot、Linux、设备树、Buildroot、驱动模型和调试方法，但下面这些内容，我们不打算假装它们兼容：
 
-- **工具链**：RK3506B 使用 ARM 32 位交叉工具链；RK3568 / RK3588 使用 AArch64 交叉工具链。
+- **工具链**：RK3506B 使用 ARM 32 位交叉工具链，RK3568 / RK3588 使用 AArch64 交叉工具链。
 - **ABI 与产物**：内核、模块、bootloader、rootfs 包、sysroot 和应用二进制按 `arm32` / `arm64` 分目录、分缓存、分 CI job。
-- **启动与异常模型**：RK3506B 讲 ARMv7-A 的异常模式和 32 位启动；EL0–EL3、AArch64 异常级与对应 ATF 流程只放在 RK3568 / RK3588 分支。
+- **启动与异常模型**：RK3506B 讲 ARMv7-A 的异常模式和 32 位启动，EL0–EL3、AArch64 异常级与对应 TF-A 流程只放在 RK3568 / RK3588 分支。
 - **板级配置**：每块板拥有独立 defconfig、设备树、镜像布局、烧录配置和验证日志，不能用“同仓库”替代兼容性验证。
 
-## 一、基础对齐层（对齐 imx） · 载体 RK3506B / RK3568
+## 一、基础对齐层（对齐 imx-forge） · 载体 RK3506B / RK3568
 
 **入门与环境**
 
@@ -52,8 +52,8 @@ RK3528 不属于当前三板主线，不在课程矩阵中占位；以后即使�
 
 - 共同骨架：BootROM → SPL / TPL → U-Boot → Linux，逐板标出实际经过的阶段
 - RK3506B 分支：ARMv7-A 32 位启动、异常模式和设备树交接
-- RK3568 / RK3588 分支：AArch64 的 EL0–EL3、ATF、可选 OP-TEE 与 Linux 交接
-- boot 源按板卡能力讲：eMMC / SD / 网络 TFTP；NVMe 只放在实际支持并完成验证的板卡
+- RK3568 / RK3588 分支：AArch64 的 EL0–EL3、TF-A、可选 OP-TEE 与 Linux 交接
+- boot 源按板卡能力讲：eMMC、SD、网络 TFTP。NVMe 只放在实际支持并完成验证的板卡
 - U-Boot 环境变量、bootcmd、bootargs
 
 **内核与设备树**
@@ -76,7 +76,7 @@ RK3528 不属于当前三板主线，不在课程矩阵中占位；以后即使�
 - GDB 远程调试、KGDB
 - ftrace / perf 性能分析
 
-## 二、横跨驱动教程（差异化招牌，深度超 imx） · 载体 RK3568 为主，RK3588 验证
+## 二、横跨驱动教程（差异化招牌，深度超 imx-forge） · 载体 RK3568 为主，RK3588 验证
 
 **驱动地基**
 
@@ -116,7 +116,7 @@ RK3528 不属于当前三板主线，不在课程矩阵中占位；以后即使�
 
 ## 三、Rockchip 官方文档索引与原创解读
 
-Rockchip 官方文档多、散、术语密、中英夹杂，新手很难啃。rk-forge 建立版本化索引并提供原创解读：
+Rockchip 官方文档多、散、术语密、中英夹杂，新手很难啃。我们在 rk-forge 里建立版本化索引，并给出原创解读：
 
 - **TRM（技术参考手册）**：记录适用 SoC 和文档版本，挑时钟、GPIO、DRAM 等关键章节解读
 - **RKNN 文档**：整理成“模型转换、量化、部署、性能验证”的步骤教程
@@ -124,14 +124,14 @@ Rockchip 官方文档多、散、术语密、中英夹杂，新手很难啃。rk
 - **BSP / SDK release notes**：维护版本、patch 与已知限制的对应关系
 - **官方与社区资料**：索引来源，不复制不明授权的原文
 
-原则：不照搬原文，补背景、标版本、给可跑例子，并把“厂商 BSP 结论”和“主线内核结论”明确分开。
+我们的做法是补背景、标版本、给可跑例子，把厂商 BSP 的说法和主线内核的说法明确分开，不照搬原文。
 
 ## 四、超越层（RK3588 独有） · 载体 RK3588
 
 **多核 SoC**
 
 - 8 核异构 big.LITTLE：大小核调度、CPU freq、hotplug
-- ATF：EL3、安全启动、optee
+- TF-A：EL3、安全启动、OP-TEE
 - SMMU（IOMMU）：地址翻译、设备隔离
 - 电源与热：suspend / resume、thermal、DVFS
 
@@ -157,7 +157,7 @@ Rockchip 官方文档多、散、术语密、中英夹杂，新手很难啃。rk
 
 ## 五、Android 轨 · 载体 RK3588
 
-RK3588 跑 Android，是 imx 给不了的差异化。很多人买 RK3588 就是冲着跑 Android 去的。
+RK3588 跑 Android，是 imx-forge 给不了的差异化。你要是冲着 Android 买 RK3588，Android 轨就是为你准备的。
 
 - AOSP 源码加 Rockchip Android SDK
 - Android bring-up：烧录、adb、fastboot
@@ -175,7 +175,7 @@ RK3588 跑 Android，是 imx 给不了的差异化。很多人买 RK3588 就是�
 
 - 多板管理：RK3506B / RK3568 / RK3588 同仓管理，架构和板级产物严格隔离
 - 发行版移植：Buildroot（教学）、Debian / Ubuntu（社区）、openEuler
-- 工具：buildmeter、patch 管理、sdk-diff
+- 工具：buildmeter、patch 管理、sdk-diff（逐子系统对比厂商 BSP 与主线移植差距的报告）
 - 自动化：按 SoC 和架构拆分的 CI、镜像构建、烧录脚本和真板验证记录
 
 ## 链接

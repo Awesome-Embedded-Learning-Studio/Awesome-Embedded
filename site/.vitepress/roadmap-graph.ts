@@ -3,7 +3,8 @@
  *
  * 数据语义来源：组织 Discussion #7（2026-08-23）与 document/roadmap/index.md 的 mermaid。
  * 种子 stars 为 2026-08-23 GitHub org API 实拉值（SSG 直出/断网兜底），运行时由 useStars() 现拉刷新。
- * 种子坐标/尺寸照已批准的首页活稿（/tmp/aels-redesign/homepage-mockup.html）逐值移植。
+ * 种子坐标不再当最终位置用：组件里的 autoLayout() 只拿它决定"谁在哪一行、这一行里谁在左谁在右"，
+ * 真实位置按行重算，间距统一、整行居中、夹回板内。尺寸仍然是权威值。
  */
 
 export type RoadmapNodeType = 'root' | 'proj' | 'sup' | 'ghost'
@@ -14,7 +15,7 @@ export interface RoadmapNode {
   id: string
   name: string
   sub: string
-  /** 种子坐标（中心点）与尺寸 */
+  /** 种子坐标（排序参考，最终位置由 autoLayout 算）与尺寸 */
   x: number
   y: number
   w: number
@@ -48,7 +49,7 @@ const github = (name: string) => `https://github.com/Awesome-Embedded-Learning-S
 export const ROADMAP_BANDS: RoadmapBand[] = [
   { label: 'L0 · 共同工作台', top: 20, bottom: 108 },
   { label: 'L1 · 语言承重墙', top: 152, bottom: 262 },
-  { label: 'L2 · 系统基本功', top: 296, bottom: 406 },
+  { label: 'L2 · 系统基本功', top: 290, bottom: 406 },
   { label: 'L3 · 嵌入式实践', top: 452, bottom: 574 },
   { label: 'L4 · 完整工程 · 结课与产品', top: 624, bottom: 880 },
 ]
@@ -62,12 +63,12 @@ export const roadmapNodes: RoadmapNode[] = [
   { id: 'FRT',  name: 'FreeRTOS',   sub: 'RTOS · Win+Linux',   x: 402,  y: 338, w: 158, h: 58, type: 'proj',  badge: '02', seedStar: 7,   repo: github('Tutorial_FreeRTOS'), href: '/projects/tutorial-freertos/' },
   { id: 'HW',   name: 'AweHardware', sub: '硬件基础轨',        x: 652,  y: 338, w: 152, h: 58, type: 'proj',  badge: '02', seedStar: 4,   repo: github('Tutorial_AwesomeHardware'), href: '/projects/tutorial-awesome-hardware/' },
   { id: 'STF',  name: 'ST-Forge',   sub: 'STM32 主教学线',     x: 402,  y: 496, w: 150, h: 58, type: 'proj',  badge: '02', seedStar: 2,   repo: github('ST-Forge'),   href: '/projects/st-forge/' },
-  { id: 'IMX',  name: 'imx-forge',  sub: '嵌入式工程大入口',   x: 726,  y: 496, w: 154, h: 58, type: 'proj',  badge: '03', seedStar: 91,  repo: github('imx-forge'),  href: '/projects/imx-forge/' },
-  { id: 'RK',   name: 'rk-forge',   sub: '主线化进阶',         x: 872,  y: 496, w: 142, h: 58, type: 'proj',  badge: '03', seedStar: 46,  repo: github('rk-forge'),   href: '/projects/rk-forge/' },
-  { id: 'H618', name: 'h618_forge', sub: 'Allwinner 研究',     x: 1006, y: 496, w: 152, h: 58, type: 'proj',  badge: '03', seedStar: 2,   repo: github('h618_forge'), href: '/projects/h618-forge/' },
-  { id: 'AQT',  name: 'AwesomeQt',  sub: 'Qt 旗舰 · 上位机',   x: 1170, y: 496, w: 148, h: 58, type: 'proj',  badge: '01', seedStar: 69,  repo: github('Tutorial_AwesomeQt'), href: '/projects/tutorial-awesome-qt/' },
-  { id: 'MF',   name: 'micro-forge', sub: 'MCU 验证底座',      x: 232,  y: 452, w: 140, h: 46, type: 'sup',   badge: '02', seedStar: 6,   repo: github('micro-forge'), href: '/projects/micro-forge/' },
-  { id: 'BM',   name: 'buildmeter', sub: '构建基建',           x: 580,  y: 582, w: 126, h: 46, type: 'sup',   badge: '03', seedStar: 0,   repo: github('buildmeter'), href: '/projects/buildmeter/' },
+  { id: 'IMX',  name: 'imx-forge',  sub: '嵌入式工程大入口',   x: 717,  y: 496, w: 154, h: 58, type: 'proj',  badge: '03', seedStar: 91,  repo: github('imx-forge'),  href: '/projects/imx-forge/' },
+  { id: 'RK',   name: 'rk-forge',   sub: '主线化进阶',         x: 889,  y: 496, w: 142, h: 58, type: 'proj',  badge: '03', seedStar: 46,  repo: github('rk-forge'),   href: '/projects/rk-forge/' },
+  { id: 'H618', name: 'h618_forge', sub: 'Allwinner 研究',     x: 1060, y: 496, w: 152, h: 58, type: 'proj',  badge: '03', seedStar: 2,   repo: github('h618_forge'), href: '/projects/h618-forge/' },
+  { id: 'AQT',  name: 'AwesomeQt',  sub: 'Qt 旗舰 · 上位机',   x: 1234, y: 496, w: 148, h: 58, type: 'proj',  badge: '01', seedStar: 69,  repo: github('Tutorial_AwesomeQt'), href: '/projects/tutorial-awesome-qt/' },
+  { id: 'MF',   name: 'micro-forge', sub: 'MCU 验证底座',      x: 232,  y: 496, w: 140, h: 46, type: 'sup',   badge: '02', seedStar: 6,   repo: github('micro-forge'), href: '/projects/micro-forge/' },
+  { id: 'BM',   name: 'buildmeter', sub: '构建基建',           x: 580,  y: 664, w: 126, h: 46, type: 'sup',   badge: '03', seedStar: 0,   repo: github('buildmeter'), href: '/projects/buildmeter/' },
   { id: 'CFB',  name: 'CFBox',      sub: 'userspace 结课',     x: 700,  y: 664, w: 146, h: 58, type: 'proj',  badge: '03', seedStar: 13,  repo: github('CFBox'),      href: '/projects/cfbox/' },
   { id: 'ECP',  name: 'eng. cpp',   sub: '工程方法 hub',       x: 902,  y: 664, w: 142, h: 58, type: 'proj',  badge: '01', seedStar: 2,   repo: github('engineering_cpp'), href: '/projects/engineering-cpp/' },
   { id: 'SIP',  name: 'IniParser',  sub: '首个小工程 spoke',   x: 1064, y: 664, w: 148, h: 58, type: 'proj',  badge: '01', seedStar: 10,  repo: github('Tutorial_cpp_SimpleIniParser'), href: '/projects/tutorial-cpp-simple-ini-parser/' },

@@ -17,13 +17,13 @@ const en = computed(() => lang.value.startsWith('en'))
 const t = {
   title: computed(() => (en.value ? 'Learning is a tree, not a pipeline' : '学习是一棵树，不是流水线')),
   note: computed(() => (en.value ? 'Drag nodes to arrange your bench · Hover to trace paths · Click a node for its project page' : '拖动节点布置你的工位 · 悬停看路径 · 点击看项目页')),
-  reset: computed(() => (en.value ? '⟲ Reset layout' : '⟲ 重置布局')),
-  allRepos: computed(() => (en.value ? '⌗ All repos →' : '⌗ 全部仓库 →')),
+  reset: computed(() => (en.value ? 'Reset layout' : '重置布局')),
+  allRepos: computed(() => (en.value ? 'All repos →' : '全部仓库 →')),
   lgSolid: computed(() => (en.value ? 'Recommended next' : '建议继续')),
   lgDash: computed(() => (en.value ? 'Deepen on demand' : '按需深化')),
   lgDot: computed(() => (en.value ? 'Support: verify · build · stable replay' : '支撑：验证 · 构建 · 稳定重放')),
   lgHere: computed(() => (en.value ? 'Start here' : '起点')),
-  lgGhost: computed(() => (en.value ? '▫ Dashed chip = planned' : '▫ 虚线框 = 规划中')),
+  lgGhost: computed(() => (en.value ? 'Dashed chip = planned' : '虚线框 = 规划中')),
   lgBadge: computed(() => (en.value ? 'Badge 01–04 = four site sections' : '角标 01–04 = 站点四区')),
 }
 
@@ -40,9 +40,115 @@ for (const e of roadmapEdges) {
   }
 }
 
-/* 网格点阵（静态，照活稿 34 间距 / 每 3 个一点） */
+/* 画布与自动排版参数 */
 const VB_W = 1330
 const VB_H = 1010
+const LAYOUT_L = 16
+const LAYOUT_R = 1314
+/* 行内间距 28，行归属按种子 y 聚类，差 40 以内算同一行 */
+const ROW_GAP = 28
+const ROW_TOL = 40
+
+/* ─────────── 自动排版 ───────────
+   种子坐标不再当最终位置用：它只回答两件事——这个节点属于哪一行、
+   这一行里谁在左谁在右。真实位置由这里算：同一行按种子左右顺序排开，
+   间距统一 28，整行绕自己的种子重心居中，再夹回板内。
+   行内顺序沿用作者排的语义顺序（教学中线 → 工程入口 → 主线化 → 研究 → 旗舰），
+   不交给重心算法去洗牌。 */
+function autoLayout() {
+  const rows: RoadmapNode[][] = []
+  const bySeedY = [...roadmapNodes].sort((a, b) => a.y - b.y)
+  for (const seed of bySeedY) {
+    const row = rows[rows.length - 1]
+    if (row && Math.abs(row[0].y - seed.y) <= ROW_TOL) row.push(seed)
+    else rows.push([seed])
+  }
+
+  for (const row of rows) {
+    const live = row.map((seed) => byId.get(seed.id)!).sort((a, b) => a.x - b.x)
+    const total = live.reduce((sum, n) => sum + n.w, 0) + ROW_GAP * (live.length - 1)
+    const anchor = row.reduce((sum, seed) => sum + seed.x, 0) / row.length
+    const y = Math.round(row.reduce((sum, seed) => sum + seed.y, 0) / row.length)
+    let cursor = Math.min(LAYOUT_R - total, Math.max(LAYOUT_L, anchor - total / 2))
+    for (const n of live) {
+      n.x = Math.round(cursor + n.w / 2)
+      n.y = y
+      cursor += n.w + ROW_GAP
+    }
+  }
+}
+autoLayout()
+
+/* 网格点阵（静态，照活稿 34 间距 / 每 3 个一点） */
+/* ─────────── 防重叠：拖拽互撞 + 载入时自动整理 ─────────── */
+const MIN_GAP = 12
+
+/* 候选位置是否压到别的节点（外扩 MIN_GAP 当作安全间隙） */
+function occupied(n: LiveNode, cx: number, cy: number): boolean {
+  const l = cx - n.w / 2 - MIN_GAP
+  const r = cx + n.w / 2 + MIN_GAP
+  const t = cy - n.h / 2 - MIN_GAP
+  const b = cy + n.h / 2 + MIN_GAP
+  for (const o of nodes) {
+    if (o.id === n.id) continue
+    if (l < o.x + o.w / 2 && r > o.x - o.w / 2 && t < o.y + o.h / 2 && b > o.y - o.h / 2) return true
+  }
+  return false
+}
+const clampX = (n: LiveNode, x: number) => Math.min(VB_W - n.w / 2 - 10, Math.max(n.w / 2 + 10, x))
+const clampY = (n: LiveNode, y: number) => Math.min(VB_H - n.h / 2 - 10, Math.max(n.h / 2 + 10, y))
+
+/* 第一轮软推开：压得越浅的方向先让开，尽量保住用户自己摆的位置。
+   第二轮就近插空：还压着的那个节点，在周围一圈圈找第一个空位。
+   两轮都不动 y 以外的轴，所以种子布局跑一遍等于什么都没发生。 */
+const RING: Array<[number, number]> = [
+  [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1],
+]
+
+function resolveOverlaps() {
+  for (let p = 0; p < 120; p++) {
+    let moved = false
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i]
+        const b = nodes[j]
+        const ox = (a.w + b.w) / 2 + MIN_GAP - Math.abs(a.x - b.x)
+        const oy = (a.h + b.h) / 2 + MIN_GAP - Math.abs(a.y - b.y)
+        if (ox <= 0 || oy <= 0) continue
+        moved = true
+        const sx = a.x < b.x ? -1 : a.x > b.x ? 1 : i % 2 ? 1 : -1
+        const sy = a.y < b.y ? -1 : a.y > b.y ? 1 : i % 2 ? 1 : -1
+        if (ox <= oy) {
+          a.x += (ox / 2) * sx
+          b.x -= (ox / 2) * sx
+        } else {
+          a.y += (oy / 2) * sy
+          b.y -= (oy / 2) * sy
+        }
+      }
+    }
+    for (const n of nodes) {
+      n.x = clampX(n, n.x)
+      n.y = clampY(n, n.y)
+    }
+    if (!moved) break
+  }
+
+  for (const n of nodes) {
+    if (!occupied(n, n.x, n.y)) continue
+    search: for (let r = 1; r <= 40; r++) {
+      for (const [ux, uy] of RING) {
+        const x = clampX(n, n.x + ux * r * 22)
+        const y = clampY(n, n.y + uy * r * 22)
+        if (!occupied(n, x, y)) {
+          n.x = x
+          n.y = y
+          break search
+        }
+      }
+    }
+  }
+}
 const GRID: Array<[number, number]> = []
 for (let gx = 30; gx < VB_W; gx += 34)
   for (let gy = 26; gy < VB_H; gy += 34)
@@ -120,7 +226,7 @@ function starOf(n: LiveNode): number | null {
 }
 
 /* ─────────── 拖拽 + 布局记忆（localStorage 仅客户端） ─────────── */
-const LAYOUT_KEY = 'aels-roadmap-layout-v1'
+const LAYOUT_KEY = 'aels-roadmap-layout-v2'
 const svgEl = ref<SVGSVGElement | null>(null)
 
 function svgXY(ev: PointerEvent): { x: number; y: number } {
@@ -163,8 +269,17 @@ function onPointerMove(ev: PointerEvent, n: LiveNode) {
     suppressClick = true
   }
   const p = svgXY(ev)
-  n.x = p.x - dragOff.x
-  n.y = p.y - dragOff.y
+  const nx = clampX(n, p.x - dragOff.x)
+  const ny = clampY(n, p.y - dragOff.y)
+  /* 目标位置空着就过去；被挡就只走没被挡的那根轴，贴着邻居滑过去 */
+  if (!occupied(n, nx, ny)) {
+    n.x = nx
+    n.y = ny
+  } else if (!occupied(n, nx, n.y)) {
+    n.x = nx
+  } else if (!occupied(n, n.x, ny)) {
+    n.y = ny
+  }
 }
 /* 导航决策由本函数接管（容器挂 vp-raw）：干净轻点 → 站内链接走 SPA 路由；
    拖拽 / 长按 → 吞掉不跳；修饰键/非左键/外链(target=_blank) → 浏览器原生行为。 */
@@ -202,10 +317,7 @@ function saveLayout() {
   }
 }
 function resetLayout() {
-  roadmapNodes.forEach((seed, i) => {
-    nodes[i].x = seed.x
-    nodes[i].y = seed.y
-  })
+  autoLayout()
   try {
     localStorage.removeItem(LAYOUT_KEY)
   } catch {
@@ -227,6 +339,9 @@ onMounted(() => {
     }
   } catch {
     /* 记忆损坏则用种子布局 */
+  } finally {
+    /* 旧版本存的位置可能互相压着，载入后统一理一遍 */
+    resolveOverlaps()
   }
 })
 onBeforeUnmount(() => {
@@ -273,6 +388,23 @@ const bandNodes = (band: RoadmapBand) =>
           :viewBox="`0 0 ${VB_W} ${VB_H}`"
           xmlns="http://www.w3.org/2000/svg"
         >
+        <!-- 板框：一圈板边、四角定位角标、右下丝印版本号 -->
+        <g class="rg-board">
+          <rect class="rg-board__edge" x="6" y="6" :width="VB_W - 12" :height="VB_H - 12" rx="8" />
+          <rect class="rg-board__inner" x="11" y="11" :width="VB_W - 22" :height="VB_H - 22" rx="5" />
+          <path class="rg-corner" d="M6 28 L6 6 L28 6" />
+          <path class="rg-corner" :d="`M${VB_W - 28} 6 L${VB_W - 6} 6 L${VB_W - 6} 28`" />
+          <path class="rg-corner" :d="`M6 ${VB_H - 28} L6 ${VB_H - 6} L28 ${VB_H - 6}`" />
+          <path class="rg-corner" :d="`M${VB_W - 28} ${VB_H - 6} L${VB_W - 6} ${VB_H - 6} L${VB_W - 6} ${VB_H - 28}`" />
+          <g class="rg-silk-block">
+            <rect x="26" y="906" width="214" height="80" rx="2" />
+            <text x="36" y="924">AELS LEARNING STUDIO</text>
+            <text x="36" y="940">ROADMAP BOARD · CU LAYER</text>
+            <text x="36" y="956">REV.A</text>
+            <text x="36" y="972">L0—L4 · 五层验证</text>
+          </g>
+        </g>
+
         <!-- 网格点阵 -->
         <circle
           v-for="([gx, gy], i) in GRID"
@@ -287,18 +419,21 @@ const bandNodes = (band: RoadmapBand) =>
         <g v-for="(b, i) in ROADMAP_BANDS" :key="`band-${i}`">
           <rect
             class="rg-band"
-            x="14"
+            x="16"
             :y="b.top"
-            width="1302"
+            width="1298"
             :height="b.bottom - b.top"
-            rx="10"
+            rx="2"
           />
-          <text class="rg-band-label" x="26" :y="b.top + 18">{{ b.label }}</text>
+          <rect class="rg-band-mark" x="26" :y="b.top + 8" width="6" height="6" />
+          <text class="rg-band-label" x="40" :y="b.top + 14">{{ b.label }}</text>
         </g>
 
         <!-- 边（走线 + 过孔） -->
         <g v-for="(e, i) in routedEdges" :key="`edge-${i}`">
-          <circle class="rg-via" :cx="e.via.x" :cy="e.via.y" r="3" />
+          <circle class="rg-via" :cx="e.via.x" :cy="e.via.y" r="3.6" />
+          <circle class="rg-via__hole" :cx="e.via.x" :cy="e.via.y" r="1.3" />
+          <path class="rg-edge__mask" :d="e.d" />
           <path class="rg-edge" :class="[`rg-edge--${e.kind}`, { 'rg-edge--hot': edgeHot(e.from, e.to) }]" :d="e.d" />
         </g>
 
@@ -322,23 +457,25 @@ const bandNodes = (band: RoadmapBand) =>
           >
             <!-- 引脚（root/proj 芯片感） -->
             <template v-if="n.type === 'root' || n.type === 'proj'">
-              <line
+              <rect
                 v-for="i in 3"
                 :key="`pl-${i}`"
                 class="rg-pin"
-                x1="-7"
-                :y1="(n.h * i) / 4"
-                x2="0"
-                :y2="(n.h * i) / 4"
+                x="-7"
+                :y="(n.h * i) / 4 - 1.6"
+                width="7"
+                height="3.2"
+                rx="0.8"
               />
-              <line
+              <rect
                 v-for="i in 3"
                 :key="`pr-${i}`"
                 class="rg-pin"
-                :x1="n.w"
-                :y1="(n.h * i) / 4"
-                :x2="n.w + 7"
-                :y2="(n.h * i) / 4"
+                :x="n.w"
+                :y="(n.h * i) / 4 - 1.6"
+                width="7"
+                height="3.2"
+                rx="0.8"
               />
             </template>
 
@@ -349,7 +486,7 @@ const bandNodes = (band: RoadmapBand) =>
               y="0"
               :width="n.w"
               :height="n.h"
-              :rx="n.type === 'sup' ? 8 : 10"
+              :rx="n.type === 'root' ? 3 : 2.5"
             />
             <text
               class="rg-name"
@@ -519,9 +656,8 @@ const bandNodes = (band: RoadmapBand) =>
 .rg-wrap {
   position: relative;
   border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   background: var(--vp-c-bg-soft);
-  box-shadow: 0 1px 3px rgba(16, 32, 24, 0.06), 0 1px 2px rgba(16, 32, 24, 0.08);
   overflow: hidden;
 }
 .rg-svg {
@@ -599,9 +735,44 @@ const bandNodes = (band: RoadmapBand) =>
 }
 
 /* ── 图内元素 ── */
+/* ── 板身 ── */
+.rg-board__edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--aels-copper) 42%, transparent);
+  stroke-width: 1.2;
+}
+.rg-board__inner {
+  fill: none;
+  stroke: color-mix(in srgb, var(--aels-copper) 18%, transparent);
+  stroke-width: 0.8;
+}
+.rg-corner {
+  fill: none;
+  stroke: color-mix(in srgb, var(--aels-copper) 55%, transparent);
+  stroke-width: 1.4;
+  stroke-linecap: square;
+}
+.rg-silk-block rect {
+  fill: none;
+  stroke: color-mix(in srgb, var(--aels-copper) 30%, transparent);
+  stroke-width: 0.8;
+}
+.rg-silk-block text {
+  font-family: var(--aels-font-mono);
+  font-size: 8.5px;
+  letter-spacing: 1.6px;
+  fill: color-mix(in srgb, var(--aels-copper) 52%, transparent);
+}
+
+/* 层带：丝印划出来的功能区，不是卡片 */
 .rg-band {
-  fill: color-mix(in srgb, var(--aels-copper) 7%, transparent);
-  opacity: 0.35;
+  fill: color-mix(in srgb, var(--aels-copper) 4%, transparent);
+  stroke: color-mix(in srgb, var(--aels-copper) 22%, transparent);
+  stroke-width: 0.9;
+  stroke-dasharray: 4 5;
+}
+.rg-band-mark {
+  fill: color-mix(in srgb, var(--aels-copper) 60%, transparent);
 }
 .rg-band-label {
   font-family: var(--aels-font-mono);
@@ -613,36 +784,51 @@ const bandNodes = (band: RoadmapBand) =>
   fill: var(--vp-c-text-3);
   opacity: 0.18;
 }
+/* 走线底衬：一层淡铜色的暗边，让铜箔看起来压在板上 */
+.rg-edge__mask {
+  fill: none;
+  stroke: color-mix(in srgb, var(--aels-copper) 22%, transparent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* 走线：solid 是主铜箔，dash 是副层，dot 是支撑线 */
 .rg-edge {
   fill: none;
-  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   transition: opacity 0.15s;
 }
 .rg-edge--solid {
   stroke: var(--aels-copper);
-  opacity: 0.6;
+  stroke-width: 2;
+  opacity: 0.62;
 }
 .rg-edge--dash {
   stroke: var(--aels-copper);
+  stroke-width: 1.6;
   opacity: 0.5;
-  stroke-dasharray: 7 5;
+  stroke-dasharray: 8 5;
 }
 .rg-edge--dot {
   stroke: var(--vp-c-text-3);
-  opacity: 0.5;
+  stroke-width: 1.2;
+  opacity: 0.45;
   stroke-dasharray: 2 5;
-  stroke-linecap: round;
 }
+/* 点亮不靠发光，靠把线换成琥珀并加粗 */
 .rg-edge--hot {
   opacity: 1;
-  stroke-width: 3;
-  filter: drop-shadow(0 0 4px var(--aels-amber));
+  stroke-width: 2.8;
+  stroke: var(--aels-amber);
 }
+/* 过孔：铜环加钻孔 */
 .rg-via {
-  fill: var(--vp-c-bg);
-  stroke: var(--aels-copper);
-  stroke-width: 1.6;
-  opacity: 0.6;
+  fill: var(--aels-copper);
+  opacity: 0.5;
+}
+.rg-via__hole {
+  fill: var(--vp-c-bg-soft);
 }
 .rg-node {
   cursor: grab;
@@ -660,7 +846,7 @@ const bandNodes = (band: RoadmapBand) =>
 .rg-chip {
   fill: var(--vp-c-bg-elv);
   stroke: var(--vp-c-brand-1);
-  stroke-width: 1.8;
+  stroke-width: 1.5;
 }
 .rg-chip--root {
   fill: var(--vp-c-brand-1);
@@ -675,9 +861,8 @@ const bandNodes = (band: RoadmapBand) =>
   stroke-width: 1.4;
 }
 .rg-pin {
-  stroke: var(--aels-copper);
-  stroke-width: 1.6;
-  opacity: 0.7;
+  fill: var(--aels-copper);
+  opacity: 0.55;
 }
 .rg-name {
   font-size: 14px;

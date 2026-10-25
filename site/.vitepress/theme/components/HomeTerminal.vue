@@ -57,8 +57,12 @@ onMounted(() => {
 
 <style scoped>
 .term {
+  /* 挪到正文区以后自己撑列宽：居中一条，别再跟着 hero 的容器走 */
+  width: calc(100% - 48px);
+  max-width: 720px;
+  margin: 72px auto 8px;
   background: var(--aels-term-bg);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   border: 1px solid color-mix(in srgb, var(--aels-term-fg) 16%, transparent);
   box-shadow: var(--aels-shadow-lift);
   overflow: hidden;

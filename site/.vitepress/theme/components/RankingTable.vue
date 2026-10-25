@@ -44,8 +44,8 @@ const ranking = computed(() => {
         <span class="repo-name">{{ item.name }}</span>
         <span class="repo-desc">{{ item.desc }}</span>
       </span>
-      <span class="col-stars">⭐ {{ item.stars }}</span>
-      <span class="col-forks">🍴 {{ item.forks }}</span>
+      <span class="col-stars">{{ item.stars }}</span>
+      <span class="col-forks">{{ item.forks }}</span>
     </a>
     <div v-if="ranking.length === 0" class="ranking-empty">
       <template v-if="state === 'loading'">正在读取 GitHub 数据…</template>
@@ -59,7 +59,7 @@ const ranking = computed(() => {
 .ranking-table {
   margin: 1.5em 0;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: var(--aels-radius-md);
   overflow: hidden;
   background-color: var(--vp-c-bg);
 }

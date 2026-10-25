@@ -23,8 +23,8 @@ GitHub Releases 页面上最新一条是 2026-06-23 的整站 PDF 导出（pando
 以下产品信息来自仓库 README 与 versioning-strategy.md。
 
 - Docker 镜像预装 ARM GNU Toolchain 15.2.rel1，镜像 tag 分 latest、preview、vX.Y.Z 三类。
-- 内核双轨并行，NXP BSP 6.12.3 走稳定线，主线 7.1 跟上游，双轨之间有迁移指南与对比分析，厂商补丁对比主线是这份教程的特色线索。
-- CI 每次提交验证 U-Boot、两条内核轨道与 rootfs 的构建，用 ccache 加速。
+- 内核轨 2026-09 起收敛为单轨：vendor（NXP BSP 6.12.3）退役，主线当前 7.2.9（2026-10-13 升级并真板实测），迁移指南与对比分析保留为教学内容，厂商补丁对比主线仍是这份教程的特色线索。
+- CI 每次提交验证 U-Boot、内核与 rootfs 的构建，用 ccache 加速。
 - 自制 rootfs 教程已于 2026-07-06 公告下架（提交 a61b828，见 #89），教程线转向 Buildroot，将来的轻量可运行镜像由组织内的 [lightroot](/projects/lightroot) 供给。
 - buildmeter 已于 2026-07-08 接入（#90），本仓以固定版本消费它。examples/ 目录下有 qt 与 light-meter 两个示例，light-meter 子目录对应 Mock light-meters 示例（#98）。
 - 文档站部署在 GitHub Pages，在线可用。许可证 MIT，主语言 C（2026-10-02 组织快照记录，当时 105 星、4 名贡献者）。
