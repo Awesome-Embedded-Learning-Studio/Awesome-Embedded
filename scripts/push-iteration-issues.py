@@ -3,9 +3,12 @@
 
 用法（两步）:
 
-    python scripts/push-iteration-issues.py <plan.md>              # 预演，只打印
-    python scripts/push-iteration-issues.py <plan.md> --apply \\
-        [--label "iteration/w44"]... [--milestone "2026-W44"]      # 真发
+    python scripts/push-iteration-issues.py <plan.md | week-dir>            # 预演，只打印
+    python scripts/push-iteration-issues.py <plan.md | week-dir> --apply \\
+        [--label wave-1]... [--milestone "2026-W44"]                        # 真发
+
+传目录时按周组织（如 content/meta/iterations/2026-W44/），扫描其中全部
+.md（README.md 即操作手册，自动跳过），逐文件解析，各自发往各自声明的仓库。
 
 计划文件格式（标题层级即父子）:
 
@@ -155,7 +158,8 @@ def link_child(owner_repo: str, parent_number: int, child_id: int) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("plan", type=Path, help="计划文件（markdown）")
+    ap.add_argument("plan", type=Path,
+                    help="计划文件，或周目录（扫描其中全部 .md，跳过 README.md）")
     ap.add_argument("--apply", action="store_true",
                     help="真发（默认只预演，不联网）")
     ap.add_argument("--label", action="append", default=[], metavar="NAME",
@@ -164,47 +168,61 @@ def main() -> None:
                     help="迭代里程碑标题，不存在则自动创建")
     args = ap.parse_args()
 
-    if not args.plan.is_file():
-        fail(f"找不到计划文件 {args.plan}")
-    owner, repo, issues, warnings = parse_plan(args.plan)
-    owner_repo = f"{owner}/{repo}"
-    for w in warnings:
-        print(f"[warn] {w}")
+    if args.plan.is_file():
+        paths = [args.plan]
+    elif args.plan.is_dir():
+        paths = [p for p in sorted(args.plan.glob("*.md"))
+                 if p.name.lower() != "readme.md"]
+        if not paths:
+            fail(f"{args.plan} 下没有计划文件（.md，README.md 除外）")
+    else:
+        fail(f"找不到 {args.plan}")
 
-    todo = [it for it in issues if not it.number]
-    print(f"[plan] {args.plan.name} -> {owner_repo}")
-    print(render_tree(issues))
-    print(f"[stat] 共 {len(issues)} 条，待建 {len(todo)}，已建跳过 {len(issues) - len(todo)}")
-    if not todo:
-        print("[done] 没有待建条目")
-        return
+    grand_total = grand_todo = grand_created = 0
+    for path in paths:
+        owner, repo, issues, warnings = parse_plan(path)
+        owner_repo = f"{owner}/{repo}"
+        for w in warnings:
+            print(f"[warn] {w}")
+        todo = [it for it in issues if not it.number]
+        print(f"[plan] {path.name} -> {owner_repo}")
+        print(render_tree(issues))
+        print(f"[stat] 共 {len(issues)} 条，待建 {len(todo)}，已建跳过 {len(issues) - len(todo)}")
+        grand_total += len(issues)
+        grand_todo += len(todo)
+        if not todo:
+            continue
+
+        if not args.apply:
+            continue
+        milestone_no = ensure_milestone(owner_repo, args.milestone) if args.milestone else None
+        if milestone_no:
+            print(f"[ok] milestone #{milestone_no} {args.milestone}")
+        lines = path.read_text(encoding="utf-8").splitlines()
+        created = 0
+        try:
+            for it in issues:
+                if it.number:
+                    continue
+                data = create_issue(owner_repo, it, args.label, milestone_no)
+                it.number, it.new_id = data["number"], data["id"]
+                write_back_number(path, lines, it)
+                print(f"[ok] #{it.number} {it.title}")
+                created += 1
+                if it.parent:
+                    # 父标题在文档里必在子之前，走到这里父的编号已就绪。
+                    link_child(owner_repo, it.parent.number, it.new_id)
+                    print(f"[ok]   └ 挂到父 #{it.parent.number} {it.parent.title}")
+        except RuntimeError as e:
+            fail(f"{path.name} 建到第 {created + 1} 条时中断，编号已写回，修好后重跑续发。\n{e}")
+        grand_created += created
 
     if not args.apply:
-        print("[dry-run] 预演结束，未联网未创建。确认无误后加 --apply 真发")
+        print(f"[dry-run] 预演结束，未联网未创建。共 {len(paths)} 个文件 "
+              f"{grand_total} 条，待建 {grand_todo}。确认无误后加 --apply 真发")
         return
-
-    milestone_no = ensure_milestone(owner_repo, args.milestone) if args.milestone else None
-    if milestone_no:
-        print(f"[ok] milestone #{milestone_no} {args.milestone}")
-    lines = args.plan.read_text(encoding="utf-8").splitlines()
-    created = 0
-    try:
-        for it in issues:
-            if it.number:
-                continue
-            data = create_issue(owner_repo, it, args.label, milestone_no)
-            it.number, it.new_id = data["number"], data["id"]
-            write_back_number(args.plan, lines, it)
-            print(f"[ok] #{it.number} {it.title}")
-            created += 1
-            if it.parent:
-                # 父标题在文档里必在子之前，走到这里父的编号已就绪。
-                link_child(owner_repo, it.parent.number, it.new_id)
-                print(f"[ok]   └ 挂到父 #{it.parent.number} {it.parent.title}")
-    except RuntimeError as e:
-        fail(f"建到第 {created + 1} 条时中断，编号已写回，修好后重跑续发。\n{e}")
-
-    print(f"[done] 新建 {created} 条。可以跑 python scripts/collect-issues.py 刷新看板")
+    print(f"[done] {len(paths)} 个文件，新建 {grand_created} 条。"
+          f"可以跑 python scripts/collect-issues.py 刷新看板")
 
 
 if __name__ == "__main__":
