@@ -1,6 +1,6 @@
 # 迭代 issue 推送操作手册
 
-`scripts/push-iteration-issues.py` 把一份 markdown 迭代计划发成 GitHub 原生父子 issue。父子用官方 sub-issue 关系挂接，与 `scripts/collect-issues.py`（issue 看板的数据源）读的是同一个关系，发完刷新看板就能看到树。
+`scripts/push-iteration-issues.py` 把一份 markdown 迭代计划发成 GitHub 原生父子 issue。父子用官方 sub-issue 关系挂接，站内 IssueBoard 看板读的就是这个关系，发完刷新看板页面就能看到树。
 
 ## 计划文件格式
 
@@ -16,7 +16,7 @@
 2. 预演：`python scripts/push-iteration-issues.py <plan.md>`，不联网不创建，把打印出的树和条目内容给用户过目。
 3. 等用户明确点头。AI 起草的内容一律是候选，用户不点头绝不加 `--apply`（仓库约定的"AI 不自动确认"同样适用于发 issue）。
 4. 真发：`--apply`，标签按 issue-tracking-plan.md 的约定用 `wave-1/2/3`，需要时 `--milestone "标题"` 建同名里程碑。
-5. 发完提醒用户可以跑 `python scripts/collect-issues.py` 刷新看板，用户同意再跑。
+5. 发完提醒用户刷新站内看板页面（看板浏览器直连 GitHub 取数，不用跑脚本）就能看到树。
 
 ## 原则（来自 .claude/mcu-with-ai/issue-tracking-plan.md，2026-10-24 拍板）
 

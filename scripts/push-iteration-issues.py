@@ -19,9 +19,9 @@
 
 写回：每条 issue 建成后，脚本把 ``<!--#编号-->`` 追加到对应标题行末尾并立即
 存盘，重跑时带编号的条目跳过，中断续跑不发重。父子用 GitHub 原生 sub-issue
-关系挂接（collect-issues.py / IssueBoard 读的就是这个关系）。
+关系挂接（站内 IssueBoard 看板读的就是这个关系）。
 
-Requires the ``gh`` CLI with a logged-in account（同 collect-issues.py）。
+Requires the ``gh`` CLI with a logged-in account.
 Fail loud: any gh error, parse error or structure error aborts the run.
 Pure standard library.
 """
@@ -222,7 +222,7 @@ def main() -> None:
               f"{grand_total} 条，待建 {grand_todo}。确认无误后加 --apply 真发")
         return
     print(f"[done] {len(paths)} 个文件，新建 {grand_created} 条。"
-          f"可以跑 python scripts/collect-issues.py 刷新看板")
+          f"看板是浏览器直连 GitHub 取数的，刷新页面即可看到")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@
 
 const API = 'https://api.github.com'
 export const ORG = 'Awesome-Embedded-Learning-Studio'
-export const ORG_URL = `https://github.com/orgs/${ORG}/repositories`
+export const ORG_URL = `https://github.com/issues?q=${encodeURIComponent(`org:${ORG} is:issue is:open`)}`
 
 export interface IssueRecord {
   /** 全局键 owner/repo#number */
@@ -19,7 +19,9 @@ export interface IssueRecord {
   repo: string
   number: number
   title: string
+  parentKey: string | null
   state: 'open' | 'closed'
+  stateReason: string | null
   /** closed 的子任务压成一行灰条，不带正文 */
   closed: boolean
   /** 正文前 500 字（去掉了 markdown 链接和图片记号） */
@@ -111,6 +113,16 @@ function repoFullOf(raw: Record<string, any>): string | null {
   return m ? `${m[1]}/${m[2]}` : null
 }
 
+function issueKey(repo: string, number: string | number): string {
+  return `${repo.toLowerCase()}#${number}`
+}
+
+function parentKeyOf(url: unknown): string | null {
+  if (typeof url !== 'string') return null
+  const match = /^https:\/\/api\.github\.com\/repos\/([^/]+\/[^/]+)\/issues\/(\d+)$/.exec(url)
+  return match ? issueKey(match[1], match[2]) : null
+}
+
 function normalize(raw: Record<string, any>, fallbackRepo?: string): IssueRecord {
   const repoFull = repoFullOf(raw) ?? fallbackRepo ?? 'unknown/unknown'
   const repo = repoFull.split('/')[1] ?? repoFull
@@ -118,14 +130,16 @@ function normalize(raw: Record<string, any>, fallbackRepo?: string): IssueRecord
   const summary = raw.sub_issues_summary ?? {}
   const { excerpt, image } = closed
     ? { excerpt: '', image: null }
-    : parseBody(raw.body ?? '', repo)
+    : parseBody(raw.body ?? '', repoFull)
   return {
-    key: `${repoFull}#${raw.number}`,
+    key: issueKey(repoFull, raw.number),
     repoFull,
     repo,
     number: raw.number,
     title: raw.title,
+    parentKey: parentKeyOf(raw.parent_issue_url),
     state: closed ? 'closed' : 'open',
+    stateReason: raw.state_reason ?? null,
     closed,
     excerpt,
     excerptImage: image,
@@ -144,42 +158,33 @@ function normalize(raw: Record<string, any>, fallbackRepo?: string): IssueRecord
 // ---- 组织级 open issue：一次搜索请求全拿 ----
 
 export async function fetchOrgIssues(): Promise<IssueRecord[]> {
-  const out: IssueRecord[] = []
+  const out = new Map<string, IssueRecord>()
   const q = encodeURIComponent(`org:${ORG} is:issue is:open`)
   for (let page = 1; page <= 10; page++) {
     const res = await ghFetch(`${API}/search/issues?q=${q}&per_page=100&page=${page}`)
     const data = await res.json()
     const items: Record<string, any>[] = data.items ?? []
-    out.push(...items.map((i) => normalize(i)))
-    if (items.length < 100 || out.length >= (data.total_count ?? 0)) break
+    for (const item of items) {
+      const issue = normalize(item)
+      out.set(issue.key, issue)
+    }
+    if (items.length < 100 || out.size >= data.total_count) break
   }
-  return out
+  return [...out.values()]
 }
 
-// ---- 子任务：点开才取，按父缓存 ----
-
-const kidsCache = new Map<string, IssueRecord[]>()
-
-export function cachedChildren(key: string): IssueRecord[] | undefined {
-  return kidsCache.get(key)
-}
+// ---- 子任务：点开才取，由看板在本次浏览中缓存 ----
 
 export async function fetchChildren(repoFull: string, number: number): Promise<IssueRecord[]> {
-  const key = `${repoFull}#${number}`
-  const hit = kidsCache.get(key)
-  if (hit) return hit
   const res = await ghFetch(`${API}/repos/${repoFull}/issues/${number}/sub_issues?per_page=100`)
   const data = await res.json()
-  const list = (Array.isArray(data) ? data : []).map((x: Record<string, any>) =>
-    normalize(x, repoFull),
-  )
-  kidsCache.set(key, list)
-  return list
+  if (!Array.isArray(data)) throw new Error('Unexpected GitHub sub-issues response')
+  return data.map((x: Record<string, any>) => normalize(x, repoFull))
 }
 
 // ---- 会话级缓存：5 分钟内重复打开不再请求 ----
 
-const CACHE_KEY = 'aels-issues:v1'
+const CACHE_KEY = 'aels-issues:v2'
 const TTL = 5 * 60 * 1000
 
 export interface IssuesPayload {
