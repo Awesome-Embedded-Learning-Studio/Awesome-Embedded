@@ -2,118 +2,57 @@
 import type { IssueRecord } from './issue-live'
 import IssueCard from './IssueCard.vue'
 
-// 递归渲染一层卡片网格：展开的父卡片横跨整行，子任务在它下面再排一层网格。
 defineOptions({ name: 'IssueGrid' })
 
-defineProps<{
+const props = withDefaults(defineProps<{
   nodes: IssueRecord[]
-  depth: number
-  hueOf: (repo: string) => number
-  showRepo: boolean
+  trail?: string[]
   expanded: Set<string>
   kids: Map<string, IssueRecord[]>
   loading: Set<string>
   errors: Map<string, string>
   nowMs: number
   en: boolean
+}>(), { trail: () => [] })
+
+const emit = defineEmits<{
+  toggle: [issue: IssueRecord]
+  retry: [issue: IssueRecord]
 }>()
 
-defineEmits<{
-  (e: 'toggle', issue: IssueRecord): void
-  (e: 'retry', issue: IssueRecord): void
-  (e: 'zoom', src: string): void
-}>()
+function descendants(parent: IssueRecord) {
+  return props.kids.get(parent.key)?.filter((i) => i.key !== parent.key && !props.trail.includes(i.key)) ?? []
+}
 </script>
 
 <template>
-  <ul class="igrid" :class="{ sub: depth > 0 }">
-    <template v-for="n in nodes" :key="n.key">
-      <li class="icell" :class="{ wide: n.closed }">
-        <IssueCard
-          :issue="n"
-          :depth="depth"
-          :hue="hueOf(n.repo)"
-          :show-repo="showRepo"
-          :expanded="expanded.has(n.key)"
-          :kids-loading="loading.has(n.key)"
-          :kids-error="errors.get(n.key) ?? null"
-          :now-ms="nowMs"
-          :en="en"
-          @toggle="$emit('toggle', n)"
-          @retry="$emit('retry', n)"
-          @zoom="$emit('zoom', $event)"
-        />
-      </li>
-      <!-- 展开的子任务另起一块整行面板，父卡片保持原来的格子宽度 -->
-      <li v-if="expanded.has(n.key) && kids.get(n.key)?.length" class="ipanel">
-        <IssueGrid
-          :nodes="kids.get(n.key)!"
-          :depth="depth + 1"
-          :hue-of="hueOf"
-          :show-repo="showRepo"
-          :expanded="expanded"
-          :kids="kids"
-          :loading="loading"
-          :errors="errors"
-          :now-ms="nowMs"
-          :en="en"
-          @toggle="$emit('toggle', $event)"
-          @retry="$emit('retry', $event)"
-          @zoom="$emit('zoom', $event)"
-        />
-      </li>
-    </template>
+  <ul class="issue-grid" :class="{ 'sub-list': trail.length > 0 }" role="list">
+    <li v-for="issue in nodes" :key="issue.key">
+      <IssueCard :issue="issue" :compact="trail.length > 0" :expanded="expanded.has(issue.key)"
+        :kids-loading="loading.has(issue.key)" :kids-error="errors.get(issue.key) ?? null"
+        :now-ms="nowMs" :en="en" @toggle="emit('toggle', issue)" @retry="emit('retry', issue)">
+        <IssueGrid v-if="expanded.has(issue.key) && descendants(issue).length"
+          :nodes="descendants(issue)" :trail="[...trail, issue.key]" :expanded="expanded"
+          :kids="kids" :loading="loading" :errors="errors" :now-ms="nowMs" :en="en"
+          @toggle="emit('toggle', $event)" @retry="emit('retry', $event)" />
+      </IssueCard>
+    </li>
   </ul>
 </template>
 
 <style scoped>
-.igrid {
+.issue-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-auto-flow: row dense;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 235px), 1fr));
   gap: 10px;
-  list-style: none;
-  margin: 0;
+  align-items: stretch;
   padding: 0;
+  margin: 0;
+  list-style: none;
 }
-
-.icell {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.icell.wide {
-  grid-column: 1 / -1;
-}
-
-.ipanel {
-  grid-column: 1 / -1;
-  margin-top: -2px;
-}
-
-.icell :deep(.issue-card) {
-  height: 100%;
-  margin-bottom: 0;
-}
-
-/* 窄卡里缩略图让位给文字 */
-.icell :deep(.thumb) {
-  width: 56px;
-  height: 56px;
-}
-
-.igrid.sub {
-  margin-top: 0;
-  padding-left: 12px;
-  border-left: 1px solid var(--vp-c-divider);
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
+.issue-grid > li { display: flex; flex-direction: column; min-width: 0; margin: 0; }
+.issue-grid.sub-list { grid-template-columns: minmax(0, 1fr); gap: 5px; margin-top: 7px; }
 @media (max-width: 639px) {
-  .igrid,
-  .igrid.sub {
-    grid-template-columns: 1fr;
-  }
+  .issue-grid { grid-template-columns: minmax(0, 1fr); }
 }
 </style>

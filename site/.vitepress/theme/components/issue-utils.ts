@@ -1,8 +1,6 @@
 // Issue 看板共用的小工具：时间格式、摘要收口、标签归类。
 // 数据从 GitHub 接口现取，字段定义见 issue-live.ts。
 
-import type { IssueRecord } from './issue-live'
-
 export const DAY = 86_400_000
 
 /** 快照生成时间就是“现在”，相对时间以它为基准，避免读起来一直在变 */
@@ -59,12 +57,4 @@ export function labelKind(name: string): LabelKind {
   if (n.includes('bug') || n.includes('fix')) return 'bug'
   if (n.includes('feature')) return 'feat'
   return 'misc'
-}
-
-/** 子任务按钮上的文案 */
-export function kidsLabel(i: IssueRecord, expanded: boolean, en: boolean): string {
-  const done = i.completedChildren
-  if (expanded) return en ? `hide ${i.childTotal}` : `收起 ${i.childTotal} 个`
-  if (en) return `${i.childTotal} sub-issues${done ? ` · ${done} done` : ''}`
-  return `${i.childTotal} 个子任务${done ? ` · ${done} 已完成` : ''}`
 }
